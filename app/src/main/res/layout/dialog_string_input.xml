@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/LinearLayoutGettingTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/et_new_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dip"
+            android:layout_marginRight="5dip"
+            android:hint="@string/dialog_getting_string_new"
+            android:lines="1"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/LinearLayoutGettingTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="1dp"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerHorizontal"/>
+        <View
+            android:id="@+id/viewSeparatorBottomCreatePlaylistHorizontal"
+            android:layout_below="@+id/b_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerHorizontal"/>
+        <View
+            android:id="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_below="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
+            android:layout_above="@+id/viewSeparatorBottomCreatePlaylistHorizontal"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="1dp"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="?android:attr/dividerVertical" />
+        <Button
+            android:id="@+id/b_cancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_toStartOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:text="@string/global_cancel" />
+        <Button
+            android:id="@+id/b_new_list"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_toEndOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_toLeftOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_toStartOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:text="@string/global_create_new" />
+    </RelativeLayout>
+</RelativeLayout>
