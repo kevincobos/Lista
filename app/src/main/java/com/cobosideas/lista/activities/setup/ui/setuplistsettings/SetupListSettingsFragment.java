@@ -1,8 +1,5 @@
 package com.cobosideas.lista.activities.setup.ui.setuplistsettings;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

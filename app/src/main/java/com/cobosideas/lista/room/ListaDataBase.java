@@ -1,6 +1,5 @@
 package com.cobosideas.lista.room;
 
-import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

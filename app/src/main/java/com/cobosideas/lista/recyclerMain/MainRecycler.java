@@ -17,15 +17,17 @@ import com.cobosideas.lista.room.models.ItemRoom;
 import java.util.List;
 
 public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder>{
-    //CODE_MAIN_RECYCLER_ID_INT
-    private final int CODE_MR_ID_INT = Constants.CODES_ALERT_MAIN_RECYCLER.CODE_MAIN_RECYCLER_ID_INT;
+    //CODE_INT_MAIN_RECYCLER
+    private final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
+    private final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
+    //DataSet to display on Recycler
+    private List<ItemRoom> dataSetListaItemROOOM;
 
     private MainRecyclerInputListener mainRecyclerInputListener;
     public interface MainRecyclerInputListener {
-        void onInterfaceString(int CODE_MR_ID_INT, String stringValue);
+        void onInterfaceString(int CODE_MR_ID_INT, Long stringValue, int itemPosition);
     }
-    //DataSet to display on Recycler
-    private List<ItemRoom> dataSetListaItemROOOM;
+
 
     //Context context;
 
@@ -40,6 +42,7 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
     static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         CardView cv_listaItems;
+        TextView tv_id;
         TextView tv_listaName;
         TextView tv_listaDescription;
         ImageView iv_imageId;
@@ -49,6 +52,7 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
             super(itemView);
 
             cv_listaItems = itemView.findViewById(R.id.cv_listaItems);
+            tv_id = itemView.findViewById(R.id.tv_id);
             tv_listaName = itemView.findViewById(R.id.tv_listaName);
             tv_listaDescription = itemView.findViewById(R.id.tv_listaDescription);
             iv_imageId = itemView.findViewById(R.id.iv_photoId);
@@ -58,15 +62,21 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
     // Provide a suitable constructor (depends on the kind of data set)
     public MainRecycler(List<ItemRoom> myDataSet, MainRecyclerInputListener context) {
         this.dataSetListaItemROOOM = myDataSet;
-        //this.context = context;
-        mainRecyclerInputListener = context;
+
+        this.mainRecyclerInputListener = context;
     }
 
-    /**    Add new Item to recyclerView     **/
+    /**    Add new Item to recyclerView  and update   **/
     public void addItemToRecycler(ItemRoom newItem) {
         dataSetListaItemROOOM.add(newItem);
         notifyDataSetChanged();
     }
+    /**    remove Item from recyclerView and update    **/
+    public void deleteItemToRecycler(int selectedToDelete, ItemRoom newItem) {
+        dataSetListaItemROOOM.remove(selectedToDelete);
+        notifyItemRemoved(selectedToDelete);
+    }
+
 
     // Create new views (invoked by the layout manager)
     @NonNull
@@ -83,6 +93,8 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         // - get element from your dataSet at this position
         // - replace the contents of the view with that element
+        String convertIdToString = dataSetListaItemROOOM.get(position).id + "";
+        holder.tv_id.setText(convertIdToString);
         holder.tv_listaName.setText(dataSetListaItemROOOM.get(position).name);
         holder.tv_listaDescription.setText(dataSetListaItemROOOM.get(position).description);
         holder.iv_imageId.setImageResource(dataSetListaItemROOOM.get(position).photoId);
@@ -92,7 +104,25 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
         holder.cv_listaItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainRecyclerInputListener.onInterfaceString(CODE_MR_ID_INT, (dataSetListaItemROOOM.get(holder.getAdapterPosition()).id + ""));
+                final Long itemDataBaseId = dataSetListaItemROOOM.get(holder.getAdapterPosition()).id;
+                final int selectedItem  = holder.getAdapterPosition();
+                mainRecyclerInputListener.onInterfaceString(
+                        CODE_INT_MAIN_RECYCLER_ACCESS,
+                        itemDataBaseId,
+                        selectedItem);
+            }
+        });
+        //Adding OnLongClickListeners to be able to delete them
+        holder.cv_listaItems.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final Long itemDataBaseId = dataSetListaItemROOOM.get(holder.getAdapterPosition()).id;
+                final int selectedItem  = holder.getAdapterPosition();
+                mainRecyclerInputListener.onInterfaceString(
+                        CODE_INT_MAIN_RECYCLER_DELETE,
+                        itemDataBaseId,
+                        selectedItem);
+                return true;
             }
         });
     }

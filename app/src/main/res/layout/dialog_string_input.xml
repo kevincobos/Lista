@@ -6,20 +6,42 @@
         android:id="@+id/LinearLayoutGettingTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/tv_alert_dialog_string_input_name"
+            android:text = "@string/dialog_getting_string_new_message_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        </TextView>
         <EditText
             android:id="@+id/et_new_list_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dip"
-            android:layout_marginRight="5dip"
-            android:hint="@string/dialog_getting_string_new"
+            android:hint="@string/dialog_getting_string_new_hint"
             android:lines="1"
             android:maxLength="30"
             android:maxLines="1"
             android:singleLine="true" />
+        <TextView
+            android:id="@+id/tv_alert_dialog_string_input_description"
+            android:text = "@string/dialog_getting_string_new_message_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        </TextView>
 
+        <EditText
+            android:id="@+id/et_new_list_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dip"
+            android:hint="@string/dialog_getting_string_description_hint"
+            android:lines="4"
+            android:maxLength="100"
+            android:maxLines="4"
+            android:minLines="4"
+            android:singleLine="false"
+            android:textAlignment="textStart" />
     </LinearLayout>
 
     <RelativeLayout
@@ -27,7 +49,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <View
-            android:id="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
+            android:id="@+id/view_separator_inferior"
             android:layout_width="match_parent"
             android:layout_alignParentTop="true"
             android:layout_height="1dp"
@@ -35,7 +57,7 @@
             android:layout_marginRight="4dip"
             android:background="?android:attr/dividerHorizontal"/>
         <View
-            android:id="@+id/viewSeparatorBottomCreatePlaylistHorizontal"
+            android:id="@+id/view_separator_bottom"
             android:layout_below="@+id/b_cancel"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -43,9 +65,9 @@
             android:layout_marginRight="4dip"
             android:background="?android:attr/dividerHorizontal"/>
         <View
-            android:id="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
-            android:layout_below="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
-            android:layout_above="@+id/viewSeparatorBottomCreatePlaylistHorizontal"
+            android:id="@+id/view_separator_medium"
+            android:layout_below="@+id/view_separator_inferior"
+            android:layout_above="@+id/view_separator_bottom"
             android:layout_height="1dp"
             android:layout_centerHorizontal="true"
             android:layout_width="1dp"
@@ -57,24 +79,19 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
-            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/view_separator_inferior"
             android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
-            android:layout_toStartOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_toStartOf="@+id/view_separator_medium"
             android:text="@string/global_cancel" />
         <Button
             android:id="@+id/b_new_list"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewSeparatorInferiorCreatePlaylistHorizontal"
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/view_separator_inferior"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
-            android:layout_toEndOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
-            android:layout_toLeftOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
-            android:layout_toStartOf="@+id/viewSeparatorMedioInferiorCreatePlaylistVisible"
+            android:layout_toEndOf="@+id/view_separator_medium"
+            android:layout_toStartOf="@+id/view_separator_medium"
             android:text="@string/global_create_new" />
     </RelativeLayout>
 </RelativeLayout>
