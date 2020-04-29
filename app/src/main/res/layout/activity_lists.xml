@@ -73,9 +73,15 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
     <!-- showing the recyclerView-->
-    <include
+    <LinearLayout
         android:id="@+id/ll_container_recycler"
-        layout="@layout/content_activity_lists" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <include
+            layout="@layout/content_activity_lists" />
+    </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_lists_add"
         android:layout_width="wrap_content"

@@ -23,7 +23,7 @@ public class CoreDataBase {
         ItemDAO itemDAO = dataBase.getItemDAO();
         return itemDAO.insert(newItemROOM);
     }
-    //Adding Items to database
+    //delete Items to database
     public void deleteItemSelected(ItemRoom newItemROOM){
         ItemDAO itemDAO = dataBase.getItemDAO();
         itemDAO.delete(newItemROOM);

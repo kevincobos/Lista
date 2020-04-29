@@ -25,7 +25,7 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
 
     private MainRecyclerInputListener mainRecyclerInputListener;
     public interface MainRecyclerInputListener {
-        void onInterfaceString(int CODE_MR_ID_INT, Long stringValue, int itemPosition);
+        void onInterfaceString(int CODE_INT_MR_ID, Long stringValue, int itemPosition);
     }
 
 
@@ -50,7 +50,6 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
 
         MyViewHolder(View itemView) {
             super(itemView);
-
             cv_listaItems = itemView.findViewById(R.id.cv_listaItems);
             tv_id = itemView.findViewById(R.id.tv_id);
             tv_listaName = itemView.findViewById(R.id.tv_listaName);
@@ -62,7 +61,6 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
     // Provide a suitable constructor (depends on the kind of data set)
     public MainRecycler(List<ItemRoom> myDataSet, MainRecyclerInputListener context) {
         this.dataSetListaItemROOOM = myDataSet;
-
         this.mainRecyclerInputListener = context;
     }
 

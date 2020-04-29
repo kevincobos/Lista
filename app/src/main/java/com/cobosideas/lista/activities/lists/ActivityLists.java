@@ -1,6 +1,7 @@
 package com.cobosideas.lista.activities.lists;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,8 @@ import com.cobosideas.lista.activities.dagger.DaggerListCard;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -30,6 +33,9 @@ import com.cobosideas.lista.R;
 import java.util.List;
 
 public class ActivityLists extends AppCompatActivity implements RecyclerLists.RecyclerListsInputListener, DialogStringInput.DialogStringInputListener {
+    //CODE_INT_MAIN_RECYCLER
+    private final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
+    private final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
     //CODE_ALERT_DIALOG_FRAGMENT
     final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
     //CODE_INT_ACTIVITY_LISTS
@@ -51,7 +57,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this.getApplicationContext();
-        setContentView(R.layout.activity_lists);
+
         setupApplicationView(); //setup toolbar and change the title name
 
         setupDataAndRecycler();
@@ -131,15 +137,15 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         String listDescription = getIntent().getStringExtra(CODE_STRING_LISTA_DESCRIPTION);
         int listPhotoId = getIntent().getIntExtra(CODE_STRING_LISTA_PHOTO_ID, CODE_DEFAULT_PHOTO_ID);
 
-        //find toolbar and set values
-        Toolbar toolbar = findViewById(R.id.tb_activity_lists);
+        setContentView(R.layout.activity_lists);//Setup view
+        Toolbar toolbar = findViewById(R.id.tb_activity_lists);//find toolbar and set values
         toolbar.setTitle(listName);
         setSupportActionBar(toolbar);
         setupToolbar(listDescription, listPhotoId);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Going back to MainActivityLista */
+                /* Going back to MainActivityLista */
                 Intent intent = new Intent(getApplicationContext(), MainActivityLista.class);
                 int requestCode = 1; // Or some number you choose
                 startActivityForResult(intent, requestCode);
@@ -192,23 +198,6 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         ComponentListCard componentListCard = DaggerComponentListCard.create();
         daggerListCard = componentListCard.getDaggerListCard();
     }
-    /** Managing Long Values coming from other fragments
-     *
-     * @param CODE_ID compare to values from Constants
-     * @param longValue get the string value
-     */
-    @Override
-    public void onInterfaceString(int CODE_ID, Long longValue) {
-        switch (CODE_ID){
-            case CODE_INT_ACTIVITY_LISTS:
-                /* Click on one of the Items in the Recycler */
-
-                break;
-        }
-
-
-    }
-
     @Override
     public void onInterfaceString(int CODE_ID, String stringValue, String stringDescription) {
         switch (CODE_ID){
@@ -238,5 +227,64 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
                 recyclerLists.addItemToRecycler(modelItemLists);
                 break;
         }
+    }
+    /** Managing Long Values coming from other fragments
+     *
+     * @param CODE_ID compare to values from Constants
+     * @param longValue long value is the id of database
+     * @param selectedItemFromCardView selected cardView item
+     */
+    @Override
+    public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
+        int requestCode = 1; // Or some number you choose
+        Intent intent = new Intent(this, ActivityLists.class);
+        ModelItemLists modelItemLists;
+        Long sessionId;
+        String sessionName;
+        String sessionDescription;
+        int sessionPhotoId;
+        switch (CODE_ID) {
+            case CODE_INT_MAIN_RECYCLER_ACCESS:
+
+                break;
+            case CODE_INT_MAIN_RECYCLER_DELETE:
+                /* LongClick on one of the Items in the Recycler */
+                //Looking inside database all information
+                modelItemLists = dataBaseLists.getListaItemFromDataBase(longValue);
+                createDeleteAlertDialog(selectedItemFromCardView, modelItemLists);
+                break;
+        }
+    }
+    /**Alert Dialog
+     * try to delete item selected from cardView in MainActivityLista
+     * @param selectedItemFromCardView id of selected item
+     * @param itemRoomComing  viewModel item from selected item
+     */
+    private void createDeleteAlertDialog(int selectedItemFromCardView, ModelItemLists itemRoomComing){
+        final ModelItemLists itemRoom = itemRoomComing;
+        final int selectedItem = selectedItemFromCardView;
+        String deleteMessage = getString(R.string.alert_dialog_delete);
+        String cancelMessage = getString(R.string.alert_dialog_delete_message_cancel);
+        final String alertDeleteMessage = getString(R.string.alert_dialog_delete_message)
+                + itemRoom.name;
+        final String alertDeleteSuccess = getString(R.string.alert_dialog_delete_success);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(alertDeleteMessage)
+                .setCancelable(false)
+                .setPositiveButton(deleteMessage, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        /*    remove item   */
+                        dataBaseLists.deleteItemSelected(itemRoom);
+                        recyclerLists.deleteItemToRecycler(selectedItem, itemRoom);
+                    }
+                })
+                .setNegativeButton(cancelMessage, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
