@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "758a0cf144bcd92e34a8530b21500d32",
+    "identityHash": "c74a48a859639a70a34d09a558543991",
     "entities": [
       {
         "tableName": "itemLists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `order` INTEGER, `name` TEXT, `description` TEXT, `date` INTEGER, `dateModify` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `order` INTEGER, `name` TEXT, `description` TEXT, `date` INTEGER, `dateModify` INTEGER, `function` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -43,6 +43,12 @@
             "columnName": "dateModify",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "function",
+            "columnName": "function",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -58,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '758a0cf144bcd92e34a8530b21500d32')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c74a48a859639a70a34d09a558543991')"
     ]
   }
 }

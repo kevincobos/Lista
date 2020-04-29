@@ -3,4 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="colorListsCardViewPrimary">#44316C</color>
+    <color name="colorListsCardViewAccent">#601AFB</color>
+    <color name="colorListsCardViewLight">#DDCFFD</color>
+    <color name="colorListsCardViewDark">#200E47</color>
 </resources>

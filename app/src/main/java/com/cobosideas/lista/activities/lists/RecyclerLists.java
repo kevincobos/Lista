@@ -16,8 +16,8 @@ import java.util.List;
 
 public class RecyclerLists extends RecyclerView.Adapter<RecyclerLists.MyViewHolder>{
     //CODE_INT_MAIN_RECYCLER
-    private final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
-    private final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
+    private final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
+    private final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
     //DataSet to display on Recycler
     private List<ModelItemLists> dataSetLists;
 
@@ -64,9 +64,25 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerLists.MyViewHold
     @NonNull
     @Override
     public RecyclerLists.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        //CODE_INT_RECYCLER_CARD_VIEW
+        final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
+        final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_SIMPLE;
+        final int CODE_INT_CARD_VIEW_IMAGE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_IMAGE;
         // create a new view
         View viewDialog = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.cardview_lists_item_simple_template, viewGroup, false);
+        switch (dataSetLists.get(viewType).function){
+            case CODE_INT_CARD_VIEW_DEFAULT:
+            viewDialog = LayoutInflater.from(viewGroup.getContext()).inflate(
+                    R.layout.cardview_lists_item_simple_template, viewGroup, false);
+            break;
+            case CODE_INT_CARD_VIEW_IMAGE:
+            viewDialog = LayoutInflater.from(viewGroup.getContext()).inflate(
+                    R.layout.cardview_lists_item_simple_template, viewGroup, false);
+            break;
+            default:
+                return new MyViewHolder(viewDialog);
+        }
         return new MyViewHolder(viewDialog);
     }
 
@@ -78,7 +94,8 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerLists.MyViewHold
         holder.tv_listsId.setText(convertIdToString);
         holder.tv_listsLink.setText(dataSetLists.get(position).name);
         holder.tv_listsName.setText(dataSetLists.get(position).description);
-        holder.tv_listaValue.setText(dataSetLists.get(position).date + "");
+        holder.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+
 
         //Adding OnClickListeners to each part of the list item then will be able to modify them+
         holder.cv_listsItems.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +104,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerLists.MyViewHold
                 final Long itemDataBaseId = dataSetLists.get(holder.getAdapterPosition()).id;
                 final int selectedItem  = holder.getAdapterPosition();
                 recyclerListsInputListener.onInterfaceString(
-                        CODE_INT_MAIN_RECYCLER_ACCESS,
+                        CODE_INT_RECYCLER_ACCESS,
                         itemDataBaseId,
                         selectedItem);
             }
@@ -99,7 +116,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerLists.MyViewHold
                 final Long itemDataBaseId = dataSetLists.get(holder.getAdapterPosition()).id;
                 final int selectedItem  = holder.getAdapterPosition();
                 recyclerListsInputListener.onInterfaceString(
-                        CODE_INT_MAIN_RECYCLER_DELETE,
+                        CODE_INT_RECYCLER_DELETE,
                         itemDataBaseId,
                         selectedItem);
                 return true;

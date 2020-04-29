@@ -6,11 +6,13 @@ public class Constants {
     //200 = CODES_MAIN_RECYCLER
     private final static int CODES_MAIN_RECYCLER = 200;
     //300 = CODES_ACTIVITY_LIST
-    private final static int CODES_ACTIVITY_LIST = 300;
+    private final static int CODES_ACTIVITY_LISTA = 300;
     //200 = CODES_ACTIVITY_LISTS_CARDS
     private final static int CODES_ACTIVITY_LISTS = 400;
     //500 = CODES_RECYCLER_LISTS
     private final static int CODES_RECYCLER_LISTS = 500;
+    //500 = CODES_RECYCLER_LISTS
+    private final static int CODES_LISTS_CARD_VIEW = 600;
 
     public interface CODES_ALERT_DIALOG_FRAGMENT{
         //Strings will help to obtain and save values in the dialog fragment
@@ -32,10 +34,18 @@ public class Constants {
         String CODE_STRING_LISTA_DESCRIPTION = "CODE_STRING_LISTA_DESCRIPTION";
         String CODE_STRING_LISTA_PHOTO_ID = "CODE_STRING_LISTA_PHOTO_ID";
 
-        int CODE_INT_ACTIVITY_LISTS  =  CODES_ACTIVITY_LIST + 1;
+        int CODE_INT_ACTIVITY_LISTA  =  CODES_ACTIVITY_LISTA + 1;
     }
     public interface CODES_RECYCLER_LISTS {
-        int CODE_INT_RECYCLER_LISTS_ID  =  CODES_RECYCLER_LISTS + 1;
+        int CODE_INT_RECYCLER_ID  =  CODES_RECYCLER_LISTS + 1;
+        int CODE_INT_RECYCLER_ACCESS  =  CODES_RECYCLER_LISTS + 2;
+        int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_LISTS + 3;
+    }
+    public interface CODES_LISTS_CARD_VIEW {
+        //setup cardView Views
+        int CODE_INT_CARD_VIEW_DEFAULT  =  CODES_LISTS_CARD_VIEW + 1;
+        int CODE_INT_CARD_VIEW_SIMPLE  =  CODES_LISTS_CARD_VIEW + 2;
+        int CODE_INT_CARD_VIEW_IMAGE  =  CODES_LISTS_CARD_VIEW + 3;
     }
     public interface CODES_ACTIVITY_LISTS{
         //Strings will help to obtain and save values in the activity lists cards

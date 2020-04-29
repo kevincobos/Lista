@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadeScrollbars="true"
-        app:cardBackgroundColor="@color/colorListsCardViewAccent"
+        app:cardBackgroundColor="@color/colorListsCardViewPrimary"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp"
         app:cardMaxElevation="4dp">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="16dp">
 
             <TextView

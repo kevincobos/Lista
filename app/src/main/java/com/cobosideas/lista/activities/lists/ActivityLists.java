@@ -33,9 +33,11 @@ import com.cobosideas.lista.R;
 import java.util.List;
 
 public class ActivityLists extends AppCompatActivity implements RecyclerLists.RecyclerListsInputListener, DialogStringInput.DialogStringInputListener {
-    //CODE_INT_MAIN_RECYCLER
-    private final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
-    private final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
+    //CODE_INT_RECYCLER_CARD_VIEW
+    private final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
+    private final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_SIMPLE;
+    private final int CODE_INT_CARD_VIEW_IMAGE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_IMAGE;
+
     //CODE_ALERT_DIALOG_FRAGMENT
     final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
     //CODE_INT_ACTIVITY_LISTS
@@ -217,6 +219,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
                 modelItemLists.description = description;
                 modelItemLists.date = System.currentTimeMillis();
                 modelItemLists.dateModify = System.currentTimeMillis();
+                modelItemLists.function = CODE_INT_CARD_VIEW_DEFAULT;
                 //modelItemLists.id:? Database assigns the value to this item
                 //getting value auto generated
                 Long newDataBaseItemId = dataBaseLists.addItemToListDataBase(modelItemLists);
@@ -236,6 +239,8 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
      */
     @Override
     public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
+        final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
+        final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
         int requestCode = 1; // Or some number you choose
         Intent intent = new Intent(this, ActivityLists.class);
         ModelItemLists modelItemLists;
@@ -244,39 +249,50 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         String sessionDescription;
         int sessionPhotoId;
         switch (CODE_ID) {
-            case CODE_INT_MAIN_RECYCLER_ACCESS:
+            case CODE_INT_RECYCLER_ACCESS:
 
                 break;
-            case CODE_INT_MAIN_RECYCLER_DELETE:
+            case CODE_INT_RECYCLER_DELETE:
                 /* LongClick on one of the Items in the Recycler */
                 //Looking inside database all information
                 modelItemLists = dataBaseLists.getListaItemFromDataBase(longValue);
-                createDeleteAlertDialog(selectedItemFromCardView, modelItemLists);
+                createLongClickAlertDialog(selectedItemFromCardView, modelItemLists);
                 break;
         }
     }
     /**Alert Dialog
      * try to delete item selected from cardView in MainActivityLista
      * @param selectedItemFromCardView id of selected item
-     * @param itemRoomComing  viewModel item from selected item
+     * @param modelItemComing  viewModel item from selected item
      */
-    private void createDeleteAlertDialog(int selectedItemFromCardView, ModelItemLists itemRoomComing){
-        final ModelItemLists itemRoom = itemRoomComing;
+    private void createLongClickAlertDialog(int selectedItemFromCardView, ModelItemLists modelItemComing){
+        final ModelItemLists modelItem = modelItemComing;
         final int selectedItem = selectedItemFromCardView;
+        String deleteDuplicate = getString(R.string.alert_dialog_duplicate);
         String deleteMessage = getString(R.string.alert_dialog_delete);
         String cancelMessage = getString(R.string.alert_dialog_delete_message_cancel);
         final String alertDeleteMessage = getString(R.string.alert_dialog_delete_message)
-                + itemRoom.name;
-        final String alertDeleteSuccess = getString(R.string.alert_dialog_delete_success);
-
+                + modelItem.name;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(alertDeleteMessage)
                 .setCancelable(false)
+                .setNeutralButton(deleteDuplicate, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        /*    duplicating item   */
+                        modelItem.id = null;
+                        Long newDataBaseItemId = dataBaseLists.addItemToListDataBase(modelItem);
+                        modelItem.id = newDataBaseItemId;
+                        modelItem.order = newDataBaseItemId;
+                        modelItem.date = System.currentTimeMillis();
+                        modelItem.dateModify = System.currentTimeMillis();
+                        recyclerLists.addItemToRecycler(modelItem);
+                    }
+                })
                 .setPositiveButton(deleteMessage, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         /*    remove item   */
-                        dataBaseLists.deleteItemSelected(itemRoom);
-                        recyclerLists.deleteItemToRecycler(selectedItem, itemRoom);
+                        dataBaseLists.deleteItemSelected(modelItem);
+                        recyclerLists.deleteItemToRecycler(selectedItem, modelItem);
                     }
                 })
                 .setNegativeButton(cancelMessage, new DialogInterface.OnClickListener() {

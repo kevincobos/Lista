@@ -21,6 +21,7 @@
     /*Delete Dialog*/
     <string name="alert_dialog_delete_message">"Are you trying to delete: "</string>
     <string name="alert_dialog_delete">"Delete"</string>
+    <string name="alert_dialog_duplicate">"Duplicate"</string>
     <string name="alert_dialog_delete_message_cancel">"Cancel"</string>
     <string name="alert_dialog_delete_success">"Your selected list was deleted!"</string>
     /*CardView Main Recycler*/

@@ -12,4 +12,5 @@ public class ModelItemLists {
     public String description;
     public Long date;
     public Long dateModify;
+    public int function;
 }
