@@ -44,9 +44,6 @@ public class MainActivityLista extends AppCompatActivity
     final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
     //CODE_STRING_ACTIVITY_LISTS
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
-    final String CODE_STRING_LISTA_NAME = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_NAME;
-    final String CODE_STRING_LISTA_DESCRIPTION = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_DESCRIPTION;
-    final String CODE_STRING_LISTA_PHOTO_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_PHOTO_ID;
     Context context; //Context to use globally
     SharableUtilitiesMessages Messages; //Using a class that simplifies the use of: SnackBar and Toast
     MainRecycler mainRecycler;//Variables for RecyclerView
@@ -65,8 +62,6 @@ public class MainActivityLista extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         setupFloatingActionButton();
-
-        //if (savedInstanceState == null){ } TODO If I need to know lifecycle has changed
         setupDataAndRecycler();
     }
     Observer<List<ItemRoom>> listUpdateObserver = new Observer<List<ItemRoom>>() {
@@ -124,7 +119,7 @@ public class MainActivityLista extends AppCompatActivity
         String message = getStringFromResources(R.string.dialog_getting_string_new_message_name);
         //Showing Dialog Message
         FragmentManager fm = getSupportFragmentManager();
-        DialogStringInput alertDialog = DialogStringInput.newInstance(title, message);
+        DialogStringInput alertDialog = DialogStringInput.newInstance();
         alertDialog.show(fm, "alertDialogNewList");
     }
     /**Getting String Value from String Resources
@@ -191,35 +186,30 @@ public class MainActivityLista extends AppCompatActivity
      */
     @Override
     public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
-        int requestCode = 1; // Or some number you choose
-        Intent intent = new Intent(this, ActivityLists.class);
-        ItemRoom itemRoom;
-        Long sessionId;
-        String sessionName;
-        String sessionDescription;
-        int sessionPhotoId;
+        ItemRoom modelViewItem;
         switch (CODE_ID){
             case CODE_INT_MAIN_RECYCLER_ACCESS:
+                Long sessionId;
+                String sessionName;
+                String sessionDescription;
+                int sessionPhotoId;
                 /* Click on one of the Items in the Recycler */
                 //Looking inside database all information
-                itemRoom = coreDataBase.getListaItemFromDataBase(longValue);
-                sessionId = itemRoom.id;
-                sessionName = itemRoom.name;
-                sessionDescription = itemRoom.description;
-                sessionPhotoId = itemRoom.photoId;
-                //intent contains de selected lista information
+                modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
+                sessionId = modelViewItem.id;
+                sessionName = modelViewItem.name;
+                sessionDescription = modelViewItem.description;
+                sessionPhotoId = modelViewItem.photoId;
+                Intent intent = new Intent(this, ActivityLists.class);
+                //intent contains de selected lista id
                 intent.putExtra(CODE_STRING_LISTA_ID, sessionId);
-                intent.putExtra(CODE_STRING_LISTA_NAME, sessionName);
-                intent.putExtra(CODE_STRING_LISTA_DESCRIPTION, sessionDescription);
-                intent.putExtra(CODE_STRING_LISTA_PHOTO_ID, sessionPhotoId);
-
-                startActivityForResult(intent, requestCode);
+                startActivity(intent);//Let's start the selected activity
                 break;
             case CODE_INT_MAIN_RECYCLER_DELETE:
                 /* LongClick on one of the Items in the Recycler */
                 //Looking inside database all information
-                itemRoom = coreDataBase.getListaItemFromDataBase(longValue);
-                createDeleteAlertDialog(selectedItemFromCardView, itemRoom);
+                modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
+                createDeleteAlertDialog(selectedItemFromCardView, modelViewItem);
                 break;
         }
     }

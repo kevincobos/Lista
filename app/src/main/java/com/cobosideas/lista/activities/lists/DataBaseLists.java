@@ -4,31 +4,36 @@ import android.content.Context;
 import androidx.room.Room;
 import java.util.List;
 
-class DataBaseLists {
+public class DataBaseLists {
     private ROOMDataBaseLists roomDataBaseLists;
-    DataBaseLists(Context context, String dataBaseName){
+    public DataBaseLists(Context context, String dataBaseName){
         this.roomDataBaseLists = Room.databaseBuilder(context, ROOMDataBaseLists.class, dataBaseName)
                 .allowMainThreadQueries()
                 .build();
     }
     //Adding Items to database
-    Long addItemToListDataBase(ModelItemLists newItem){
+    public Long addItemToListDataBase(ModelItemLists newItem){
         DAOItemLists DAOItem = roomDataBaseLists.getItemDAO();
         return DAOItem.insert(newItem);
     }
     //delete Items to database
-    void deleteItemSelected(ModelItemLists modelItemLists){
-        DAOItemLists itemDAO = roomDataBaseLists.getItemDAO();
-        itemDAO.delete(modelItemLists);
+    public void deleteItemSelected(ModelItemLists modelItemLists){
+        DAOItemLists DAOItem = roomDataBaseLists.getItemDAO();
+        DAOItem.delete(modelItemLists);
     }
     //getting data from database in memory
-    List<ModelItemLists> getListsItemsFromDataBase(){
+    public List<ModelItemLists> getListsItemsFromDataBase(){
         DAOItemLists DAOItem = roomDataBaseLists.getItemDAO();
         return DAOItem.getAllItemsLists();
     }
     //getting selected item from database
-    ModelItemLists getListaItemFromDataBase(Long Id){
+    public ModelItemLists getListsItemFromDataBase(Long Id){
         DAOItemLists DAOItem = roomDataBaseLists.getItemDAO();
         return DAOItem.getItemListsById(Id);
+    }
+    //update selected item from database
+    public void updateSelectedItemListsFromDataBase(ModelItemLists modelItemLists){
+        DAOItemLists DAOItem = roomDataBaseLists.getItemDAO();
+        DAOItem.update(modelItemLists);
     }
 }

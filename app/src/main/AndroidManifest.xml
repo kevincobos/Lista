@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".activities.lists.ActivityLists"
             android:label="@string/title_activity_lists"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.setup.ActivitySetupListSettings" />
         <activity
-            android:name=".activities.edit.ActivityEditMainList"
+            android:name=".activities.edit.ActivityEditLists"
             android:label="@string/title_activity_edit_main_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -9,10 +9,14 @@ import com.cobosideas.lista.MainActivityLista;
 import com.cobosideas.lista.activities.dagger.ComponentListCard;
 import com.cobosideas.lista.activities.dagger.DaggerComponentListCard;
 import com.cobosideas.lista.activities.dagger.DaggerListCard;
+import com.cobosideas.lista.activities.edit.ActivityEditLists;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
+import com.cobosideas.lista.room.core.CoreDataBase;
+import com.cobosideas.lista.room.models.ItemRoom;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Database;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,10 +38,16 @@ import com.cobosideas.lista.R;
 import java.util.List;
 
 public class ActivityLists extends AppCompatActivity implements RecyclerLists.RecyclerListsInputListener, DialogStringInput.DialogStringInputListener {
+    /*     CONSTANTS
+         CODE_STRING_ACTIVITY_LISTA this is the values coming from MainActivityLista */
+    final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
     //CODE_INT_RECYCLER_CARD_VIEW
     private final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
     private final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_SIMPLE;
     private final int CODE_INT_CARD_VIEW_IMAGE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_IMAGE;
+    //CODE_INT_ACTIVITY_EDIT_LISTS
+    private final String CODE_STRING_EDIT_LISTS_ID = Constants.CODES_ACTIVITY_EDIT_LISTS.CODE_STRING_EDIT_LISTS_ID_SELECTED;
+    private final String CODE_STRING_LISTS_DATABASE_NAME = Constants.CODES_ACTIVITY_EDIT_LISTS.CODE_STRING_LISTS_DATABASE_NAME;
 
     //CODE_ALERT_DIALOG_FRAGMENT
     final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
@@ -44,7 +55,8 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     final int CODE_INT_ACTIVITY_LISTS = Constants.CODES_ACTIVITY_LISTS.CODE_INT_ACTIVITY_LISTS;
     //database name combining (CODE_DATABASE_ID and globalId)
     final String CODE_DATABASE_ID =  Constants.CODES_ACTIVITY_LISTS.CODE_DATABASE_ID;
-    Long globalId;
+    String gSelectedListaDataBaseName;
+    Long gSelectedListaItemId;
 
     Context context; //Context to use globally
     DataBaseLists dataBaseLists;//Initialize the DataBase to be able to use it
@@ -58,31 +70,43 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this.getApplicationContext();
-
+        if (savedInstanceState == null){
+            setDataBaseIdName();
+        }else{
+            getGlobalVariables(savedInstanceState);
+        }
         setupApplicationView(); //setup toolbar and change the title name
-
         setupDataAndRecycler();
 
         /* TODO Setup dagger  */
         setupDagger();
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_activity_lists, menu);
         return super.onCreateOptionsMenu(menu);
     }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
 
-    private String getDataBaseIdName(){
-        /*     CONSTANTS
-         CODE_STRING_ACTIVITY_LISTS this is the values coming from MainActivityLista */
-        final String CODE_STRING_LISTS_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
+    }
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        savedInstanceState.putString(CODE_STRING_LISTS_DATABASE_NAME,
+                this.gSelectedListaDataBaseName);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+    private void getGlobalVariables(Bundle savedInstanceState) {
+        this.gSelectedListaDataBaseName = savedInstanceState
+                .getString(CODE_STRING_LISTS_DATABASE_NAME);
+    }
+    private void setDataBaseIdName(){
         //Getting values coming from MainActivityLista
-        this.globalId = getIntent().getLongExtra(CODE_STRING_LISTS_ID, 0);
-        return CODE_DATABASE_ID + globalId;
+        gSelectedListaItemId = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
+        this.gSelectedListaDataBaseName = CODE_DATABASE_ID + gSelectedListaItemId;
+
     }
     Observer<List<ModelItemLists>> listUpdateObserver = new Observer<List<ModelItemLists>>() {
         @Override
@@ -91,8 +115,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         }
     };
     public void setupDataAndRecycler(){
-        String dataBaseIdName = getDataBaseIdName();
-        dataBaseLists = new DataBaseLists(context, dataBaseIdName);//Starting DataBase
+        dataBaseLists = new DataBaseLists(context, gSelectedListaDataBaseName);//Starting DataBase
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
         viewModelLists = new ViewModelProvider(this).get(ViewModelLists.class);
@@ -120,44 +143,39 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         RecyclerView.Adapter mAdapter = recyclerLists;
         recyclerViewLists.setAdapter(mAdapter);
     }
+    private ItemRoom getSelectedListaItemFromDataBase(Long selectedItemFromListaDataBase){
+        CoreDataBase coreDataBase = new CoreDataBase(this);
+        return coreDataBase.getListaItemFromDataBase(selectedItemFromListaDataBase);
+    }
     /**
      * getting values sent from MainActivityLista
      * setup Toolbar
      * setup FloatingActionButton
      */
     private void setupApplicationView(){
-        /*     CONSTANTS
-         CODE_STRING_ACTIVITY_LISTS this is the values coming from MainActivityLista */
-        final String CODE_STRING_LISTA_NAME = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_NAME;
-        final String CODE_STRING_LISTA_DESCRIPTION = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_DESCRIPTION;
-        final String CODE_STRING_LISTA_PHOTO_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_PHOTO_ID;
+        context = this.getApplicationContext();
         //This int contains the default picture for the cards
-        final int CODE_DEFAULT_PHOTO_ID = R.drawable.ic_launcher_background;
-
+        ItemRoom itemRoom = getSelectedListaItemFromDataBase(gSelectedListaItemId);
         //Getting values coming from MainActivityLista
-        String listName = getIntent().getStringExtra(CODE_STRING_LISTA_NAME);
-        String listDescription = getIntent().getStringExtra(CODE_STRING_LISTA_DESCRIPTION);
-        int listPhotoId = getIntent().getIntExtra(CODE_STRING_LISTA_PHOTO_ID, CODE_DEFAULT_PHOTO_ID);
-
+        String listName = itemRoom.name;
+        String listDescription = itemRoom.description;
+        int listPhotoId = itemRoom.photoId;
         setContentView(R.layout.activity_lists);//Setup view
         Toolbar toolbar = findViewById(R.id.tb_activity_lists);//find toolbar and set values
-        toolbar.setTitle(listName);
+        toolbar.setTitle(listName); //set title on toolbar
         setSupportActionBar(toolbar);
         setupToolbar(listDescription, listPhotoId);
+        /* Going back to MainActivityLista */
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Going back to MainActivityLista */
                 Intent intent = new Intent(getApplicationContext(), MainActivityLista.class);
-                int requestCode = 1; // Or some number you choose
-                startActivityForResult(intent, requestCode);
+                startActivity(intent);
             }
         });
-
-        //setup floatingActionButton
+        //setup floatingActionButton to add more items
         setupFloatingActionButton();
     }
-
     private  void setupFloatingActionButton(){
         FloatingActionButton fab = findViewById(R.id.fab_lists_add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -170,11 +188,11 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
         //Values to setup AlertFragment, so far I'm not using this values
-        String title = getStringFromResources(R.string.dialog_getting_string_new_title);
-        String message = getStringFromResources(R.string.dialog_getting_string_new_message_name);
+        String title = getStringFromResources(R.string.dialog_getting_string_new_hint);
+        String message = getStringFromResources(R.string.dialog_getting_string_description_hint);
         //Showing Dialog Message
         FragmentManager fm = getSupportFragmentManager();
-        DialogStringInput alertDialog = DialogStringInput.newInstance(title, message);
+        DialogStringInput alertDialog = DialogStringInput.newInstance();
         alertDialog.show(fm, "alertDialogNewList");
     }
     /**Getting String Value from String Resources
@@ -191,10 +209,10 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
      * @param listPhotoId this is the photo being show top
      */
     private void setupToolbar(String listDescription, int listPhotoId){
-        TextView tvToolbarDescription = findViewById(R.id.tv_toolbar_lists_description);
-        ImageView ivToolbarLogo = findViewById(R.id.iV_collapsing_toolbar_list);
-        tvToolbarDescription.setText(listDescription);
-        ivToolbarLogo.setImageResource(listPhotoId);
+        TextView tv_ToolbarDescription = findViewById(R.id.tv_toolbar_lists_description);
+        ImageView iv_ToolbarLogo = findViewById(R.id.iV_collapsing_toolbar_list);
+        tv_ToolbarDescription.setText(listDescription);
+        iv_ToolbarLogo.setImageResource(listPhotoId);
     }
     private void setupDagger(){
         ComponentListCard componentListCard = DaggerComponentListCard.create();
@@ -217,9 +235,6 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
                 ModelItemLists modelItemLists = new ModelItemLists();
                 modelItemLists.name = listName;
                 modelItemLists.description = description;
-                modelItemLists.date = System.currentTimeMillis();
-                modelItemLists.dateModify = System.currentTimeMillis();
-                modelItemLists.function = CODE_INT_CARD_VIEW_DEFAULT;
                 //modelItemLists.id:? Database assigns the value to this item
                 //getting value auto generated
                 Long newDataBaseItemId = dataBaseLists.addItemToListDataBase(modelItemLists);
@@ -234,28 +249,26 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     /** Managing Long Values coming from other fragments
      *
      * @param CODE_ID compare to values from Constants
-     * @param longValue long value is the id of database
+     * @param longValueItemSelected long value is the id of database
      * @param selectedItemFromCardView selected cardView item
      */
     @Override
-    public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
+    public void onInterfaceString(int CODE_ID, Long longValueItemSelected, int selectedItemFromCardView) {
         final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
         final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
-        int requestCode = 1; // Or some number you choose
-        Intent intent = new Intent(this, ActivityLists.class);
-        ModelItemLists modelItemLists;
-        Long sessionId;
-        String sessionName;
-        String sessionDescription;
-        int sessionPhotoId;
         switch (CODE_ID) {
             case CODE_INT_RECYCLER_ACCESS:
-
+                Intent intent = new Intent(this, ActivityEditLists.class);
+                intent.putExtra(CODE_STRING_EDIT_LISTS_ID, longValueItemSelected);
+                intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaItemId);
+                intent.putExtra(CODE_STRING_LISTS_DATABASE_NAME, gSelectedListaDataBaseName);
+                //intent contains de selected lista information
+                startActivity(intent);//Let's start the selected activity
                 break;
             case CODE_INT_RECYCLER_DELETE:
                 /* LongClick on one of the Items in the Recycler */
                 //Looking inside database all information
-                modelItemLists = dataBaseLists.getListaItemFromDataBase(longValue);
+                ModelItemLists modelItemLists = dataBaseLists.getListsItemFromDataBase(longValueItemSelected);
                 createLongClickAlertDialog(selectedItemFromCardView, modelItemLists);
                 break;
         }
@@ -283,8 +296,6 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
                         Long newDataBaseItemId = dataBaseLists.addItemToListDataBase(modelItem);
                         modelItem.id = newDataBaseItemId;
                         modelItem.order = newDataBaseItemId;
-                        modelItem.date = System.currentTimeMillis();
-                        modelItem.dateModify = System.currentTimeMillis();
                         recyclerLists.addItemToRecycler(modelItem);
                     }
                 })

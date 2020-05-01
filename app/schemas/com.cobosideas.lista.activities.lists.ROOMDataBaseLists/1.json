@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c74a48a859639a70a34d09a558543991",
+    "identityHash": "4f0946d4a902cee4810c04c30a0e9947",
     "entities": [
       {
         "tableName": "itemLists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `order` INTEGER, `name` TEXT, `description` TEXT, `date` INTEGER, `dateModify` INTEGER, `function` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `order` INTEGER, `name` TEXT, `description` TEXT, `date` INTEGER, `dateModify` INTEGER, `function` INTEGER NOT NULL, `icon` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -49,6 +49,12 @@
             "columnName": "function",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -64,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c74a48a859639a70a34d09a558543991')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4f0946d4a902cee4810c04c30a0e9947')"
     ]
   }
 }

@@ -18,22 +18,18 @@ import com.cobosideas.lista.R;
 import com.cobosideas.lista.global.Constants;
 
 public class DialogStringInput extends DialogFragment {
-
-    /*
-        Trying to create a connection request sender for action
-    */
     //CODE_ALERT_DIALOG_FRAGMENT
     private final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
     private final String CODE_STRING_TITLE = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_STRING_TITLE;
     private final String CODE_STRING_MESSAGE = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_STRING_MESSAGE;
     private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_STRING_EDIT_STRING_VALUE;
     private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_STRING_BUTTON_NEW_STATE;
-
+    /*        Trying to create a connection request sender for action    */
     public interface DialogStringInputListener {
         void onInterfaceString(int CODE_ID, String stringValue, String stringDescription);
     }
     //Global values to show on AlertDialog
-    private String title, message, stringValue, stringDescription;
+    private String stringValue, stringDescription;
     //we will extract the string from et_stringValue to send it to the Activity
     private EditText et_stringValue;
     //we will extract the string from et_stringDescription to send it to the Activity
@@ -43,14 +39,11 @@ public class DialogStringInput extends DialogFragment {
     //buttonNewListState state
     private boolean buttonNewListState = false;
     public DialogStringInput(){
-
     }
-    public static DialogStringInput newInstance(String titleValue, String messageValue) {
+    public static DialogStringInput newInstance() {
         DialogStringInput dialogFragment = new DialogStringInput();
         //Setting values on Arguments
         Bundle args = new Bundle();
-        args.putString("title", titleValue);
-        args.putString("message", messageValue);
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
@@ -61,11 +54,6 @@ public class DialogStringInput extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-
-        //This are not visible
-        savedInstanceState.putString(CODE_STRING_TITLE, title);
-        savedInstanceState.putString(CODE_STRING_MESSAGE, message);
-
         //This are use
         savedInstanceState.putString(CODE_STRING_EDIT_STRING_VALUE, stringValue);
         savedInstanceState.putBoolean(CODE_STRING_BUTTON_NEW_STATE, buttonNewListState);
@@ -78,16 +66,7 @@ public class DialogStringInput extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Make sure getArguments() is not null, if null show different text
-        if (getArguments() != null){
-            title = getArguments().getString(CODE_STRING_TITLE);
-            message = getArguments().getString(CODE_STRING_MESSAGE);
-        }else{
-            title = getStringFromResources(R.string.dialog_getting_string_title_error);
-            message = getStringFromResources(R.string.dialog_getting_string_message_error);
-        }
         if (savedInstanceState != null) {
-            title = savedInstanceState.getString(CODE_STRING_TITLE);
-            message = savedInstanceState.getString(CODE_STRING_MESSAGE);
             stringValue = savedInstanceState.getString(CODE_STRING_EDIT_STRING_VALUE);
             buttonNewListState = savedInstanceState.getBoolean(CODE_STRING_BUTTON_NEW_STATE);
         }
@@ -137,8 +116,6 @@ public class DialogStringInput extends DialogFragment {
 
     }
     private void loadEditorTexts(){
-        et_stringValue.setText(title);
-        et_stringDescription.setText(title);
         et_stringValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

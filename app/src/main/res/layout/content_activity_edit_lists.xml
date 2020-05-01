@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/s_edit_lists"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|center_horizontal">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_selected_icon_lists_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rectangle"
+            android:backgroundTintMode="src_over"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="@drawable/touch_selector"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/activity_edit_lists_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ib_selected_icon_lists_item" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="294dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle"
+            android:hint="@string/dialog_getting_string_name_empty"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:text="@string/activity_edit_lists_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/activity_edit_lists_description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="279dp"
+            android:layout_height="89dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle"
+
+            android:gravity="top|start"
+            android:hint="@string/dialog_getting_string_description_hint"
+            android:lines="4"
+            android:maxLength="100"
+            android:singleLine="true"
+            android:inputType="textMultiLine"
+            android:text="@string/activity_edit_lists_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+        <RadioGroup
+            android:id="@+id/rg_lists_templates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_description" />
+
+        <Button
+            android:id="@+id/b_save_changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="@string/activity_edit_lists_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rg_lists_templates" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>

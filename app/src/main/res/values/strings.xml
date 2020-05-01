@@ -11,12 +11,15 @@
     <string name="dialog_getting_string_message_error">"No Message"</string>
     <string name="dialog_getting_string_error">"Error: Unable complete request"</string>
     /*DialogFragment create new list*/
-    <string name="dialog_getting_string_new_title">"Creating new"</string>
+    <string name="dialog_getting_string_new_title">"New"</string>
     <string name="dialog_getting_string_new_message_name">"Name"</string>
-    <string name="dialog_getting_string_new_hint">"List name"</string>
+    <string name="dialog_getting_string_new_hint">"New name"</string>
     <string name="dialog_getting_string_description_hint">"Welcome…"</string>
-    <string name="dialog_getting_string_description">"Welcome . . ."</string>
+    <string name="dialog_getting_string_description">"Description"</string>
     <string name="dialog_getting_string_name_empty">"Empty name"</string>
+    /*DialogFragment icon Chooser*/
+    <string name="dialog_icon_chooser_title">"Select an Icon"</string>
+    <string name="dialog_icon_chooser_change">"Change Icon"</string>
     /*Alert Dialog*/
     /*Delete Dialog*/
     <string name="alert_dialog_delete_message">"Are you trying to delete: "</string>
@@ -27,6 +30,10 @@
     /*CardView Main Recycler*/
     <string name="cardView_main_recycler_description">"Image representing Item"</string>
     <string name="title_activity_edit_main_list">ActivityEditMainList</string>
+    <!-- Strings used for Activity_Edit_Lists -->
+    <string name="activity_edit_lists_name">"Name"</string>
+    <string name="activity_edit_lists_description">"Description"</string>
+    <string name="activity_edit_lists_save">"Save Changes"</string>
 
     <!-- Strings used for fragments for navigation -->
 
@@ -38,13 +45,6 @@
     <string name="cv_lists_text">"It's empty"</string>
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_lists">ActivityLists</string>
 
 </resources>
