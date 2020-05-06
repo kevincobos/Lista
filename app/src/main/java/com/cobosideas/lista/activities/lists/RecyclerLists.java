@@ -3,6 +3,7 @@ package com.cobosideas.lista.activities.lists;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,18 +47,20 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // each data item is just a string in this case
         CardView cv_listsItems;
         TextView tv_listsId;
-        TextView tv_listsLink;
         TextView tv_listsName;
+        TextView tv_listsDescription;
         TextView tv_listaValue;
+        ImageView iv_iconLists;
 
 
         MyViewHolderDefault(View itemView) {
             super(itemView);
             cv_listsItems = itemView.findViewById(R.id.cv_listsItems);
             tv_listsId = itemView.findViewById(R.id.tv_lists_id);
-            tv_listsLink = itemView.findViewById(R.id.tv_lists_link);
+            tv_listsDescription = itemView.findViewById(R.id.tv_lists_description);
             tv_listsName = itemView.findViewById(R.id.tv_lists_name);
             tv_listaValue = itemView.findViewById(R.id.tv_lists_value);
+            iv_iconLists = itemView.findViewById(R.id.iv_icon_lists);
         }
     }
     // Provide a reference to the views for each data item
@@ -70,6 +73,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv_listsLink;
         TextView tv_listsName;
         TextView tv_listaValue;
+        ImageView iv_iconLists;
 
 
         MyViewHolderSimple(View itemView) {
@@ -79,6 +83,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_listsLink = itemView.findViewById(R.id.tv_lists_link);
             tv_listsName = itemView.findViewById(R.id.tv_lists_name);
             tv_listaValue = itemView.findViewById(R.id.tv_lists_value);
+            iv_iconLists = itemView.findViewById(R.id.iv_icon_lists);
         }
     }
     // Provide a reference to the views for each data item
@@ -91,6 +96,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv_listsLink;
         TextView tv_listsName;
         TextView tv_listaValue;
+        ImageView iv_iconLists;
 
 
         MyViewHolderImage(View itemView) {
@@ -100,6 +106,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_listsLink = itemView.findViewById(R.id.tv_lists_link);
             tv_listsName = itemView.findViewById(R.id.tv_lists_name);
             tv_listaValue = itemView.findViewById(R.id.tv_lists_value);
+            iv_iconLists = itemView.findViewById(R.id.iv_icon_lists);
         }
     }
 
@@ -141,9 +148,10 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case CODE_INT_CARD_VIEW_DEFAULT:
                 MyViewHolderDefault myViewHolderDefault = (MyViewHolderDefault) holder;
                 myViewHolderDefault.tv_listsId.setText(convertIdToString);
-                myViewHolderDefault.tv_listsLink.setText(dataSetLists.get(position).name);
-                myViewHolderDefault.tv_listsName.setText(dataSetLists.get(position).description);
+                myViewHolderDefault.tv_listsName.setText(dataSetLists.get(position).name);
+                myViewHolderDefault.tv_listsDescription.setText(dataSetLists.get(position).description);
                 myViewHolderDefault.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+                myViewHolderDefault.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
 
                 //Adding OnClickListeners to each part of the list item then will be able to modify them+
@@ -178,6 +186,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderSimple.tv_listsLink.setText(dataSetLists.get(position).name);
                 myViewHolderSimple.tv_listsName.setText(dataSetLists.get(position).description);
                 myViewHolderSimple.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+                myViewHolderSimple.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
 
                 //Adding OnClickListeners to each part of the list item then will be able to modify them+
@@ -212,6 +221,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderImage.tv_listsLink.setText(dataSetLists.get(position).name);
                 myViewHolderImage.tv_listsName.setText(dataSetLists.get(position).description);
                 myViewHolderImage.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+                myViewHolderImage.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
 
                 //Adding OnClickListeners to each part of the list item then will be able to modify them+

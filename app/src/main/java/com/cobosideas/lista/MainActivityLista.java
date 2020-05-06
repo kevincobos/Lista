@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cobosideas.lista.activities.edit_lista.ActivityEditLista;
 import com.cobosideas.lista.activities.lists.ActivityLists;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
@@ -42,6 +43,7 @@ public class MainActivityLista extends AppCompatActivity
     //CODE_INT_MAIN_RECYCLER
     final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
     final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
+    private final int CODE_INT_MAIN_RECYCLER_PREFERENCES = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_PREFERENCES;
     //CODE_STRING_ACTIVITY_LISTS
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
     Context context; //Context to use globally
@@ -64,7 +66,7 @@ public class MainActivityLista extends AppCompatActivity
         setupFloatingActionButton();
         setupDataAndRecycler();
     }
-    Observer<List<ItemRoom>> listUpdateObserver = new Observer<List<ItemRoom>>() {
+    Observer<List<ItemRoom>> listaUpdateObserver = new Observer<List<ItemRoom>>() {
         @Override
         public void onChanged(List<ItemRoom> itemRooms) {
             setupRecycler(itemRooms); //Managing Recycler
@@ -84,7 +86,7 @@ public class MainActivityLista extends AppCompatActivity
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.getAllItemsMutableLiveDataRoom().observe(this, listUpdateObserver);
+        mainViewModel.getAllItemsMutableLiveDataRoom().observe(this, listaUpdateObserver);
         //get all values from Data Base and setup mainRecyclerViewModel
         mainViewModel.setAllItemsViewModel(coreDataBase.getListaItemsFromDataBase());
     }
@@ -168,7 +170,6 @@ public class MainActivityLista extends AppCompatActivity
                 ItemRoom itemRoom = new ItemRoom();
                 itemRoom.name = stringValue;
                 itemRoom.description = description;
-                itemRoom.photoId = R.drawable.ic_launcher_background;
                 //itemRoom.id:? Database assigns the value to this item
                 //getting value auto generated
                 itemRoom.id = coreDataBase.addItemToListaDataBase(itemRoom);
@@ -187,19 +188,15 @@ public class MainActivityLista extends AppCompatActivity
     @Override
     public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
         ItemRoom modelViewItem;
+        Long sessionId;
         switch (CODE_ID){
             case CODE_INT_MAIN_RECYCLER_ACCESS:
-                Long sessionId;
-                String sessionName;
-                String sessionDescription;
-                int sessionPhotoId;
+
                 /* Click on one of the Items in the Recycler */
                 //Looking inside database all information
                 modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
                 sessionId = modelViewItem.id;
-                sessionName = modelViewItem.name;
-                sessionDescription = modelViewItem.description;
-                sessionPhotoId = modelViewItem.photoId;
+
                 Intent intent = new Intent(this, ActivityLists.class);
                 //intent contains de selected lista id
                 intent.putExtra(CODE_STRING_LISTA_ID, sessionId);
@@ -210,6 +207,16 @@ public class MainActivityLista extends AppCompatActivity
                 //Looking inside database all information
                 modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
                 createDeleteAlertDialog(selectedItemFromCardView, modelViewItem);
+                break;
+            case CODE_INT_MAIN_RECYCLER_PREFERENCES:
+                /* Click on preferences in selected Item in the Recycler */
+                //Looking inside database all information
+                modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
+                sessionId = modelViewItem.id;
+                Intent intentEditLista = new Intent(this, ActivityEditLista.class);
+                //intent contains de selected lista id
+                intentEditLista.putExtra(CODE_STRING_LISTA_ID, sessionId);
+                startActivity(intentEditLista);//Let's edit the selected Lista
                 break;
         }
     }

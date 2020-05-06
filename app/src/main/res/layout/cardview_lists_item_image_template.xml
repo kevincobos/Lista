@@ -15,6 +15,11 @@
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp"
         app:cardMaxElevation="4dp">
+        <ImageView
+            android:id="@+id/iv_icon_lists"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/fruits_banana_color" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

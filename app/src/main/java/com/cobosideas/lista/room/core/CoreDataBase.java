@@ -38,4 +38,9 @@ public class CoreDataBase {
         ItemDAO itemDAO = dataBase.getItemDAO();
         return itemDAO.getItemById(Id);
     }
+    //update selected item from database
+    public void updateSelectedItem(ItemRoom updatingItem){
+        ItemDAO DAOItem = dataBase.getItemDAO();
+        DAOItem.update(updatingItem);
+    }
 }

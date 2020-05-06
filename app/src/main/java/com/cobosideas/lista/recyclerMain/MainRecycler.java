@@ -3,6 +3,7 @@ package com.cobosideas.lista.recyclerMain;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,10 +17,14 @@ import com.cobosideas.lista.room.models.ItemRoom;
 
 import java.util.List;
 
-public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder>{
+public class MainRecycler extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    //CODE_INT_RECYCLER_CARD_VIEW
+    private final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_LISTA_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
+    private final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_LISTA_CARD_VIEW.CODE_INT_CARD_VIEW_LINK;
     //CODE_INT_MAIN_RECYCLER
     private final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
     private final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
+    private final int CODE_INT_MAIN_RECYCLER_PREFERENCES = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_PREFERENCES;
     //DataSet to display on Recycler
     private List<ItemRoom> dataSetListaItemROOOM;
 
@@ -46,6 +51,7 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
         TextView tv_listaName;
         TextView tv_listaDescription;
         ImageView iv_imageId;
+        ImageButton ib_preferences;
 
 
         MyViewHolder(View itemView) {
@@ -55,6 +61,7 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
             tv_listaName = itemView.findViewById(R.id.tv_listaName);
             tv_listaDescription = itemView.findViewById(R.id.tv_listaDescription);
             iv_imageId = itemView.findViewById(R.id.iv_photoId);
+            ib_preferences = itemView.findViewById(R.id.ib_card_view_main_preferences);
         }
     }
 
@@ -74,36 +81,53 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
         dataSetListaItemROOOM.remove(selectedToDelete);
         notifyItemRemoved(selectedToDelete);
     }
-
-
+    @Override
+    public int getItemViewType(int position) {
+        return dataSetListaItemROOOM.get(position).function;
+    }
     // Create new views (invoked by the layout manager)
     @NonNull
     @Override
-    public MainRecycler.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // create a new view
-        View viewDialog = LayoutInflater.from(viewGroup.getContext()).inflate(
-                R.layout.recycler_main_item_simple_template, viewGroup, false);
-        return new MyViewHolder(viewDialog);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(
+                R.layout.cardview_main_default_template, viewGroup, false);
+        RecyclerView.ViewHolder viewHolder = new MyViewHolder(view);
+        switch (viewType){
+            case CODE_INT_CARD_VIEW_DEFAULT:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(
+                        R.layout.cardview_main_default_template, viewGroup, false);
+                viewHolder = new MyViewHolder(view);
+                break;
+            case CODE_INT_CARD_VIEW_SIMPLE:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(
+                        R.layout.cardview_main_selection_link_template, viewGroup, false);
+                viewHolder = new MyViewHolder(view);
+                break;
+        }
+        return viewHolder;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         // - get element from your dataSet at this position
         // - replace the contents of the view with that element
+        MyViewHolder myViewHolder = (MyViewHolder) holder;
+
         String convertIdToString = dataSetListaItemROOOM.get(position).id + "";
-        holder.tv_id.setText(convertIdToString);
-        holder.tv_listaName.setText(dataSetListaItemROOOM.get(position).name);
-        holder.tv_listaDescription.setText(dataSetListaItemROOOM.get(position).description);
-        holder.iv_imageId.setImageResource(dataSetListaItemROOOM.get(position).photoId);
+        myViewHolder.tv_id.setText(convertIdToString);
+        myViewHolder.tv_listaName.setText(dataSetListaItemROOOM.get(position).name);
+        myViewHolder.tv_listaDescription.setText(dataSetListaItemROOOM.get(position).description);
+        myViewHolder.iv_imageId.setImageResource(dataSetListaItemROOOM.get(position).icon);
 
 
         //Adding OnClickListeners to each part of the list item then will be able to modify them+
-        holder.cv_listaItems.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.cv_listaItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Long itemDataBaseId = dataSetListaItemROOOM.get(holder.getAdapterPosition()).id;
-                final int selectedItem  = holder.getAdapterPosition();
+                final int selectedItem = holder.getAdapterPosition();
                 mainRecyclerInputListener.onInterfaceString(
                         CODE_INT_MAIN_RECYCLER_ACCESS,
                         itemDataBaseId,
@@ -111,16 +135,29 @@ public class MainRecycler extends RecyclerView.Adapter<MainRecycler.MyViewHolder
             }
         });
         //Adding OnLongClickListeners to be able to delete them
-        holder.cv_listaItems.setOnLongClickListener(new View.OnLongClickListener() {
+        myViewHolder.cv_listaItems.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 final Long itemDataBaseId = dataSetListaItemROOOM.get(holder.getAdapterPosition()).id;
-                final int selectedItem  = holder.getAdapterPosition();
+                final int selectedItem = holder.getAdapterPosition();
                 mainRecyclerInputListener.onInterfaceString(
                         CODE_INT_MAIN_RECYCLER_DELETE,
                         itemDataBaseId,
                         selectedItem);
                 return true;
+            }
+        });
+
+        //This will sent us over ActivityEditLista to change the way this item acts
+        myViewHolder.ib_preferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Long itemDataBaseId = dataSetListaItemROOOM.get(holder.getAdapterPosition()).id;
+                final int selectedItem = holder.getAdapterPosition();
+                mainRecyclerInputListener.onInterfaceString(
+                        CODE_INT_MAIN_RECYCLER_PREFERENCES,
+                        itemDataBaseId,
+                        selectedItem);
             }
         });
     }

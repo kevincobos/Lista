@@ -20,7 +20,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
+            <ImageView
+                android:id="@+id/iv_icon_lists"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/fruits_banana_color" />
             <TextView
                 android:id="@+id/tv_lists_id"
                 android:layout_width="wrap_content"

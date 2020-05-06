@@ -4,17 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.cobosideas.lista.MainActivityLista;
-import com.cobosideas.lista.activities.dagger.ComponentListCard;
-import com.cobosideas.lista.activities.dagger.DaggerComponentListCard;
-import com.cobosideas.lista.activities.dagger.DaggerListCard;
-import com.cobosideas.lista.activities.edit.ActivityEditLists;
-import com.cobosideas.lista.dialogs.DialogStringInput;
-import com.cobosideas.lista.global.Constants;
-import com.cobosideas.lista.room.core.CoreDataBase;
-import com.cobosideas.lista.room.models.ItemRoom;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,15 +19,18 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Database;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import com.cobosideas.lista.MainActivityLista;
 import com.cobosideas.lista.R;
+import com.cobosideas.lista.activities.dagger.ComponentListCard;
+import com.cobosideas.lista.activities.dagger.DaggerComponentListCard;
+import com.cobosideas.lista.activities.dagger.DaggerListCard;
+import com.cobosideas.lista.activities.edit.ActivityEditLists;
+import com.cobosideas.lista.dialogs.DialogStringInput;
+import com.cobosideas.lista.global.Constants;
+import com.cobosideas.lista.room.core.CoreDataBase;
+import com.cobosideas.lista.room.models.ItemRoom;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -41,18 +38,12 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     /*     CONSTANTS
          CODE_STRING_ACTIVITY_LISTA this is the values coming from MainActivityLista */
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
-    //CODE_INT_RECYCLER_CARD_VIEW
-    private final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
-    private final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_SIMPLE;
-    private final int CODE_INT_CARD_VIEW_IMAGE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_IMAGE;
     //CODE_INT_ACTIVITY_EDIT_LISTS
     private final String CODE_STRING_EDIT_LISTS_ID = Constants.CODES_ACTIVITY_EDIT_LISTS.CODE_STRING_EDIT_LISTS_ID_SELECTED;
     private final String CODE_STRING_LISTS_DATABASE_NAME = Constants.CODES_ACTIVITY_EDIT_LISTS.CODE_STRING_LISTS_DATABASE_NAME;
 
     //CODE_ALERT_DIALOG_FRAGMENT
     final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
-    //CODE_INT_ACTIVITY_LISTS
-    final int CODE_INT_ACTIVITY_LISTS = Constants.CODES_ACTIVITY_LISTS.CODE_INT_ACTIVITY_LISTS;
     //database name combining (CODE_DATABASE_ID and globalId)
     final String CODE_DATABASE_ID =  Constants.CODES_ACTIVITY_LISTS.CODE_DATABASE_ID;
     String gSelectedListaDataBaseName;
@@ -65,8 +56,6 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
 
     DaggerListCard daggerListCard;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +64,16 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         }else{
             getGlobalVariables(savedInstanceState);
         }
-        setupApplicationView(); //setup toolbar and change the title name
-        setupDataAndRecycler();
+        try {
+            setupApplicationView(); //setup toolbar and change the title name
+            setupDataAndRecycler();
 
-        /* TODO Setup dagger  */
-        setupDagger();
+            /* TODO Setup dagger  */
+            setupDagger();
+        }catch (Exception error){
+
+            goingBackMainActivity();
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,7 +100,6 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         //Getting values coming from MainActivityLista
         gSelectedListaItemId = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
         this.gSelectedListaDataBaseName = CODE_DATABASE_ID + gSelectedListaItemId;
-
     }
     Observer<List<ModelItemLists>> listUpdateObserver = new Observer<List<ModelItemLists>>() {
         @Override
@@ -159,7 +152,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         //Getting values coming from MainActivityLista
         String listName = itemRoom.name;
         String listDescription = itemRoom.description;
-        int listPhotoId = itemRoom.photoId;
+        int listPhotoId = itemRoom.icon;
         setContentView(R.layout.activity_lists);//Setup view
         Toolbar toolbar = findViewById(R.id.tb_activity_lists);//find toolbar and set values
         toolbar.setTitle(listName); //set title on toolbar
@@ -169,12 +162,15 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivityLista.class);
-                startActivity(intent);
+                goingBackMainActivity();
             }
         });
         //setup floatingActionButton to add more items
         setupFloatingActionButton();
+    }
+    private void goingBackMainActivity(){
+        Intent intent = new Intent(getApplicationContext(), MainActivityLista.class);
+        startActivity(intent);
     }
     private  void setupFloatingActionButton(){
         FloatingActionButton fab = findViewById(R.id.fab_lists_add);
@@ -187,9 +183,6 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     }
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
-        //Values to setup AlertFragment, so far I'm not using this values
-        String title = getStringFromResources(R.string.dialog_getting_string_new_hint);
-        String message = getStringFromResources(R.string.dialog_getting_string_description_hint);
         //Showing Dialog Message
         FragmentManager fm = getSupportFragmentManager();
         DialogStringInput alertDialog = DialogStringInput.newInstance();

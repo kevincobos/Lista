@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "da40cd75ccba7f3293661fd7a30fc427",
+    "identityHash": "927836b3a5695ff3eba5a0e65a4caf10",
     "entities": [
       {
         "tableName": "items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `photoId` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `date` INTEGER, `dateModify` INTEGER, `function` INTEGER NOT NULL, `icon` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -27,8 +27,26 @@
             "notNull": false
           },
           {
-            "fieldPath": "photoId",
-            "columnName": "photoId",
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dateModify",
+            "columnName": "dateModify",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "function",
+            "columnName": "function",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -46,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da40cd75ccba7f3293661fd7a30fc427')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '927836b3a5695ff3eba5a0e65a4caf10')"
     ]
   }
 }

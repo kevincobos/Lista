@@ -1,5 +1,7 @@
 package com.cobosideas.lista.global;
 
+import com.cobosideas.lista.R;
+
 public class Constants {
     //100 = CODES_ALERT_DIALOG_FRAGMENT
     private final static int CODE_ALERT_DIALOG_FRAGMENT = 100;
@@ -17,7 +19,12 @@ public class Constants {
     private final static int CODES_ACTIVITY_EDIT_LISTS = 700;
     //800 = CODES_ALERT_DIALOG_FRAGMENT
     private final static int CODES_DIALOG_ICON_CHOOSER = 800;
+    //900 = CODES_ACTIVITY_EDIT_LISTA
+    private final static int CODES_ACTIVITY_EDIT_LISTA = 900;
 
+    public interface CODES_ACTIVITY_BOOT{
+        boolean CODE_BOOLEAN_START_DEBUG = false;
+    }
     public interface CODES_ALERT_DIALOG_FRAGMENT{
         //Strings will help to obtain and save values in the dialog fragment
         String CODE_STRING_TITLE = "CODE_STRING_TITLE";
@@ -33,10 +40,43 @@ public class Constants {
         String CODE_STRING_ICON_CHOOSER_SELECTED = "CODE_STRING_ICON_CHOOSER_SELECTED";
 
         int CODES_DIALOG_ICON_CHOOSER_ID  =  CODES_DIALOG_ICON_CHOOSER + 1;
+
+        int[] DRAWABLE_ICONS_FRUITS = new int[]{
+                R.drawable.fruits_apple_color,
+                R.drawable.fruits_banana_color,
+                R.drawable.fruits_blackberry_color,
+                R.drawable.fruits_cherries_color,
+                R.drawable.fruits_grapes_color,
+                R.drawable.fruits_green_apple_color,
+                R.drawable.fruits_orange_color,
+                R.drawable.fruits_pineaple,
+                R.drawable.fruits_peach_color,
+                R.drawable.fruits_pear_color,
+                R.drawable.fruits_strawberry_color,
+                R.drawable.fruits_lemon_color,
+                R.drawable.fruits_watermelon_color
+        };
+        int[] DRAWABLE_ICONS_VEGETABLES = new int[]{
+                R.drawable.vegetables_carrot_color,
+                R.drawable.vegetables_jalapeno_color,
+                R.drawable.vegetables_onion_color,
+                R.drawable.vegetables_radish_color,
+                R.drawable.vegetables_tomato_color,
+                R.drawable.vegetables_yellow_pepper_color
+        };
+        int[] DRAWABLE_ICONS_MONEY = new int[]{
+
+        };
     }
     public interface CODES_MAIN_RECYCLER {
         int CODE_INT_MAIN_RECYCLER_ACCESS  =  CODES_MAIN_RECYCLER + 1;
         int CODE_INT_MAIN_RECYCLER_DELETE  =  CODES_MAIN_RECYCLER + 2;
+        int CODE_INT_MAIN_RECYCLER_PREFERENCES  =  CODES_MAIN_RECYCLER + 3;
+    }
+    public interface CODES_LISTA_CARD_VIEW {
+        //setup cardView Views
+        int CODE_INT_CARD_VIEW_DEFAULT = 0;
+        int CODE_INT_CARD_VIEW_LINK = 1;
     }
     public interface CODES_ACTIVITY_LISTA {
         //Strings will help to obtain and save values in the activity
@@ -47,10 +87,20 @@ public class Constants {
 
         int CODE_INT_ACTIVITY_LISTA  =  CODES_ACTIVITY_LISTA + 1;
     }
+    public interface CODES_ACTIVITY_EDIT_LISTA {
+        //Strings will help to obtain and save values in the activity
+        String CODE_STRING_EDIT_LISTA_SELECTED = "CODE_STRING_EDIT_LISTA_SELECTED";
+
+        int CODE_INT_ACTIVITY_EDIT_LISTA  =  CODES_ACTIVITY_EDIT_LISTA + 1;
+
+        String[] STRINGS_LISTA_TEMPLATES = new String[]{
+                "DEFAULT",
+                "SELECTION"
+        };
+    }
     public interface CODES_RECYCLER_LISTS {
-        int CODE_INT_RECYCLER_ID  =  CODES_RECYCLER_LISTS + 1;
-        int CODE_INT_RECYCLER_ACCESS  =  CODES_RECYCLER_LISTS + 2;
-        int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_LISTS + 3;
+        int CODE_INT_RECYCLER_ACCESS  =  CODES_RECYCLER_LISTS + 1;
+        int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_LISTS + 2;
     }
     public interface CODES_LISTS_CARD_VIEW {
         //setup cardView Views
