@@ -43,7 +43,6 @@ public class MainActivityLista extends AppCompatActivity
     //CODE_INT_MAIN_RECYCLER
     final int CODE_INT_MAIN_RECYCLER_ACCESS = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_ACCESS;
     final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
-    private final int CODE_INT_MAIN_RECYCLER_PREFERENCES = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_PREFERENCES;
     //CODE_STRING_ACTIVITY_LISTS
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
     Context context; //Context to use globally
@@ -51,13 +50,14 @@ public class MainActivityLista extends AppCompatActivity
     MainRecycler mainRecycler;//Variables for RecyclerView
     MainViewModel mainViewModel;//Model View View Model
     CoreDataBase coreDataBase;//Initialize the DataBase to be able to use it
+    long timeStamp = 0;
+    long timeToWaite = 500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         context = this.getApplicationContext();
         Messages = new SharableUtilitiesMessages(context);//setting up Messages with context
-
 
         setContentView(R.layout.activity_main_lista);
         Toolbar toolbar = findViewById(R.id.tb_main_activity_lista);
@@ -89,6 +89,19 @@ public class MainActivityLista extends AppCompatActivity
         mainViewModel.getAllItemsMutableLiveDataRoom().observe(this, listaUpdateObserver);
         //get all values from Data Base and setup mainRecyclerViewModel
         mainViewModel.setAllItemsViewModel(coreDataBase.getListaItemsFromDataBase());
+    }
+
+    /**
+     * Only doubleClick will show the menu
+     */
+    @Override
+    public void onBackPressed() {
+        long newTimeStamp = System.currentTimeMillis();
+        if ((newTimeStamp - timeStamp) < timeToWaite){
+            createAlertDialogExit();
+        }else{
+            timeStamp = newTimeStamp;
+        }
     }
     @Nullable
     @Override
@@ -187,6 +200,7 @@ public class MainActivityLista extends AppCompatActivity
      */
     @Override
     public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
+        final int CODE_INT_MAIN_RECYCLER_PREFERENCES = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_PREFERENCES;
         ItemRoom modelViewItem;
         Long sessionId;
         switch (CODE_ID){
@@ -206,7 +220,7 @@ public class MainActivityLista extends AppCompatActivity
                 /* LongClick on one of the Items in the Recycler */
                 //Looking inside database all information
                 modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
-                createDeleteAlertDialog(selectedItemFromCardView, modelViewItem);
+                createAlertDialogDelete(selectedItemFromCardView, modelViewItem);
                 break;
             case CODE_INT_MAIN_RECYCLER_PREFERENCES:
                 /* Click on preferences in selected Item in the Recycler */
@@ -220,12 +234,13 @@ public class MainActivityLista extends AppCompatActivity
                 break;
         }
     }
+
     /**Alert Dialog
      * try to delete item selected from cardView in MainActivityLista
      * @param selectedItemFromCardView id of selected item
      * @param itemRoomComing  viewModel item from selected item
      */
-    private void createDeleteAlertDialog(int selectedItemFromCardView, ItemRoom itemRoomComing){
+    private void createAlertDialogDelete(int selectedItemFromCardView, ItemRoom itemRoomComing){
         final ItemRoom itemRoom = itemRoomComing;
         final int selectedItem = selectedItemFromCardView;
         String deleteMessage = getString(R.string.alert_dialog_delete);
@@ -243,6 +258,37 @@ public class MainActivityLista extends AppCompatActivity
                         coreDataBase.deleteItemSelected(itemRoom);
                         mainRecycler.deleteItemToRecycler(selectedItem, itemRoom);
                         Messages.message(alertDeleteSuccess);
+                    }
+                })
+                .setNegativeButton(cancelMessage, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    /**
+     * menu to exit or stay
+     */
+    private void createAlertDialogExit(){
+        final String exitMessage = getString(R.string.alert_dialog_exit_message);
+        final String buttonExit = getString(R.string.alert_dialog_exit_button);
+        final String cancelMessage = getString(R.string.alert_dialog_exit_cancel_button);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(exitMessage)
+                .setCancelable(false)
+                .setPositiveButton(buttonExit, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        int pid = android.os.Process.myPid();
+                        android.os.Process.killProcess(pid);
+                        finishAndRemoveTask();
+                        System.exit(0);
+                        finish();
+                        finishAffinity();
+                        System.exit(0);
                     }
                 })
                 .setNegativeButton(cancelMessage, new DialogInterface.OnClickListener() {

@@ -24,6 +24,7 @@ public class Constants {
 
     public interface CODES_ACTIVITY_BOOT{
         boolean CODE_BOOLEAN_START_DEBUG = false;
+        String CODE_STRING_EXTERNAL_VALUE = "CODE_STRING_EXTERNAL_VALUE";
     }
     public interface CODES_ALERT_DIALOG_FRAGMENT{
         //Strings will help to obtain and save values in the dialog fragment
@@ -40,7 +41,6 @@ public class Constants {
         String CODE_STRING_ICON_CHOOSER_SELECTED = "CODE_STRING_ICON_CHOOSER_SELECTED";
 
         int CODES_DIALOG_ICON_CHOOSER_ID  =  CODES_DIALOG_ICON_CHOOSER + 1;
-
         int[] DRAWABLE_ICONS_FRUITS = new int[]{
                 R.drawable.fruits_apple_color,
                 R.drawable.fruits_banana_color,
@@ -64,8 +64,49 @@ public class Constants {
                 R.drawable.vegetables_tomato_color,
                 R.drawable.vegetables_yellow_pepper_color
         };
-        int[] DRAWABLE_ICONS_MONEY = new int[]{
-
+        int[] DRAWABLE_ICONS_FINANCES = new int[]{
+                R.drawable.finances_bank,
+                R.drawable.finances_sign,
+                R.drawable.finances_piggy_bank
+        };
+        int[] DRAWABLE_ICONS_INSURANCE = new int[]{
+                R.drawable.insurance_bills,
+                R.drawable.insurance_car,
+                R.drawable.insurance_dental,
+                R.drawable.insurance_money,
+                R.drawable.insurance_nurse
+        };
+        int[] DRAWABLE_ICONS_ENTERTAINMENT = new int[]{
+                R.drawable.entertainment_netflix,
+                R.drawable.entertainment_tv_clasic,
+                R.drawable.entertainment_tv_simple
+        };
+        int[] DRAWABLE_ICONS_CAR = new int[]{
+                R.drawable.car_yellow,
+                R.drawable.car_orange,
+                R.drawable.car_gray
+        };
+        int[] DRAWABLE_ICONS_HOUSE = new int[]{
+            R.drawable.house_clasic,
+            R.drawable.house_classic_trees,
+            R.drawable.house_simple
+        };
+        int[] DRAWABLE_ICONS_TRASH = new int[]{
+                R.drawable.trash_container_green,
+                R.drawable.trash_bag,
+                R.drawable.trash_car,
+                R.drawable.trash_cart,
+                R.drawable.trash_container_orange
+        };
+        int[][] DRAWABLE_ICONS = new int[][]{
+                DRAWABLE_ICONS_FRUITS,
+                DRAWABLE_ICONS_VEGETABLES,
+                DRAWABLE_ICONS_FINANCES,
+                DRAWABLE_ICONS_INSURANCE,
+                DRAWABLE_ICONS_ENTERTAINMENT,
+                DRAWABLE_ICONS_CAR,
+                DRAWABLE_ICONS_HOUSE,
+                DRAWABLE_ICONS_TRASH
         };
     }
     public interface CODES_MAIN_RECYCLER {
@@ -81,9 +122,6 @@ public class Constants {
     public interface CODES_ACTIVITY_LISTA {
         //Strings will help to obtain and save values in the activity
         String CODE_STRING_LISTA_ID = "LISTA_ID";
-        String CODE_STRING_LISTA_NAME = "CODE_STRING_LISTA_NAME";
-        String CODE_STRING_LISTA_DESCRIPTION = "CODE_STRING_LISTA_DESCRIPTION";
-        String CODE_STRING_LISTA_PHOTO_ID = "CODE_STRING_LISTA_PHOTO_ID";
 
         int CODE_INT_ACTIVITY_LISTA  =  CODES_ACTIVITY_LISTA + 1;
     }
@@ -101,6 +139,7 @@ public class Constants {
     public interface CODES_RECYCLER_LISTS {
         int CODE_INT_RECYCLER_ACCESS  =  CODES_RECYCLER_LISTS + 1;
         int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_LISTS + 2;
+        int CODE_INT_RECYCLER_EDIT  =  CODES_RECYCLER_LISTS + 3;
     }
     public interface CODES_LISTS_CARD_VIEW {
         //setup cardView Views
@@ -122,7 +161,6 @@ public class Constants {
     public interface CODES_ACTIVITY_EDIT_LISTS{
         //Strings will help to obtain and save values in the activity lists cards
         String CODE_STRING_EDIT_LISTS_ID_SELECTED = "CODE_STRING_EDIT_LISTS_ID_SELECTED";
-        String CODE_STRING_LISTS_DATABASE_NAME = "CODE_STRING_LISTS_DATABASE_NAME";
 
         String[] STRINGS_LISTS_TEMPLATES = new String[]{
                 "DEFAULT",

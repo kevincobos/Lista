@@ -3,6 +3,7 @@ package com.cobosideas.lista.activities.lists;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     //CODE_INT_RECYCLER
     private final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
     private final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
+    private final int CODE_INT_RECYCLER_EDIT = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_EDIT;
     //DataSet to display on Recycler
     private List<ModelItemLists> dataSetLists;
 
@@ -30,7 +32,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public interface RecyclerListsInputListener {
         void onInterfaceString(int CODE_INT_MR_ID, Long stringValue, int itemPosition);
     }
-    public RecyclerLists(@NonNull List<ModelItemLists> dataSetLists,  @NonNull RecyclerListsInputListener contextListener) {
+    RecyclerLists(@NonNull List<ModelItemLists> dataSetLists, @NonNull RecyclerListsInputListener contextListener) {
         this.dataSetLists = dataSetLists;
         this.recyclerListsInputListener = contextListener;
     }
@@ -51,6 +53,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv_listsDescription;
         TextView tv_listaValue;
         ImageView iv_iconLists;
+        ImageButton ib_lists_edit;
 
 
         MyViewHolderDefault(View itemView) {
@@ -61,6 +64,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_listsName = itemView.findViewById(R.id.tv_lists_name);
             tv_listaValue = itemView.findViewById(R.id.tv_lists_value);
             iv_iconLists = itemView.findViewById(R.id.iv_icon_lists);
+            ib_lists_edit = itemView.findViewById(R.id.ib_card_view_lists_edit);
         }
     }
     // Provide a reference to the views for each data item
@@ -74,6 +78,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv_listsName;
         TextView tv_listaValue;
         ImageView iv_iconLists;
+        ImageButton ib_lists_edit;
 
 
         MyViewHolderSimple(View itemView) {
@@ -84,6 +89,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_listsName = itemView.findViewById(R.id.tv_lists_name);
             tv_listaValue = itemView.findViewById(R.id.tv_lists_value);
             iv_iconLists = itemView.findViewById(R.id.iv_icon_lists);
+            ib_lists_edit = itemView.findViewById(R.id.ib_card_view_lists_edit);
         }
     }
     // Provide a reference to the views for each data item
@@ -97,6 +103,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv_listsName;
         TextView tv_listaValue;
         ImageView iv_iconLists;
+        ImageButton ib_lists_edit;
 
 
         MyViewHolderImage(View itemView) {
@@ -107,6 +114,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_listsName = itemView.findViewById(R.id.tv_lists_name);
             tv_listaValue = itemView.findViewById(R.id.tv_lists_value);
             iv_iconLists = itemView.findViewById(R.id.iv_icon_lists);
+            ib_lists_edit = itemView.findViewById(R.id.ib_card_view_lists_edit);
         }
     }
 
@@ -150,11 +158,22 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderDefault.tv_listsId.setText(convertIdToString);
                 myViewHolderDefault.tv_listsName.setText(dataSetLists.get(position).name);
                 myViewHolderDefault.tv_listsDescription.setText(dataSetLists.get(position).description);
-                myViewHolderDefault.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+                //myViewHolderDefault.tv_listaValue.setText(dataSetLists.get(position).date.toString()); //TODO FIXIT
                 myViewHolderDefault.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
-
-                //Adding OnClickListeners to each part of the list item then will be able to modify them+
+                //Click on ImageButton allow us to enter to edit lists item
+                myViewHolderDefault.ib_lists_edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Long itemDataBaseId = dataSetLists.get(holder.getAdapterPosition()).id;
+                        final int selectedItem  = holder.getAdapterPosition();
+                        recyclerListsInputListener.onInterfaceString(
+                                CODE_INT_RECYCLER_EDIT,
+                                itemDataBaseId,
+                                selectedItem);
+                    }
+                });
+                //Adding OnClickListeners to each item to access to ActivityManageFunctions
                 myViewHolderDefault.cv_listsItems.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -185,11 +204,21 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderSimple.tv_listsId.setText(convertIdToString);
                 myViewHolderSimple.tv_listsLink.setText(dataSetLists.get(position).name);
                 myViewHolderSimple.tv_listsName.setText(dataSetLists.get(position).description);
-                myViewHolderSimple.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+                //myViewHolderSimple.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
                 myViewHolderSimple.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
-
-                //Adding OnClickListeners to each part of the list item then will be able to modify them+
+                myViewHolderSimple.ib_lists_edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Long itemDataBaseId = dataSetLists.get(holder.getAdapterPosition()).id;
+                        final int selectedItem  = holder.getAdapterPosition();
+                        recyclerListsInputListener.onInterfaceString(
+                                CODE_INT_RECYCLER_EDIT,
+                                itemDataBaseId,
+                                selectedItem);
+                    }
+                });
+                //Adding OnClickListeners to each item to access to ActivityManageFunctions
                 myViewHolderSimple.cv_listsItems.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -220,11 +249,22 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderImage.tv_listsId.setText(convertIdToString);
                 myViewHolderImage.tv_listsLink.setText(dataSetLists.get(position).name);
                 myViewHolderImage.tv_listsName.setText(dataSetLists.get(position).description);
-                myViewHolderImage.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
+                //myViewHolderImage.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
                 myViewHolderImage.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
-
-                //Adding OnClickListeners to each part of the list item then will be able to modify them+
+                //Edit lists item
+                myViewHolderImage.ib_lists_edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Long itemDataBaseId = dataSetLists.get(holder.getAdapterPosition()).id;
+                        final int selectedItem  = holder.getAdapterPosition();
+                        recyclerListsInputListener.onInterfaceString(
+                                CODE_INT_RECYCLER_EDIT,
+                                itemDataBaseId,
+                                selectedItem);
+                    }
+                });
+                //Adding OnClickListeners to each item to access to ActivityManageFunctions
                 myViewHolderImage.cv_listsItems.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

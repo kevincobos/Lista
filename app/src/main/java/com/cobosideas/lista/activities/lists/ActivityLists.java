@@ -25,7 +25,8 @@ import com.cobosideas.lista.R;
 import com.cobosideas.lista.activities.dagger.ComponentListCard;
 import com.cobosideas.lista.activities.dagger.DaggerComponentListCard;
 import com.cobosideas.lista.activities.dagger.DaggerListCard;
-import com.cobosideas.lista.activities.edit.ActivityEditLists;
+import com.cobosideas.lista.activities.lists.edit_lists.ActivityEditLists;
+import com.cobosideas.lista.activities.lists.manage_functions.ActivityManageFunctions;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
 import com.cobosideas.lista.room.core.CoreDataBase;
@@ -34,20 +35,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class ActivityLists extends AppCompatActivity implements RecyclerLists.RecyclerListsInputListener, DialogStringInput.DialogStringInputListener {
+public class ActivityLists extends AppCompatActivity implements
+        RecyclerLists.RecyclerListsInputListener, DialogStringInput.DialogStringInputListener {
     /*     CONSTANTS
          CODE_STRING_ACTIVITY_LISTA this is the values coming from MainActivityLista */
-    final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
-    //CODE_INT_ACTIVITY_EDIT_LISTS
-    private final String CODE_STRING_EDIT_LISTS_ID = Constants.CODES_ACTIVITY_EDIT_LISTS.CODE_STRING_EDIT_LISTS_ID_SELECTED;
-    private final String CODE_STRING_LISTS_DATABASE_NAME = Constants.CODES_ACTIVITY_EDIT_LISTS.CODE_STRING_LISTS_DATABASE_NAME;
+    private final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA
+            .CODE_STRING_LISTA_ID;
 
     //CODE_ALERT_DIALOG_FRAGMENT
     final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
-    //database name combining (CODE_DATABASE_ID and globalId)
-    final String CODE_DATABASE_ID =  Constants.CODES_ACTIVITY_LISTS.CODE_DATABASE_ID;
-    String gSelectedListaDataBaseName;
-    Long gSelectedListaItemId;
+    //Database number to combine with database name to access data
+    Long gSelectedListaDataBaseNumber;
 
     Context context; //Context to use globally
     DataBaseLists dataBaseLists;//Initialize the DataBase to be able to use it
@@ -60,7 +58,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null){
-            setDataBaseIdName();
+            setSelectedDataBase();
         }else{
             getGlobalVariables(savedInstanceState);
         }
@@ -71,7 +69,8 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
             /* TODO Setup dagger  */
             setupDagger();
         }catch (Exception error){
-
+            //In case there is a error on on starting the this activity,
+            // we are going back to the MainActivity
             goingBackMainActivity();
         }
     }
@@ -88,18 +87,17 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     }
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        savedInstanceState.putString(CODE_STRING_LISTS_DATABASE_NAME,
-                this.gSelectedListaDataBaseName);
+        savedInstanceState.putLong(CODE_STRING_LISTA_ID,
+                this.gSelectedListaDataBaseNumber);
         super.onSaveInstanceState(savedInstanceState);
     }
     private void getGlobalVariables(Bundle savedInstanceState) {
-        this.gSelectedListaDataBaseName = savedInstanceState
-                .getString(CODE_STRING_LISTS_DATABASE_NAME);
+        this.gSelectedListaDataBaseNumber = savedInstanceState
+                .getLong(CODE_STRING_LISTA_ID, 0);
     }
-    private void setDataBaseIdName(){
+    private void setSelectedDataBase(){
         //Getting values coming from MainActivityLista
-        gSelectedListaItemId = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
-        this.gSelectedListaDataBaseName = CODE_DATABASE_ID + gSelectedListaItemId;
+        this.gSelectedListaDataBaseNumber = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
     }
     Observer<List<ModelItemLists>> listUpdateObserver = new Observer<List<ModelItemLists>>() {
         @Override
@@ -108,7 +106,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         }
     };
     public void setupDataAndRecycler(){
-        dataBaseLists = new DataBaseLists(context, gSelectedListaDataBaseName);//Starting DataBase
+        dataBaseLists = new DataBaseLists(context, gSelectedListaDataBaseNumber);//Starting DataBase
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
         viewModelLists = new ViewModelProvider(this).get(ViewModelLists.class);
@@ -148,7 +146,7 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     private void setupApplicationView(){
         context = this.getApplicationContext();
         //This int contains the default picture for the cards
-        ItemRoom itemRoom = getSelectedListaItemFromDataBase(gSelectedListaItemId);
+        ItemRoom itemRoom = getSelectedListaItemFromDataBase(gSelectedListaDataBaseNumber);
         //Getting values coming from MainActivityLista
         String listName = itemRoom.name;
         String listDescription = itemRoom.description;
@@ -168,9 +166,14 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
         //setup floatingActionButton to add more items
         setupFloatingActionButton();
     }
+    @Override
+    public void onBackPressed() {
+        goingBackMainActivity();
+        super.onBackPressed();
+    }
     private void goingBackMainActivity(){
-        Intent intent = new Intent(getApplicationContext(), MainActivityLista.class);
-        startActivity(intent);
+        Intent intentToAccessMainActivity = new Intent(getApplicationContext(), MainActivityLista.class);
+        startActivity(intentToAccessMainActivity);
     }
     private  void setupFloatingActionButton(){
         FloatingActionButton fab = findViewById(R.id.fab_lists_add);
@@ -249,12 +252,15 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
     public void onInterfaceString(int CODE_ID, Long longValueItemSelected, int selectedItemFromCardView) {
         final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
         final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
+        final int CODE_INT_RECYCLER_EDIT = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_EDIT;
+        final String CODE_STRING_EDIT_LISTS_ID_SELECTED = Constants.CODES_ACTIVITY_EDIT_LISTS.
+                CODE_STRING_EDIT_LISTS_ID_SELECTED;
+        Intent intent;
         switch (CODE_ID) {
-            case CODE_INT_RECYCLER_ACCESS:
-                Intent intent = new Intent(this, ActivityEditLists.class);
-                intent.putExtra(CODE_STRING_EDIT_LISTS_ID, longValueItemSelected);
-                intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaItemId);
-                intent.putExtra(CODE_STRING_LISTS_DATABASE_NAME, gSelectedListaDataBaseName);
+            case CODE_INT_RECYCLER_EDIT:
+                intent = new Intent(this, ActivityEditLists.class);
+                intent.putExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, longValueItemSelected);
+                intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaDataBaseNumber);
                 //intent contains de selected lista information
                 startActivity(intent);//Let's start the selected activity
                 break;
@@ -263,6 +269,13 @@ public class ActivityLists extends AppCompatActivity implements RecyclerLists.Re
                 //Looking inside database all information
                 ModelItemLists modelItemLists = dataBaseLists.getListsItemFromDataBase(longValueItemSelected);
                 createLongClickAlertDialog(selectedItemFromCardView, modelItemLists);
+                break;
+            case CODE_INT_RECYCLER_ACCESS:
+                intent = new Intent(this, ActivityManageFunctions.class);
+                intent.putExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, longValueItemSelected);
+                intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaDataBaseNumber);
+                //intent contains de selected lista information
+                startActivity(intent);//Let's start the selected activity
                 break;
         }
     }

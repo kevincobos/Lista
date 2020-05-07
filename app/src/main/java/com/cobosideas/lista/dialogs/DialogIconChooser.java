@@ -103,15 +103,12 @@ public class DialogIconChooser extends DialogFragment {
         }
     };
     private void setupImageViews(LinearLayout linearLayoutContainer){
-        final int[] DRAWABLE_ICONS_FRUITS = Constants.CODES_DIALOG_ICON_CHOOSER.DRAWABLE_ICONS_FRUITS;
-        final int[] DRAWABLE_ICONS_VEGETABLES = Constants.CODES_DIALOG_ICON_CHOOSER.DRAWABLE_ICONS_VEGETABLES;
-        setupImagesButtonsFruits(linearLayoutContainer, DRAWABLE_ICONS_FRUITS);
-        setupImagesButtonsFruits(linearLayoutContainer, DRAWABLE_ICONS_VEGETABLES);
+        final int[][] DRAWABLE_ICONS = Constants.CODES_DIALOG_ICON_CHOOSER.DRAWABLE_ICONS;
+        for (int[] drawable_icon : DRAWABLE_ICONS) {
+            setupImagesButtons(linearLayoutContainer, drawable_icon);
+        }
     }
-    private void setupImagesButtonsFruits(LinearLayout linearLayoutContainer, int[] DRAWABLE_ICONS){
-
-
-
+    private void setupImagesButtons(LinearLayout linearLayoutContainer, int[] DRAWABLE_ICONS){
         LinearLayout.LayoutParams ll_Icon_Params = new LinearLayout.LayoutParams(150,
                 150);
         ll_Icon_Params.setMargins(4, 10, 4, 10);
@@ -119,8 +116,6 @@ public class DialogIconChooser extends DialogFragment {
 
         int countingTotalIcons = 0;
         int totalDrawableIconsFruits = DRAWABLE_ICONS.length;
-
-
 
         LinearLayout ll_Icon_Column;
 
@@ -160,9 +155,6 @@ public class DialogIconChooser extends DialogFragment {
 
                     ll_Icon_Column.addView(ib_IconShow[count]);
                     countingTotalIcons++;
-
-
-
             }
 
             fillingSpace[fillingSpace.length-1] = new Space(this.getContext());

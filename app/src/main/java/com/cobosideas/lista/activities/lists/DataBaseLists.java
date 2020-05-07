@@ -2,12 +2,17 @@ package com.cobosideas.lista.activities.lists;
 
 import android.content.Context;
 import androidx.room.Room;
+
+import com.cobosideas.lista.global.Constants;
+
 import java.util.List;
 
 public class DataBaseLists {
     private ROOMDataBaseLists roomDataBaseLists;
-    public DataBaseLists(Context context, String dataBaseName){
-        this.roomDataBaseLists = Room.databaseBuilder(context, ROOMDataBaseLists.class, dataBaseName)
+    public DataBaseLists(Context context, long selectedDataBaseNumber){
+        //database name combining (CODE_DATABASE_ID and globalId)
+        final String CODE_DATABASE_ID =  Constants.CODES_ACTIVITY_LISTS.CODE_DATABASE_ID;
+        this.roomDataBaseLists = Room.databaseBuilder(context, ROOMDataBaseLists.class, CODE_DATABASE_ID+selectedDataBaseNumber)
                 .allowMainThreadQueries()
                 .build();
     }

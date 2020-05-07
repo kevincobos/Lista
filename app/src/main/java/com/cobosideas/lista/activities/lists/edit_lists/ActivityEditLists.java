@@ -1,4 +1,4 @@
-package com.cobosideas.lista.activities.edit;
+package com.cobosideas.lista.activities.lists.edit_lists;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,13 +26,9 @@ public class ActivityEditLists extends AppCompatActivity implements DialogIconCh
     /*     CONSTANTS
          CODE_STRING_ACTIVITY_LISTA this is the values coming from MainActivityLista */
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
-    //CODE_ALERT_DIALOG_FRAGMENT
-    private final int CODES_DIALOG_ICON_CHOOSER_ID = Constants.CODES_DIALOG_ICON_CHOOSER.CODES_DIALOG_ICON_CHOOSER_ID;
     //CODE_INT_ACTIVITY_EDIT_LISTS
     private final String CODE_STRING_EDIT_LISTS_ID_SELECTED = Constants.CODES_ACTIVITY_EDIT_LISTS.
             CODE_STRING_EDIT_LISTS_ID_SELECTED;
-    private final String CODE_STRING_LISTS_DATABASE_NAME = Constants.CODES_ACTIVITY_EDIT_LISTS
-            .CODE_STRING_LISTS_DATABASE_NAME;
     private final String[] CODE_STRINGS_LISTS_TEMPLATES = Constants.CODES_ACTIVITY_EDIT_LISTS
             .STRINGS_LISTS_TEMPLATES;
     Context gContext; //Context to use globally
@@ -41,7 +37,6 @@ public class ActivityEditLists extends AppCompatActivity implements DialogIconCh
 
     Long gSelectedListaItemId;
     Long gSelectedListId;
-    String gSelectedListaDataBaseName;
 
     ImageView ib_SelectedIconListItem;
     @Override
@@ -90,7 +85,7 @@ public class ActivityEditLists extends AppCompatActivity implements DialogIconCh
         alertDialog.show(fm, "alertDialogFragmentIconChooser");
     }
     private void setupDataBaseListsSelectedList(){
-        gDataBaseLists = new DataBaseLists(gContext, gSelectedListaDataBaseName);
+        gDataBaseLists = new DataBaseLists(gContext, gSelectedListaItemId);
         gModelItemLists = gDataBaseLists.getListsItemFromDataBase(gSelectedListId);
     }
     private void saveChanges(){
@@ -133,18 +128,15 @@ public class ActivityEditLists extends AppCompatActivity implements DialogIconCh
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         savedInstanceState.putLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, this.gSelectedListId);
         savedInstanceState.putLong(CODE_STRING_LISTA_ID, this.gSelectedListaItemId);
-        savedInstanceState.putString(CODE_STRING_LISTS_DATABASE_NAME, this.gSelectedListaDataBaseName);
         super.onSaveInstanceState(savedInstanceState);
     }
     private void setGlobalVariables(){
         this.gSelectedListId = getIntent().getLongExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
         this.gSelectedListaItemId = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
-        this.gSelectedListaDataBaseName = getIntent().getStringExtra(CODE_STRING_LISTS_DATABASE_NAME);
     }
     private void getGlobalVariables(Bundle savedInstanceState) {
         this.gSelectedListId = savedInstanceState.getLong(CODE_STRING_EDIT_LISTS_ID_SELECTED);
         this.gSelectedListaItemId = savedInstanceState.getLong(CODE_STRING_LISTA_ID);
-        this.gSelectedListaDataBaseName = savedInstanceState.getString(CODE_STRING_LISTS_DATABASE_NAME);
     }
     private void setupToolBar(){
         Toolbar toolbar = findViewById(R.id.tb_activity_edit_lists);
@@ -155,15 +147,15 @@ public class ActivityEditLists extends AppCompatActivity implements DialogIconCh
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ActivityLists.class);
-                intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaItemId);
-                startActivity(intent);
+                goingBackListActivity();
             }
         });
     }
 
     @Override
     public void onInterfaceString(int CODE_ID, int selectedIconToChange) {
+        //CODE_ALERT_DIALOG_FRAGMENT
+        final int CODES_DIALOG_ICON_CHOOSER_ID = Constants.CODES_DIALOG_ICON_CHOOSER.CODES_DIALOG_ICON_CHOOSER_ID;
         switch (CODE_ID) {
             case CODES_DIALOG_ICON_CHOOSER_ID:
                 //update the selected list icon image and replace the imageButton
@@ -174,5 +166,15 @@ public class ActivityEditLists extends AppCompatActivity implements DialogIconCh
     private void previewIconChange(int selectedIconToChange){
         gModelItemLists.icon = selectedIconToChange;
         ib_SelectedIconListItem.setImageDrawable(this.getDrawable(selectedIconToChange));
+    }
+    @Override
+    public void onBackPressed() {
+        goingBackListActivity();
+        super.onBackPressed();
+    }
+    private void goingBackListActivity(){
+        Intent intent = new Intent(getApplicationContext(), ActivityLists.class);
+        intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaItemId);
+        startActivity(intent);
     }
 }
