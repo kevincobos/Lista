@@ -17,35 +17,40 @@ import androidx.fragment.app.DialogFragment;
 import com.cobosideas.lista.R;
 import com.cobosideas.lista.global.Constants;
 
-public class DialogStringInput extends DialogFragment {
+public class DialogStringIntegerInput extends DialogFragment{
     //CODE_ALERT_DIALOG_FRAGMENT
-    private final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
-    private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INPUT.CODE_STRING_EDIT_STRING_VALUE;
-    private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ADF_STRING_INPUT.CODE_STRING_BUTTON_NEW_STATE;
+    private final int CODE_INT_ADF_STRING_INTEGER_ID = Constants.CODES_ADF_STRING_INTEGER_INPUT.
+            CODE_INT_ADF_STRING_INTEGER_ID;
+    private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INTEGER_INPUT.
+            CODE_STRING_EDIT_STRING_VALUE;
+    private final String CODE_STRING_EDIT_INTEGER_VALUE = Constants.CODES_ADF_STRING_INTEGER_INPUT.
+            CODE_STRING_EDIT_INTEGER_VALUE;
+    private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ADF_STRING_INTEGER_INPUT.
+            CODE_STRING_BUTTON_NEW_STATE;
+
     /*        Trying to create a connection request sender for action    */
     public interface DialogStringInputListener {
-        void onInterfaceString(int CODE_ID, String stringValue, String stringDescription);
+        void onInterfaceString(int CODE_ID, String stringValue, int integerValue);
     }
     //Global values to show on AlertDialog
-    private String stringValue, stringDescription;
+    private String stringValue;
+    private int integerValue;
     //we will extract the string from et_stringValue to send it to the Activity
-    private EditText et_stringValue;
+    private EditText et_StringValue;
     //we will extract the string from et_stringDescription to send it to the Activity
-    private EditText et_stringDescription;
+    private EditText et_IntegerValue;
     //Buttons
-    private Button b_Cancel, b_CreateNewList;
+    private Button b_Cancel, b_CreateNewManageFunctions;
     //buttonNewListState state
     private boolean buttonNewListState = false;
-    public DialogStringInput(){
-    }
-    public static DialogStringInput newInstance() {
-        DialogStringInput dialogFragment = new DialogStringInput();
+    public DialogStringIntegerInput(){        }
+    public static DialogStringIntegerInput newInstance() {
+        DialogStringIntegerInput dialogFragment = new DialogStringIntegerInput();
         //Setting values on Arguments
         Bundle args = new Bundle();
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         //This are use
@@ -54,7 +59,6 @@ public class DialogStringInput extends DialogFragment {
 
         super.onSaveInstanceState(savedInstanceState);
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,18 +70,18 @@ public class DialogStringInput extends DialogFragment {
     }
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_string_input , container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_string_integer_input , container, false);
 
         b_Cancel = view.findViewById(R.id.b_cancel);
-        b_CreateNewList = view.findViewById(R.id.b_new_list);
-        et_stringValue	= view.findViewById(R.id.et_new_list_name);
-        et_stringDescription = view.findViewById(R.id.et_new_list_description);
+        b_CreateNewManageFunctions = view.findViewById(R.id.b_new_manage_functions);
+        et_StringValue = view.findViewById(R.id.et_new_string);
+        et_IntegerValue= view.findViewById(R.id.et_new_value);
 
         loadButtons();
         loadEditorTexts();
-
-        //getDialog().setTitle(title);
         return view;
     }
 
@@ -88,8 +92,8 @@ public class DialogStringInput extends DialogFragment {
                 dismiss();
             }
         });
-        b_CreateNewList.setEnabled(buttonNewListState);
-        b_CreateNewList.setOnClickListener(new View.OnClickListener() {
+        b_CreateNewManageFunctions.setEnabled(buttonNewListState);
+        b_CreateNewManageFunctions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // on success
@@ -97,7 +101,9 @@ public class DialogStringInput extends DialogFragment {
                 //send editText value to Activity
                 DialogStringInputListener listener = (DialogStringInputListener) getActivity();
                 if (listener != null) {
-                    listener.onInterfaceString(CODE_INT_ADF_ID, stringValue, stringDescription);
+                    listener.onInterfaceString(CODE_INT_ADF_STRING_INTEGER_ID,
+                            stringValue,
+                            integerValue);
                 }else{
                     String errorMessage = getResources().getString(R.string.dialog_getting_string_error);
                     Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
@@ -109,7 +115,7 @@ public class DialogStringInput extends DialogFragment {
 
     }
     private void loadEditorTexts(){
-        et_stringValue.addTextChangedListener(new TextWatcher() {
+        et_StringValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -122,13 +128,17 @@ public class DialogStringInput extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                stringValue = et_stringValue.getText().toString();
-                stringDescription = et_stringDescription.getText().toString();
-                buttonNewListState = (!stringValue.equals("")) && (!stringDescription.equals(""));
-                b_CreateNewList.setEnabled(buttonNewListState);
+                stringValue = et_StringValue.getText().toString();
+                try {
+                    integerValue = Integer.parseInt(et_IntegerValue.getText().toString());
+                }catch (Exception ignored){
+                    integerValue = 0;
+                }
+                buttonNewListState = (!stringValue.equals(""));
+                b_CreateNewManageFunctions.setEnabled(buttonNewListState);
             }
         });
-        et_stringDescription.addTextChangedListener(new TextWatcher() {
+        et_IntegerValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -141,10 +151,14 @@ public class DialogStringInput extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                stringValue = et_stringValue.getText().toString();
-                stringDescription = et_stringDescription.getText().toString();
-                buttonNewListState = (!stringValue.equals("")) && (!stringDescription.equals(""));
-                b_CreateNewList.setEnabled(buttonNewListState);
+                stringValue = et_StringValue.getText().toString();
+                try {
+                    integerValue = Integer.parseInt(et_IntegerValue.getText().toString());
+                }catch (Exception ignored){
+                    integerValue = 0;
+                }
+                buttonNewListState = (!stringValue.equals(""));
+                b_CreateNewManageFunctions.setEnabled(buttonNewListState);
             }
         });
     }

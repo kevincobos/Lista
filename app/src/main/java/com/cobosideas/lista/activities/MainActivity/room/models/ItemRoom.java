@@ -14,6 +14,6 @@ public class ItemRoom {
     public String description;
     public Long date = System.currentTimeMillis();
     public Long dateModify = System.currentTimeMillis();
-    public int function = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
+    public int function = Constants.CODES_CARD_VIEW_LISTS.CODE_INT_CARD_VIEW_DEFAULT;
     public int icon = R.drawable.ic_launcher_foreground;
 }

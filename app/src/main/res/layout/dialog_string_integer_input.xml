@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/LinearLayoutGettingTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/tv_alert_string_integer_input_name"
+            android:text = "@string/dialog_string_integer_title"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        </TextView>
+        <EditText
+            android:id="@+id/et_new_string"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dip"
+            android:layout_marginStart="5dip"
+            android:hint="@string/dialog_string_integer_description_hint"
+            android:lines="1"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/tv_alert_dialog_string_input_description"
+            android:text = "@string/dialog_string_integer_value"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        </TextView>
+
+        <EditText
+            android:id="@+id/et_new_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dip"
+            android:layout_marginEnd="5dip"
+            android:hint="@string/dialog_string_integer_value"
+            android:lines="1"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:numeric="integer"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/LinearLayoutGettingTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/view_separator_inferior"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="1dp"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerHorizontal"/>
+        <View
+            android:id="@+id/view_separator_bottom"
+            android:layout_below="@+id/b_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerHorizontal"/>
+        <View
+            android:id="@+id/view_separator_medium"
+            android:layout_below="@+id/view_separator_inferior"
+            android:layout_above="@+id/view_separator_bottom"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="1dp"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="?android:attr/dividerVertical" />
+        <Button
+            android:id="@+id/b_cancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_separator_inferior"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/view_separator_medium"
+            android:text="@string/global_cancel" />
+        <Button
+            android:id="@+id/b_new_manage_functions"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_separator_inferior"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/view_separator_medium"
+            android:layout_toStartOf="@+id/view_separator_medium"
+            android:text="@string/global_create_new" />
+    </RelativeLayout>
+</RelativeLayout>

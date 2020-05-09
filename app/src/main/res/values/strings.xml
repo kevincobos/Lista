@@ -17,6 +17,11 @@
     <string name="dialog_getting_string_description_hint">"Welcome…"</string>
     <string name="dialog_getting_string_description">"Description"</string>
     <string name="dialog_getting_string_name_empty">"Empty name"</string>
+    /*DialogFragment create new Manage Functions*/
+    <string name="dialog_string_integer_title">"Description"</string>
+    <string name="dialog_string_integer_value">"Value"</string>
+    <string name="dialog_string_integer_description_hint">"Describe value"</string>
+    <string name="dialog_string_integer_value_hint">"0"</string>
     /*DialogFragment icon Chooser*/
     <string name="dialog_icon_chooser_title">"Select an Image"</string>
     <string name="dialog_icon_chooser_change">"Change Icon"</string>
@@ -45,8 +50,12 @@
     <!-- toolbar strings -->
     <string name="iv_lists_toolbar_content">Image represent list item</string>
     <string name="tv_lists_toolbar_default_content">List description</string>
-    <!-- cardview for recycler strings -->
+    <!-- cardView for recycler strings -->
     <string name="cv_lists_text">"It's empty"</string>
+
+    <!-- cardView for recycler strings -->
+    <string name="cv_manage_functions_name">"Enter value's description"</string>
+    <string name="cv_manage_functions_number">"0"</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="title_activity_lists">ActivityLists</string>

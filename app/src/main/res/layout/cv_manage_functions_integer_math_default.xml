@@ -29,18 +29,19 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:text="@string/cv_lists_text"
+                android:text="@string/cv_manage_functions_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorListsCardViewLight"
                 android:textStyle="bold" />
+
             <TextView
-                android:id="@+id/tv_manage_function_integer"
+                android:id="@+id/tv_manage_function_number"
                 android:layout_width="127dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
-                android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="@string/cv_lists_text"
+                android:text="@string/cv_manage_functions_number"
+                android:textAlignment="textEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textStyle="bold" />
 

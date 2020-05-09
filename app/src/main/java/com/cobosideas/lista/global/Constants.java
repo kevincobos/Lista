@@ -3,37 +3,108 @@ package com.cobosideas.lista.global;
 import com.cobosideas.lista.R;
 
 public class Constants {
-    //100 = CODES_ALERT_DIALOG_FRAGMENT
-    private final static int CODE_ALERT_DIALOG_FRAGMENT = 100;
-    //200 = CODES_MAIN_RECYCLER
-    private final static int CODES_MAIN_RECYCLER = 200;
-    //300 = CODES_ACTIVITY_LIST
-    private final static int CODES_ACTIVITY_LISTA = 300;
-    //200 = CODES_ACTIVITY_LISTS_CARDS
-    private final static int CODES_ACTIVITY_LISTS = 400;
-    //500 = CODES_RECYCLER_LISTS
-    private final static int CODES_RECYCLER_LISTS = 500;
-    //600 = CODES_RECYCLER_LISTS
-    private final static int CODES_LISTS_CARD_VIEW = 600;
-    //700 = CODES_RECYCLER_LISTS
-    private final static int CODES_ACTIVITY_EDIT_LISTS = 700;
-    //800 = CODES_ALERT_DIALOG_FRAGMENT
-    private final static int CODES_DIALOG_ICON_CHOOSER = 800;
-    //900 = CODES_ACTIVITY_EDIT_LISTA
-    private final static int CODES_ACTIVITY_EDIT_LISTA = 900;
+    private final static int CODES_ADF_STRING_INPUT = 100;
+    private final static int CODE_ADF_STRING_INTEGER_INPUT = 200;
+    private final static int CODES_RECYCLER_MAIN = 300;
+    private final static int CODES_RECYCLER_LISTS = 400;
+    private final static int CODES_RECYCLER_MANAGER_FUNCTIONS = 400;
+    private final static int CODES_DIALOG_ICON_CHOOSER = 500;
 
     public interface CODES_ACTIVITY_BOOT{
         boolean CODE_BOOLEAN_START_DEBUG = false;
         String CODE_STRING_EXTERNAL_VALUE = "CODE_STRING_EXTERNAL_VALUE";
     }
-    public interface CODES_ALERT_DIALOG_FRAGMENT{
+    public interface CODES_ACTIVITY_LISTA {
+        //Strings will help to obtain and save values in the activity
+        String CODE_STRING_LISTA_ID = "dbLista";
+    }
+    public interface CODES_ACTIVITY_EDIT_LISTA {
+        //Strings will help to obtain and save values in the activity
+        String CODE_STRING_EDIT_LISTA_SELECTED = "CODE_STRING_EDIT_LISTA_SELECTED";
+        String[] STRINGS_LISTA_TEMPLATES = new String[]{
+                "DEFAULT",
+                "SELECTION"
+        };
+    }
+    public interface CODES_ACTIVITY_LISTS{
+        //Strings will help to obtain and save values in the activity lists cards
+        String CODE_STRING_LISTS_ID = "CODE_STRING_LISTS_ID";
+    }
+    public interface CODES_ACTIVITY_MANAGE_FUNCTIONS {
+        //Strings will help to obtain and save values in the activity lists cards
+        String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
+    }
+    public interface CODES_DATABASE_MANAGE_FUNCTIONS {
+        String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
+        int INT_DEFAULT_TEMPLATES = 0;
+        int INT_MONEY_TEMPLATES = 2;
+        int INT_ONE_TIME_REMAINDER_TEMPLATES = 3;
+        int INT_DAILY_REMAINDER_TEMPLATES = 4;
+        int INT_WEEKLY_REMAINDER_TEMPLATES = 5;
+        int INT_MONTHLY_REMAINDER_TEMPLATES = 6;
+        int INT_YEARLY_REMAINDER_TEMPLATES = 7;
+        int INT_CONDITIONAL_REMAINDER_TEMPLATES = 8;
+        String[] STRINGS_MANAGE_FUNCTIONS_TEMPLATES = new String[]{
+                "DEFAULT",
+                "MONEY",
+                "ONE TIME REMAINDER",
+                "DAILY REMAINDER",
+                "WEEKLY REMAINDER",
+                "MONTHLY REMAINDER",
+                "YEARLY REMAINDER",
+                "CONDITIONAL REMAINDER",
+        };
+    }
+    public interface CODES_ACTIVITY_EDIT_LISTS{
+        //Strings contains the database name
+        String CODE_STRING_EDIT_LISTS_ID_SELECTED = "CODE_STRING_EDIT_LISTS_ID_SELECTED";
+
+        String[] STRINGS_LISTS_TEMPLATES = new String[]{
+                "DEFAULT",
+                "SIMPLE",
+                "IMAGE"
+        };
+    }
+    public interface CODES_CARD_VIEW_LISTA {
+        //setup cardView Views
+        int CODE_INT_CARD_VIEW_DEFAULT = 0;
+        int CODE_INT_CARD_VIEW_LINK = 1;
+    }
+    public interface CODES_CARD_VIEW_LISTS {
+        //setup cardView Views
+        int CODE_INT_CARD_VIEW_DEFAULT  =  0;
+        int CODE_INT_CARD_VIEW_SIMPLE  =  1;
+        int CODE_INT_CARD_VIEW_IMAGE  =  2;
+    }
+    public interface CODES_RECYCLER_LISTS {
+        int CODE_INT_RECYCLER_ACCESS  =  CODES_RECYCLER_LISTS + 1;
+        int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_LISTS + 2;
+        int CODE_INT_RECYCLER_EDIT  =  CODES_RECYCLER_LISTS + 3;
+    }
+    public interface CODES_RECYCLER_MANAGER_FUNCTIONS {
+        int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_MANAGER_FUNCTIONS + 2;
+        int CODE_INT_RECYCLER_EDIT  =  CODES_RECYCLER_MANAGER_FUNCTIONS + 3;
+    }
+    public interface CODES_MAIN_RECYCLER {
+        int CODE_INT_MAIN_RECYCLER_ACCESS  =  CODES_RECYCLER_MAIN + 1;
+        int CODE_INT_MAIN_RECYCLER_DELETE  =  CODES_RECYCLER_MAIN + 2;
+        int CODE_INT_MAIN_RECYCLER_PREFERENCES  =  CODES_RECYCLER_MAIN + 3;
+    }
+    //ALERT DIALOG FRAGMENTS
+    public interface CODES_ADF_STRING_INPUT {
         //Strings will help to obtain and save values in the dialog fragment
-        String CODE_STRING_TITLE = "CODE_STRING_TITLE";
-        String CODE_STRING_MESSAGE = "CODE_STRING_MESSAGE";
         String CODE_STRING_EDIT_STRING_VALUE = "CODE_STRING_EDIT_STRING_VALUE";
         String CODE_STRING_BUTTON_NEW_STATE = "CODE_STRING_BUTTON_NEW_STATE";
 
-        int CODE_INT_ALERT_DIALOG_FRAGMENT_ID  =  CODE_ALERT_DIALOG_FRAGMENT + 1;
+        int CODE_INT_ALERT_DIALOG_FRAGMENT_ID  =  CODES_ADF_STRING_INPUT + 1;
+    }
+    public interface CODES_ADF_STRING_INTEGER_INPUT{
+        //Strings will help to obtain and save values in the dialog fragment
+        String CODE_STRING_EDIT_STRING_VALUE = "CODE_STRING_EDIT_STRING_VALUE";
+        String CODE_STRING_EDIT_INTEGER_VALUE = "CODE_STRING_EDIT_INTEGER_VALUE";
+        String CODE_STRING_BUTTON_NEW_STATE = "CODE_STRING_BUTTON_NEW_STATE";
+
+        int CODE_INT_ADF_STRING_INTEGER_ID  =  CODE_ADF_STRING_INTEGER_INPUT + 1;
     }
     public interface CODES_DIALOG_ICON_CHOOSER{
         //Strings will help to obtain and save values in the dialog fragment icon chooser
@@ -87,9 +158,9 @@ public class Constants {
                 R.drawable.car_gray
         };
         int[] DRAWABLE_ICONS_HOUSE = new int[]{
-            R.drawable.house_clasic,
-            R.drawable.house_classic_trees,
-            R.drawable.house_simple
+                R.drawable.house_clasic,
+                R.drawable.house_classic_trees,
+                R.drawable.house_simple
         };
         int[] DRAWABLE_ICONS_TRASH = new int[]{
                 R.drawable.trash_container_green,
@@ -108,60 +179,5 @@ public class Constants {
                 DRAWABLE_ICONS_HOUSE,
                 DRAWABLE_ICONS_TRASH
         };
-    }
-    public interface CODES_MAIN_RECYCLER {
-        int CODE_INT_MAIN_RECYCLER_ACCESS  =  CODES_MAIN_RECYCLER + 1;
-        int CODE_INT_MAIN_RECYCLER_DELETE  =  CODES_MAIN_RECYCLER + 2;
-        int CODE_INT_MAIN_RECYCLER_PREFERENCES  =  CODES_MAIN_RECYCLER + 3;
-    }
-    public interface CODES_LISTA_CARD_VIEW {
-        //setup cardView Views
-        int CODE_INT_CARD_VIEW_DEFAULT = 0;
-        int CODE_INT_CARD_VIEW_LINK = 1;
-    }
-    public interface CODES_ACTIVITY_LISTA {
-        //Strings will help to obtain and save values in the activity
-        String CODE_STRING_LISTA_ID = "dbLista";
-    }
-    public interface CODES_ACTIVITY_EDIT_LISTA {
-        //Strings will help to obtain and save values in the activity
-        String CODE_STRING_EDIT_LISTA_SELECTED = "CODE_STRING_EDIT_LISTA_SELECTED";
-
-        int CODE_INT_ACTIVITY_EDIT_LISTA  =  CODES_ACTIVITY_EDIT_LISTA + 1;
-
-        String[] STRINGS_LISTA_TEMPLATES = new String[]{
-                "DEFAULT",
-                "SELECTION"
-        };
-    }
-    public interface CODES_RECYCLER_LISTS {
-        int CODE_INT_RECYCLER_ACCESS  =  CODES_RECYCLER_LISTS + 1;
-        int CODE_INT_RECYCLER_DELETE  =  CODES_RECYCLER_LISTS + 2;
-        int CODE_INT_RECYCLER_EDIT  =  CODES_RECYCLER_LISTS + 3;
-    }
-    public interface CODES_LISTS_CARD_VIEW {
-        //setup cardView Views
-        int CODE_INT_CARD_VIEW_DEFAULT  =  0;
-        int CODE_INT_CARD_VIEW_SIMPLE  =  1;
-        int CODE_INT_CARD_VIEW_IMAGE  =  2;
-    }
-    public interface CODES_ACTIVITY_LISTS{
-        //Strings will help to obtain and save values in the activity lists cards
-        String CODE_STRING_LISTS_ID = "CODE_STRING_LISTS_ID";
-
-
-        int CODE_INT_ACTIVITY_LISTS  =  CODES_ACTIVITY_LISTS + 1;
-    }
-    public interface CODES_ACTIVITY_EDIT_LISTS{
-        //Strings will help to obtain and save values in the activity lists cards
-        String CODE_STRING_EDIT_LISTS_ID_SELECTED = "CODE_STRING_EDIT_LISTS_ID_SELECTED";
-
-        String[] STRINGS_LISTS_TEMPLATES = new String[]{
-                "DEFAULT",
-                "SIMPLE",
-                "IMAGE"
-        };
-
-        int CODE_INT_EDIT_LISTS  =  CODES_ACTIVITY_EDIT_LISTS + 1;
     }
 }

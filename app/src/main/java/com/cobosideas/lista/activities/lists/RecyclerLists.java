@@ -18,9 +18,9 @@ import java.util.List;
 
 public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     //CODE_INT_RECYCLER_CARD_VIEW
-    private final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_DEFAULT;
-    private final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_SIMPLE;
-    private final int CODE_INT_CARD_VIEW_IMAGE = Constants.CODES_LISTS_CARD_VIEW.CODE_INT_CARD_VIEW_IMAGE;
+    private final int CODE_INT_CARD_VIEW_DEFAULT = Constants.CODES_CARD_VIEW_LISTS.CODE_INT_CARD_VIEW_DEFAULT;
+    private final int CODE_INT_CARD_VIEW_SIMPLE = Constants.CODES_CARD_VIEW_LISTS.CODE_INT_CARD_VIEW_SIMPLE;
+    private final int CODE_INT_CARD_VIEW_IMAGE = Constants.CODES_CARD_VIEW_LISTS.CODE_INT_CARD_VIEW_IMAGE;
     //CODE_INT_RECYCLER
     private final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
     private final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
@@ -30,7 +30,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private RecyclerListsInputListener recyclerListsInputListener;
     public interface RecyclerListsInputListener {
-        void onInterfaceString(int CODE_INT_MR_ID, Long stringValue, int itemPosition);
+        void onInterfaceString(int CODE_INT_LIST_ID, Long stringValue, int itemPosition);
     }
     RecyclerLists(@NonNull List<ModelItemLists> dataSetLists, @NonNull RecyclerListsInputListener contextListener) {
         this.dataSetLists = dataSetLists;
@@ -147,7 +147,6 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
-
         // - get element from your dataSet at this position
         // - replace the contents of the view with that element
         String convertIdToString = dataSetLists.get(position).id + "";
@@ -158,7 +157,6 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderDefault.tv_listsId.setText(convertIdToString);
                 myViewHolderDefault.tv_listsName.setText(dataSetLists.get(position).name);
                 myViewHolderDefault.tv_listsDescription.setText(dataSetLists.get(position).description);
-                //myViewHolderDefault.tv_listaValue.setText(dataSetLists.get(position).date.toString()); //TODO FIXIT
                 myViewHolderDefault.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
                 //Click on ImageButton allow us to enter to edit lists item
@@ -204,7 +202,6 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderSimple.tv_listsId.setText(convertIdToString);
                 myViewHolderSimple.tv_listsLink.setText(dataSetLists.get(position).name);
                 myViewHolderSimple.tv_listsName.setText(dataSetLists.get(position).description);
-                //myViewHolderSimple.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
                 myViewHolderSimple.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
                 myViewHolderSimple.ib_lists_edit.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +246,6 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolderImage.tv_listsId.setText(convertIdToString);
                 myViewHolderImage.tv_listsLink.setText(dataSetLists.get(position).name);
                 myViewHolderImage.tv_listsName.setText(dataSetLists.get(position).description);
-                //myViewHolderImage.tv_listaValue.setText(dataSetLists.get(position).date + ""); //TODO FIXIT
                 myViewHolderImage.iv_iconLists.setImageResource(dataSetLists.get(position).icon);
 
                 //Edit lists item
@@ -303,7 +299,7 @@ public class RecyclerLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
     /**    remove Item from recyclerView and update    **/
-    void deleteItemToRecycler(int selectedToDelete, ModelItemLists newItem) {
+    void deleteItemToRecycler(int selectedToDelete) {
         dataSetLists.remove(selectedToDelete);
         notifyItemRemoved(selectedToDelete);
     }

@@ -43,14 +43,14 @@ public class ActivityLists extends AppCompatActivity implements
             .CODE_STRING_LISTA_ID;
 
     //CODE_ALERT_DIALOG_FRAGMENT
-    final int CODE_INT_ADF_ID = Constants.CODES_ALERT_DIALOG_FRAGMENT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
+    final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
     //Database number to combine with database name to access data
     Long gSelectedListaDataBaseNumber;
 
-    Context context; //Context to use globally
-    DataBaseLists dataBaseLists;//Initialize the DataBase to be able to use it
-    ViewModelLists viewModelLists;//Model View View Model
-    RecyclerLists recyclerLists;//Variables for RecyclerView
+    Context gContext; //Context to use globally
+    DataBaseLists gDataBaseLists;//Initialize the DataBase to be able to use it
+    ViewModelLists gViewModelLists;//Model View View Model
+    RecyclerLists gRecyclerLists;//Variables for RecyclerView
 
     DaggerListCard daggerListCard;
 
@@ -106,13 +106,13 @@ public class ActivityLists extends AppCompatActivity implements
         }
     };
     public void setupDataAndRecycler(){
-        dataBaseLists = new DataBaseLists(context, gSelectedListaDataBaseNumber);//Starting DataBase
+        gDataBaseLists = new DataBaseLists(gContext, gSelectedListaDataBaseNumber);//Starting DataBase
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
-        viewModelLists = new ViewModelProvider(this).get(ViewModelLists.class);
-        viewModelLists.getAllItemsMutableLiveDataModel().observe(this, listUpdateObserver);
+        gViewModelLists = new ViewModelProvider(this).get(ViewModelLists.class);
+        gViewModelLists.getAllItemsMutableLiveDataModel().observe(this, listUpdateObserver);
         //get all values from Data Base and setup mainRecyclerViewModel
-        viewModelLists.setAllItemsViewModel(dataBaseLists.getListsItemsFromDataBase());
+        gViewModelLists.setAllItemsViewModel(gDataBaseLists.getListsItemsFromDataBase());
     }
     /** Setup the recycler
      *
@@ -130,8 +130,8 @@ public class ActivityLists extends AppCompatActivity implements
         recyclerViewLists.setLayoutManager(layoutManager);
 
         //setup recycler: DataBase , MainRecyclerInputListener
-        recyclerLists = new RecyclerLists(itemsLists, this);
-        RecyclerView.Adapter mAdapter = recyclerLists;
+        gRecyclerLists = new RecyclerLists(itemsLists, this);
+        RecyclerView.Adapter mAdapter = gRecyclerLists;
         recyclerViewLists.setAdapter(mAdapter);
     }
     private ItemRoom getSelectedListaItemFromDataBase(Long selectedItemFromListaDataBase){
@@ -144,7 +144,7 @@ public class ActivityLists extends AppCompatActivity implements
      * setup FloatingActionButton
      */
     private void setupApplicationView(){
-        context = this.getApplicationContext();
+        gContext = this.getApplicationContext();
         //This int contains the default picture for the cards
         ItemRoom itemRoom = getSelectedListaItemFromDataBase(gSelectedListaDataBaseNumber);
         //Getting values coming from MainActivityLista
@@ -233,12 +233,12 @@ public class ActivityLists extends AppCompatActivity implements
                 modelItemLists.description = description;
                 //modelItemLists.id:? Database assigns the value to this item
                 //getting value auto generated
-                Long newDataBaseItemId = dataBaseLists.addItemToListDataBase(modelItemLists);
+                Long newDataBaseItemId = gDataBaseLists.addItemToListDataBase(modelItemLists);
                 modelItemLists.id = newDataBaseItemId;
                 //create a counter to reorder table later
                 modelItemLists.order = newDataBaseItemId;
                 //inserting new item
-                recyclerLists.addItemToRecycler(modelItemLists);
+                gRecyclerLists.addItemToRecycler(modelItemLists);
                 break;
         }
     }
@@ -267,7 +267,7 @@ public class ActivityLists extends AppCompatActivity implements
             case CODE_INT_RECYCLER_DELETE:
                 /* LongClick on one of the Items in the Recycler */
                 //Looking inside database all information
-                ModelItemLists modelItemLists = dataBaseLists.getListsItemFromDataBase(longValueItemSelected);
+                ModelItemLists modelItemLists = gDataBaseLists.getListsItemFromDataBase(longValueItemSelected);
                 createLongClickAlertDialog(selectedItemFromCardView, modelItemLists);
                 break;
             case CODE_INT_RECYCLER_ACCESS:
@@ -299,17 +299,17 @@ public class ActivityLists extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int id) {
                         /*    duplicating item   */
                         modelItem.id = null;
-                        Long newDataBaseItemId = dataBaseLists.addItemToListDataBase(modelItem);
+                        Long newDataBaseItemId = gDataBaseLists.addItemToListDataBase(modelItem);
                         modelItem.id = newDataBaseItemId;
                         modelItem.order = newDataBaseItemId;
-                        recyclerLists.addItemToRecycler(modelItem);
+                        gRecyclerLists.addItemToRecycler(modelItem);
                     }
                 })
                 .setPositiveButton(deleteMessage, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         /*    remove item   */
-                        dataBaseLists.deleteItemSelected(modelItem);
-                        recyclerLists.deleteItemToRecycler(selectedItem, modelItem);
+                        gDataBaseLists.deleteItemSelected(modelItem);
+                        gRecyclerLists.deleteItemToRecycler(selectedItem);
                     }
                 })
                 .setNegativeButton(cancelMessage, new DialogInterface.OnClickListener() {
