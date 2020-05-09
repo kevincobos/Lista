@@ -1,4 +1,4 @@
-package com.cobosideas.lista.activities.lists.manage_functions;
+package com.cobosideas.lista.activities.manage_functions;
 
 import android.content.Context;
 import android.content.Intent;

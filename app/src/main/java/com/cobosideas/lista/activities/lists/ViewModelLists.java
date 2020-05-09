@@ -2,8 +2,6 @@ package com.cobosideas.lista.activities.lists;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.cobosideas.lista.room.models.ItemRoom;
-
 import java.util.List;
 
 public class ViewModelLists extends ViewModel {

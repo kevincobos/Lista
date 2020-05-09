@@ -1,11 +1,11 @@
-package com.cobosideas.lista.room;
+package com.cobosideas.lista.activities.MainActivity.room;
 
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.cobosideas.lista.room.models.ItemRoom;
-import com.cobosideas.lista.room.DAO.ItemDAO;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.DAO.ItemDAO;
 
 @Database(entities = {ItemRoom.class}, version = 1)
 public abstract class ListaDataBase extends RoomDatabase {

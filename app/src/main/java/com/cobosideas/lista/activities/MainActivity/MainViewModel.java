@@ -1,8 +1,8 @@
-package com.cobosideas.lista.viewmodel;
+package com.cobosideas.lista.activities.MainActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.cobosideas.lista.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 
 import java.util.List;
 

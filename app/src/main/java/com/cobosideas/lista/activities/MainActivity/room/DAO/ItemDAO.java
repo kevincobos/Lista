@@ -1,11 +1,11 @@
-package com.cobosideas.lista.room.DAO;
+package com.cobosideas.lista.activities.MainActivity.room.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import com.cobosideas.lista.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 
 import java.util.List;
 

@@ -20,17 +20,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cobosideas.lista.MainActivityLista;
+import com.cobosideas.lista.activities.MainActivity.MainActivityLista;
 import com.cobosideas.lista.R;
 import com.cobosideas.lista.activities.dagger.ComponentListCard;
 import com.cobosideas.lista.activities.dagger.DaggerComponentListCard;
 import com.cobosideas.lista.activities.dagger.DaggerListCard;
-import com.cobosideas.lista.activities.lists.edit_lists.ActivityEditLists;
-import com.cobosideas.lista.activities.lists.manage_functions.ActivityManageFunctions;
+import com.cobosideas.lista.activities.edit_lists.ActivityEditLists;
+import com.cobosideas.lista.activities.manage_functions.ActivityManageFunctions;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
-import com.cobosideas.lista.room.core.CoreDataBase;
-import com.cobosideas.lista.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.core.CoreDataBase;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

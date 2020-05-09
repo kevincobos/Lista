@@ -1,4 +1,4 @@
-package com.cobosideas.lista;
+package com.cobosideas.lista.activities.MainActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,15 +20,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cobosideas.lista.R;
 import com.cobosideas.lista.activities.edit_lista.ActivityEditLista;
 import com.cobosideas.lista.activities.lists.ActivityLists;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
 import com.cobosideas.lista.global.SharableUtilitiesMessages;
-import com.cobosideas.lista.recyclerMain.MainRecycler;
-import com.cobosideas.lista.room.core.CoreDataBase;
-import com.cobosideas.lista.room.models.ItemRoom;
-import com.cobosideas.lista.viewmodel.MainViewModel;
+import com.cobosideas.lista.activities.MainActivity.room.core.CoreDataBase;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

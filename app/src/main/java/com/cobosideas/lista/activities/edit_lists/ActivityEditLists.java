@@ -1,4 +1,4 @@
-package com.cobosideas.lista.activities.lists.edit_lists;
+package com.cobosideas.lista.activities.edit_lists;
 
 import android.content.Context;
 import android.content.Intent;

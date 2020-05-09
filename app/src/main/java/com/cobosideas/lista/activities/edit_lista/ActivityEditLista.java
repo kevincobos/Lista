@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.cobosideas.lista.MainActivityLista;
+import com.cobosideas.lista.activities.MainActivity.MainActivityLista;
 import com.cobosideas.lista.dialogs.DialogIconChooser;
 import com.cobosideas.lista.global.Constants;
 
@@ -21,8 +21,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.cobosideas.lista.R;
-import com.cobosideas.lista.room.core.CoreDataBase;
-import com.cobosideas.lista.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.core.CoreDataBase;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 
 public class ActivityEditLista extends AppCompatActivity implements DialogIconChooser.DialogIconChooserListener{
     /*     CONSTANTS

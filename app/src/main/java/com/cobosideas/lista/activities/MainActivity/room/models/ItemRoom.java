@@ -1,4 +1,4 @@
-package com.cobosideas.lista.room.models;
+package com.cobosideas.lista.activities.MainActivity.room.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

@@ -6,4 +6,11 @@
     <!--Dimensions for the DialogStringInput-->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--Dimensions for the CardViews Lista-->
+    <dimen name="cv_activity_lista">4dp</dimen>
+    <!--Dimensions for the CardViews Lists-->
+    <dimen name="cv_activity_lists">4dp</dimen>
+    <!--Dimensions for the CardViews Manage Functions-->
+    <dimen name="cv_activity_manage_functions">4dp</dimen>
 </resources>

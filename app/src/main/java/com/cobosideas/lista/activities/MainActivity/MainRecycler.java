@@ -1,4 +1,4 @@
-package com.cobosideas.lista.recyclerMain;
+package com.cobosideas.lista.activities.MainActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cobosideas.lista.R;
 import com.cobosideas.lista.global.Constants;
-import com.cobosideas.lista.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 
 import java.util.List;
 

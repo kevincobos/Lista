@@ -1,20 +1,22 @@
-package com.cobosideas.lista.room.core;
+package com.cobosideas.lista.activities.MainActivity.room.core;
 
 import android.content.Context;
 
 import androidx.room.Room;
 
-import com.cobosideas.lista.room.DAO.ItemDAO;
-import com.cobosideas.lista.room.ListaDataBase;
-import com.cobosideas.lista.room.models.ItemRoom;
+import com.cobosideas.lista.activities.MainActivity.room.DAO.ItemDAO;
+import com.cobosideas.lista.activities.MainActivity.room.ListaDataBase;
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
+import com.cobosideas.lista.global.Constants;
 
 import java.util.List;
 
 public class CoreDataBase {
     private ListaDataBase dataBase;
-
     public CoreDataBase(Context context){
-        this.dataBase = Room.databaseBuilder(context, ListaDataBase.class, "dbLista")
+        //getting coreDataBase name
+        final String CODE_STRING_LISTA_ID =  Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
+        this.dataBase = Room.databaseBuilder(context, ListaDataBase.class, CODE_STRING_LISTA_ID)
                 .allowMainThreadQueries()
                 .build();
     }

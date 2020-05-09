@@ -121,9 +121,7 @@ public class Constants {
     }
     public interface CODES_ACTIVITY_LISTA {
         //Strings will help to obtain and save values in the activity
-        String CODE_STRING_LISTA_ID = "LISTA_ID";
-
-        int CODE_INT_ACTIVITY_LISTA  =  CODES_ACTIVITY_LISTA + 1;
+        String CODE_STRING_LISTA_ID = "dbLista";
     }
     public interface CODES_ACTIVITY_EDIT_LISTA {
         //Strings will help to obtain and save values in the activity
@@ -149,12 +147,8 @@ public class Constants {
     }
     public interface CODES_ACTIVITY_LISTS{
         //Strings will help to obtain and save values in the activity lists cards
-        String CODE_DATABASE_ID = "CODE_STRING_LISTS_ID";
-
         String CODE_STRING_LISTS_ID = "CODE_STRING_LISTS_ID";
-        String CODE_STRING_LISTS_NAME = "CODE_STRING_LISTS_NAME";
-        String CODE_STRING_LISTS_DESCRIPTION = "CODE_STRING_LISTS_DESCRIPTION";
-        String CODE_STRING_LISTS_PHOTO_ID = "CODE_STRING_LISTS_PHOTO_ID";
+
 
         int CODE_INT_ACTIVITY_LISTS  =  CODES_ACTIVITY_LISTS + 1;
     }

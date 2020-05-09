@@ -10,11 +10,13 @@ import java.util.List;
 public class DataBaseLists {
     private ROOMDataBaseLists roomDataBaseLists;
     public DataBaseLists(Context context, long selectedDataBaseNumber){
-        //database name combining (CODE_DATABASE_ID and globalId)
-        final String CODE_DATABASE_ID =  Constants.CODES_ACTIVITY_LISTS.CODE_DATABASE_ID;
-        this.roomDataBaseLists = Room.databaseBuilder(context, ROOMDataBaseLists.class, CODE_DATABASE_ID+selectedDataBaseNumber)
-                .allowMainThreadQueries()
-                .build();
+        //database name combining (CODE_STRING_LISTS_ID and selectedDataBaseNumber)
+        final String CODE_STRING_LISTS_ID = Constants.
+                CODES_ACTIVITY_LISTS.CODE_STRING_LISTS_ID + selectedDataBaseNumber;
+        //Setup database
+        this.roomDataBaseLists = Room.databaseBuilder(context,
+                ROOMDataBaseLists.class,
+                CODE_STRING_LISTS_ID).allowMainThreadQueries().build();
     }
     //Adding Items to database
     public Long addItemToListDataBase(ModelItemLists newItem){
