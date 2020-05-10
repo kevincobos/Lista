@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.cobosideas.lista.global.Constants;
 
+import java.util.ArrayList;
+
 @Entity (tableName = "itemManageFunctions") //This is the name of the table to be view values
 public class ModelItemManageFunctions {
     @PrimaryKey(autoGenerate = true)
@@ -15,5 +17,5 @@ public class ModelItemManageFunctions {
     public Long date = System.currentTimeMillis();
     public Long dateModify = System.currentTimeMillis();
     public int function = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.INT_DEFAULT_TEMPLATES;
-    public String jSON = "";
+    public ArrayList<String> jSON = new ArrayList<>();
 }

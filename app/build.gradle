@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
 
-
     defaultConfig {
         applicationId "com.cobosideas.lista"
         minSdkVersion 21
@@ -29,8 +28,8 @@ android {
         }
     }
 
-}
 
+}
 dependencies {
     def navigation_fragment_version = "2.2.2"
     def room_version = "2.2.5"
@@ -40,13 +39,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //ROOM
+    annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.navigation:navigation-fragment:$navigation_fragment_version"
     implementation "androidx.navigation:navigation-ui:$navigation_fragment_version"
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
@@ -75,4 +75,9 @@ dependencies {
     //Implementing Dagger to inject dependencies
     implementation "com.google.dagger:dagger:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //JSON and Type converter
+    //annotationProcessor "android.arch.persistence.room:compiler:1.1.1" this one is old
+    //implementation "android.arch.persistence.room:runtime:1.1.1" this one is old
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

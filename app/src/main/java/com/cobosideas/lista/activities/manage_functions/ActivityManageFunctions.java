@@ -172,7 +172,7 @@ public class ActivityManageFunctions extends AppCompatActivity implements Recycl
         ModelItemManageFunctions modelItemManageFunctions = new ModelItemManageFunctions();
         modelItemManageFunctions.link = gSelectedListaItemId;
         modelItemManageFunctions.name = stringValue;
-        modelItemManageFunctions.value = integerValue;
+        //modelItemManageFunctions.jSON = integerValue + "";
 
         //modelItemLists.id:? Database assigns the value to this item
         //getting value auto generated
