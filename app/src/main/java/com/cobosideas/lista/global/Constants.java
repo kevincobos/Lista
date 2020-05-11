@@ -37,13 +37,13 @@ public class Constants {
     public interface CODES_DATABASE_MANAGE_FUNCTIONS {
         String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
         int INT_DEFAULT_TEMPLATES = 0;
-        int INT_MONEY_TEMPLATES = 2;
-        int INT_ONE_TIME_REMAINDER_TEMPLATES = 3;
-        int INT_DAILY_REMAINDER_TEMPLATES = 4;
-        int INT_WEEKLY_REMAINDER_TEMPLATES = 5;
-        int INT_MONTHLY_REMAINDER_TEMPLATES = 6;
-        int INT_YEARLY_REMAINDER_TEMPLATES = 7;
-        int INT_CONDITIONAL_REMAINDER_TEMPLATES = 8;
+        int INT_MONEY_TEMPLATES = 1;
+        int INT_ONE_TIME_REMAINDER_TEMPLATES = 2;
+        int INT_DAILY_REMAINDER_TEMPLATES = 3;
+        int INT_WEEKLY_REMAINDER_TEMPLATES = 4;
+        int INT_MONTHLY_REMAINDER_TEMPLATES = 5;
+        int INT_YEARLY_REMAINDER_TEMPLATES = 6;
+        int INT_CONDITIONAL_REMAINDER_TEMPLATES = 7;
         String[] STRINGS_MANAGE_FUNCTIONS_TEMPLATES = new String[]{
                 "DEFAULT",
                 "MONEY",
@@ -105,6 +105,18 @@ public class Constants {
         String CODE_STRING_BUTTON_NEW_STATE = "CODE_STRING_BUTTON_NEW_STATE";
 
         int CODE_INT_ADF_STRING_INTEGER_ID  =  CODE_ADF_STRING_INTEGER_INPUT + 1;
+    }
+    public interface CODES_ADF_NEW_FUNCTION_TYPE_MENU{
+        String[] STRINGS_MANAGE_FUNCTIONS_TEMPLATES = new String[]{
+                "DEFAULT",
+                "MONEY",
+                "ONE TIME REMAINDER",
+                "DAILY REMAINDER",
+                "WEEKLY REMAINDER",
+                "MONTHLY REMAINDER",
+                "YEARLY REMAINDER",
+                "CONDITIONAL REMAINDER",
+        };
     }
     public interface CODES_DIALOG_ICON_CHOOSER{
         //Strings will help to obtain and save values in the dialog fragment icon chooser

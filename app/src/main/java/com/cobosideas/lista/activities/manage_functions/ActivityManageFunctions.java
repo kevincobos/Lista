@@ -1,6 +1,7 @@
 package com.cobosideas.lista.activities.manage_functions;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import com.cobosideas.lista.global.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -20,12 +22,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 
 import java.util.List;
-
-public class ActivityManageFunctions extends AppCompatActivity implements RecyclerManageFunctions.RecyclerManageFunctionsInputListener, DialogStringIntegerInput.DialogStringInputListener {
+public class ActivityManageFunctions extends AppCompatActivity implements
+        RecyclerManageFunctions.RecyclerManageFunctionsInputListener,
+        DialogStringIntegerInput.DialogStringInputListener {
     /*     CONSTANTS
      *     CODE_STRING_ACTIVITY_LISTA this is the values coming from ActivityLists */
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
@@ -133,12 +135,68 @@ public class ActivityManageFunctions extends AppCompatActivity implements Recycl
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Showing Dialog Message
-                FragmentManager fm = getSupportFragmentManager();
-                DialogStringIntegerInput alertDialogFragment = DialogStringIntegerInput.newInstance();
-                alertDialogFragment.show(fm, "alertDialogNewManageFunction");
+                newFunctionType();
             }
         });
+    }
+    private void newFunctionType(){
+        final int INT_DEFAULT_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_DEFAULT_TEMPLATES;
+        final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MONEY_TEMPLATES;
+        final int INT_ONE_TIME_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_ONE_TIME_REMAINDER_TEMPLATES;
+        final int INT_DAILY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_DAILY_REMAINDER_TEMPLATES;
+        final int INT_WEEKLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_WEEKLY_REMAINDER_TEMPLATES;
+        final int INT_MONTHLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MONTHLY_REMAINDER_TEMPLATES;
+        final int INT_YEARLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_YEARLY_REMAINDER_TEMPLATES;
+        final int INT_CONDITIONAL_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_CONDITIONAL_REMAINDER_TEMPLATES;
+
+        String dialog_new_function_type = getString(R.string.dialog_new_function_type);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(dialog_new_function_type);
+        String[]  STRINGS_MANAGE_FUNCTIONS_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                STRINGS_MANAGE_FUNCTIONS_TEMPLATES;
+        builder.setItems(STRINGS_MANAGE_FUNCTIONS_TEMPLATES, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case INT_DEFAULT_TEMPLATES:
+                        break;
+                    case INT_MONEY_TEMPLATES:
+                        //Showing AlertDialogFragment New Function Money
+                        FragmentManager fm = getSupportFragmentManager();
+                        DialogStringIntegerInput alertDialogFragment = DialogStringIntegerInput.newInstance();
+                        alertDialogFragment.show(fm, "alertDialogNewManageFunction");
+                        break;
+                    case INT_ONE_TIME_REMAINDER_TEMPLATES:
+
+                        break;
+                    case INT_DAILY_REMAINDER_TEMPLATES:
+
+                        break;
+                    case INT_WEEKLY_REMAINDER_TEMPLATES:
+
+                        break;
+                    case INT_MONTHLY_REMAINDER_TEMPLATES:
+
+                        break;
+                    case INT_YEARLY_REMAINDER_TEMPLATES:
+
+                        break;
+                    case INT_CONDITIONAL_REMAINDER_TEMPLATES:
+
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     @Override
     public void onBackPressed() {
@@ -162,17 +220,16 @@ public class ActivityManageFunctions extends AppCompatActivity implements Recycl
                 break;
         }
     }
+
     @Override
-    public void onInterfaceString(int CODE_ID, String stringValue, int integerValue) {
-        //CODE_ALERT_DIALOG_FRAGMENT
-        final int CODE_INT_ADF_STRING_INTEGER_ID = Constants.CODES_ADF_STRING_INTEGER_INPUT.
-                CODE_INT_ADF_STRING_INTEGER_ID;
+    public void onInterfaceNewFunctionType(int CODE_FUNCTION_ADF_ID, Object objectFunctionType) {
         /* Add Item to database*/
         //Create a item
         ModelItemManageFunctions modelItemManageFunctions = new ModelItemManageFunctions();
         modelItemManageFunctions.link = gSelectedListaItemId;
-        modelItemManageFunctions.name = stringValue;
-        modelItemManageFunctions.value = integerValue;
+        modelItemManageFunctions.function = CODE_FUNCTION_ADF_ID;
+
+        modelItemManageFunctions.JSON = createStringFunctionJSON(CODE_FUNCTION_ADF_ID, objectFunctionType);
 
         //modelItemLists.id:? Database assigns the value to this item
         //getting value auto generated
@@ -182,5 +239,46 @@ public class ActivityManageFunctions extends AppCompatActivity implements Recycl
         modelItemManageFunctions.order = newDataBaseItemId;
         //inserting new item
         gRecyclerManageFunctions.addItemToRecycler(modelItemManageFunctions);
+    }
+
+    public static String createStringFunctionJSON(int CODE_FUNCTION_ADF_ID, Object valuesObject) {
+        final int INT_DEFAULT_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_DEFAULT_TEMPLATES;
+        final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MONEY_TEMPLATES;
+        final int INT_ONE_TIME_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_ONE_TIME_REMAINDER_TEMPLATES;
+        final int INT_DAILY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_DAILY_REMAINDER_TEMPLATES;
+        final int INT_WEEKLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_WEEKLY_REMAINDER_TEMPLATES;
+        final int INT_MONTHLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MONTHLY_REMAINDER_TEMPLATES;
+        final int INT_YEARLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_YEARLY_REMAINDER_TEMPLATES;
+        final int INT_CONDITIONAL_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_CONDITIONAL_REMAINDER_TEMPLATES;
+        switch (CODE_FUNCTION_ADF_ID) {
+            case INT_DEFAULT_TEMPLATES:
+                FunctionTypeMoneyAmount functionTypeMoneyAmount2 = (FunctionTypeMoneyAmount) valuesObject;
+                return TypeConverterFunctions.getStringFunctionTypeMoney(functionTypeMoneyAmount2);
+            case INT_MONEY_TEMPLATES:
+                FunctionTypeMoneyAmount functionTypeMoneyAmount = (FunctionTypeMoneyAmount) valuesObject;
+                return TypeConverterFunctions.getStringFunctionTypeMoney(functionTypeMoneyAmount);
+            case INT_ONE_TIME_REMAINDER_TEMPLATES:
+                return "";
+            case INT_DAILY_REMAINDER_TEMPLATES:
+                return "";
+            case INT_WEEKLY_REMAINDER_TEMPLATES:
+                return "";
+            case INT_MONTHLY_REMAINDER_TEMPLATES:
+                return "";
+            case INT_YEARLY_REMAINDER_TEMPLATES:
+                return "";
+            case INT_CONDITIONAL_REMAINDER_TEMPLATES:
+                return "";
+                default:
+                    return "";
+        }
     }
 }
