@@ -22,9 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cobosideas.lista.activities.MainActivity.MainActivityLista;
 import com.cobosideas.lista.R;
-import com.cobosideas.lista.activities.dagger.ComponentListCard;
-import com.cobosideas.lista.activities.dagger.DaggerComponentListCard;
-import com.cobosideas.lista.activities.dagger.DaggerListCard;
 import com.cobosideas.lista.activities.edit_lists.ActivityEditLists;
 import com.cobosideas.lista.activities.manage_functions.ActivityManageFunctions;
 import com.cobosideas.lista.dialogs.DialogStringInput;
@@ -52,7 +49,7 @@ public class ActivityLists extends AppCompatActivity implements
     ViewModelLists gViewModelLists;//Model View View Model
     RecyclerLists gRecyclerLists;//Variables for RecyclerView
 
-    DaggerListCard daggerListCard;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +63,6 @@ public class ActivityLists extends AppCompatActivity implements
             setupApplicationView(); //setup toolbar and change the title name
             setupDataAndRecycler();
 
-            /* TODO Setup dagger  */
-            setupDagger();
         }catch (Exception error){
             //In case there is a error on on starting the this activity,
             // we are going back to the MainActivity
@@ -210,10 +205,7 @@ public class ActivityLists extends AppCompatActivity implements
         tv_ToolbarDescription.setText(listDescription);
         iv_ToolbarLogo.setImageResource(listPhotoId);
     }
-    private void setupDagger(){
-        ComponentListCard componentListCard = DaggerComponentListCard.create();
-        daggerListCard = componentListCard.getDaggerListCard();
-    }
+
     @Override
     public void onInterfaceString(int CODE_ID, String stringValue, String stringDescription) {
         switch (CODE_ID){

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(entities = {ModelItemManageFunctions.class}, version = 1)
-@TypeConverters({ConverterManageFunctions.class})   //Adding this to be able to save JSON data
+@TypeConverters({TypeConverterFunctions.class})
 public abstract class ROOMDataBaseManageFunctions extends RoomDatabase {
     public abstract DAOItemFunctions getItemDAO();
 }

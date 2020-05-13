@@ -15,12 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cobosideas.lista.R;
+import com.cobosideas.lista.activities.manage_functions.FunctionTypeMoneyAmount;
 import com.cobosideas.lista.global.Constants;
 
 public class DialogStringIntegerInput extends DialogFragment{
     //CODE_ALERT_DIALOG_FRAGMENT
-    private final int CODE_INT_ADF_STRING_INTEGER_ID = Constants.CODES_ADF_STRING_INTEGER_INPUT.
-            CODE_INT_ADF_STRING_INTEGER_ID;
+    private final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+            INT_MONEY_TEMPLATES;
     private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INTEGER_INPUT.
             CODE_STRING_EDIT_STRING_VALUE;
     private final String CODE_STRING_EDIT_INTEGER_VALUE = Constants.CODES_ADF_STRING_INTEGER_INPUT.
@@ -30,7 +31,7 @@ public class DialogStringIntegerInput extends DialogFragment{
 
     /*        Trying to create a connection request sender for action    */
     public interface DialogStringInputListener {
-        void onInterfaceString(int CODE_ID, String stringValue, int integerValue);
+        void onInterfaceNewFunctionType(int CODE_FUNCTION_ID, Object objectFunctionType);
     }
     //Global values to show on AlertDialog
     private String stringValue;
@@ -101,9 +102,11 @@ public class DialogStringIntegerInput extends DialogFragment{
                 //send editText value to Activity
                 DialogStringInputListener listener = (DialogStringInputListener) getActivity();
                 if (listener != null) {
-                    listener.onInterfaceString(CODE_INT_ADF_STRING_INTEGER_ID,
-                            stringValue,
-                            integerValue);
+                    FunctionTypeMoneyAmount functionTypeMoneyAmount = new FunctionTypeMoneyAmount(
+                            stringValue, integerValue);
+                    listener.onInterfaceNewFunctionType(
+                            INT_MONEY_TEMPLATES,
+                            functionTypeMoneyAmount);
                 }else{
                     String errorMessage = getResources().getString(R.string.dialog_getting_string_error);
                     Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();

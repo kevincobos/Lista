@@ -8,15 +8,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.TypeConverters;
 
 import com.cobosideas.lista.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerManageFunctions extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     //DataSet to display on Recycler
     private List<ModelItemManageFunctions> dataSetManageFunctions;
     private RecyclerManageFunctionsInputListener recyclerInputListener;
+
     public interface RecyclerManageFunctionsInputListener {
         void onInterfaceString(int CODE_INT_MR_ID, Long stringValue, int itemPosition);
     }
@@ -52,11 +58,16 @@ public class RecyclerManageFunctions extends RecyclerView.Adapter<RecyclerView.V
     }
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        String convertToStringValue = dataSetManageFunctions.get(position).jSON+"";
+        String stringFunctionType = dataSetManageFunctions.get(position).JSON+"";
+
+        FunctionTypeMoneyAmount functionTypeMoneyAmount = TypeConverterFunctions.getFunctionTypeMoneyAmount(stringFunctionType);
+
         RecyclerManageFunctions.MyViewHolderDefault myViewHolderDefault = (RecyclerManageFunctions.
                 MyViewHolderDefault) holder;
-        myViewHolderDefault.tv_manage_function_Name.setText(dataSetManageFunctions.get(position).name);
-        myViewHolderDefault.tv_manage_function_number.setText(convertToStringValue);
+        //myViewHolderDefault.tv_manage_function_Name.setText(dataSetManageFunctions.get(position).);
+        myViewHolderDefault.tv_manage_function_Name.setText(functionTypeMoneyAmount.name);
+
+        myViewHolderDefault.tv_manage_function_number.setText(functionTypeMoneyAmount.number+"");
     }
     @Override
     public int getItemCount() {
