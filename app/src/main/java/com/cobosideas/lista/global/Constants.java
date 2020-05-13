@@ -7,8 +7,10 @@ public class Constants {
     private final static int CODE_ADF_STRING_INTEGER_INPUT = 200;
     private final static int CODES_RECYCLER_MAIN = 300;
     private final static int CODES_RECYCLER_LISTS = 400;
-    private final static int CODES_RECYCLER_MANAGER_FUNCTIONS = 400;
-    private final static int CODES_DIALOG_ICON_CHOOSER = 500;
+    private final static int CODES_RECYCLER_MANAGER_FUNCTIONS = 500;
+    private final static int CODES_DIALOG_ICON_CHOOSER = 600;
+    private final static int CODES_ACTIVITY_MANAGE_FUNCTIONS = 700;
+
 
     public interface CODES_ACTIVITY_BOOT{
         boolean CODE_BOOLEAN_START_DEBUG = false;
@@ -33,10 +35,12 @@ public class Constants {
     public interface CODES_ACTIVITY_MANAGE_FUNCTIONS {
         //Strings will help to obtain and save values in the activity lists cards
         String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
+        int CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY = CODES_ACTIVITY_MANAGE_FUNCTIONS + 1;
+        int CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER = CODES_ACTIVITY_MANAGE_FUNCTIONS + 2;
     }
     public interface CODES_DATABASE_MANAGE_FUNCTIONS {
         String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
-        int INT_DEFAULT_TEMPLATES = 0;
+        int INT_REMAINDER_TEMPLATES = 0;
         int INT_MONEY_TEMPLATES = 1;
         int INT_ONE_TIME_REMAINDER_TEMPLATES = 2;
         int INT_DAILY_REMAINDER_TEMPLATES = 3;
@@ -44,15 +48,10 @@ public class Constants {
         int INT_MONTHLY_REMAINDER_TEMPLATES = 5;
         int INT_YEARLY_REMAINDER_TEMPLATES = 6;
         int INT_CONDITIONAL_REMAINDER_TEMPLATES = 7;
-        String[] STRINGS_MANAGE_FUNCTIONS_TEMPLATES = new String[]{
-                "DEFAULT",
-                "MONEY",
-                "ONE TIME REMAINDER",
-                "DAILY REMAINDER",
-                "WEEKLY REMAINDER",
-                "MONTHLY REMAINDER",
-                "YEARLY REMAINDER",
-                "CONDITIONAL REMAINDER",
+
+        int[] INT_MANAGE_FUNCTIONS_TEMPLATES_NAMES = new int[]{
+                R.string.database_manage_functions_templates_money,
+                R.string.database_manage_functions_templates_remainder
         };
     }
     public interface CODES_ACTIVITY_EDIT_LISTS{

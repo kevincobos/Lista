@@ -9,6 +9,7 @@ import com.cobosideas.lista.R;
 import com.cobosideas.lista.activities.lists.ActivityLists;
 import com.cobosideas.lista.activities.lists.DataBaseLists;
 import com.cobosideas.lista.activities.lists.ModelItemLists;
+import com.cobosideas.lista.dialogs.DialogFunctionRemainderChooser;
 import com.cobosideas.lista.dialogs.DialogStringIntegerInput;
 import com.cobosideas.lista.global.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -140,57 +141,47 @@ public class ActivityManageFunctions extends AppCompatActivity implements
         });
     }
     private void newFunctionType(){
-        final int INT_DEFAULT_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_DEFAULT_TEMPLATES;
+        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
+                CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY;
+        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
+                CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER;
+
+        final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_REMAINDER_TEMPLATES;
         final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
                 INT_MONEY_TEMPLATES;
-        final int INT_ONE_TIME_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_ONE_TIME_REMAINDER_TEMPLATES;
-        final int INT_DAILY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_DAILY_REMAINDER_TEMPLATES;
-        final int INT_WEEKLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_WEEKLY_REMAINDER_TEMPLATES;
-        final int INT_MONTHLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_MONTHLY_REMAINDER_TEMPLATES;
-        final int INT_YEARLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_YEARLY_REMAINDER_TEMPLATES;
-        final int INT_CONDITIONAL_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_CONDITIONAL_REMAINDER_TEMPLATES;
 
         String dialog_new_function_type = getString(R.string.dialog_new_function_type);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(dialog_new_function_type);
-        String[]  STRINGS_MANAGE_FUNCTIONS_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                STRINGS_MANAGE_FUNCTIONS_TEMPLATES;
-        builder.setItems(STRINGS_MANAGE_FUNCTIONS_TEMPLATES, new DialogInterface.OnClickListener() {
+
+        int totalMenuItems = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MANAGE_FUNCTIONS_TEMPLATES_NAMES.length;
+        int[] INT_MANAGE_FUNCTIONS_TEMPLATES_NAMES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MANAGE_FUNCTIONS_TEMPLATES_NAMES;
+        String[]  stringManageFunctionsTemplateNames = new String[totalMenuItems];
+        for (int cont = 0; cont < totalMenuItems; cont++){
+            stringManageFunctionsTemplateNames[cont] = getString(
+                    INT_MANAGE_FUNCTIONS_TEMPLATES_NAMES[cont]);
+        }
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        builder.setItems(stringManageFunctionsTemplateNames, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
-                    case INT_DEFAULT_TEMPLATES:
-                        break;
                     case INT_MONEY_TEMPLATES:
                         //Showing AlertDialogFragment New Function Money
-                        FragmentManager fm = getSupportFragmentManager();
-                        DialogStringIntegerInput alertDialogFragment = DialogStringIntegerInput.newInstance();
-                        alertDialogFragment.show(fm, "alertDialogNewManageFunction");
+                        DialogStringIntegerInput alertDialogFragment =
+                                DialogStringIntegerInput.newInstance();
+                        alertDialogFragment.show(fragmentManager,
+                                "alertDialogNewFunctionMoney");
                         break;
-                    case INT_ONE_TIME_REMAINDER_TEMPLATES:
-
-                        break;
-                    case INT_DAILY_REMAINDER_TEMPLATES:
-
-                        break;
-                    case INT_WEEKLY_REMAINDER_TEMPLATES:
-
-                        break;
-                    case INT_MONTHLY_REMAINDER_TEMPLATES:
-
-                        break;
-                    case INT_YEARLY_REMAINDER_TEMPLATES:
-
-                        break;
-                    case INT_CONDITIONAL_REMAINDER_TEMPLATES:
-
+                    case INT_REMAINDER_TEMPLATES:
+                        //Showing AlertDialogFragment New Function Remainder
+                        DialogFunctionRemainderChooser alertDialogFragmentNewRemainder =
+                                DialogFunctionRemainderChooser.newInstance();
+                        alertDialogFragmentNewRemainder.show(fragmentManager,
+                                "alertDialogNewFunctionRemainder");
                         break;
                 }
             }
@@ -242,8 +233,13 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     }
 
     public static String createStringFunctionJSON(int CODE_FUNCTION_ADF_ID, Object valuesObject) {
-        final int INT_DEFAULT_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_DEFAULT_TEMPLATES;
+        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
+                CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY;
+        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
+                CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER;
+
+        final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_REMAINDER_TEMPLATES;
         final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
                 INT_MONEY_TEMPLATES;
         final int INT_ONE_TIME_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
@@ -259,26 +255,14 @@ public class ActivityManageFunctions extends AppCompatActivity implements
         final int INT_CONDITIONAL_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
                 INT_CONDITIONAL_REMAINDER_TEMPLATES;
         switch (CODE_FUNCTION_ADF_ID) {
-            case INT_DEFAULT_TEMPLATES:
-                FunctionTypeMoneyAmount functionTypeMoneyAmount2 = (FunctionTypeMoneyAmount) valuesObject;
-                return TypeConverterFunctions.getStringFunctionTypeMoney(functionTypeMoneyAmount2);
-            case INT_MONEY_TEMPLATES:
+            case CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY:
                 FunctionTypeMoneyAmount functionTypeMoneyAmount = (FunctionTypeMoneyAmount) valuesObject;
                 return TypeConverterFunctions.getStringFunctionTypeMoney(functionTypeMoneyAmount);
-            case INT_ONE_TIME_REMAINDER_TEMPLATES:
+            case CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER:
+
                 return "";
-            case INT_DAILY_REMAINDER_TEMPLATES:
-                return "";
-            case INT_WEEKLY_REMAINDER_TEMPLATES:
-                return "";
-            case INT_MONTHLY_REMAINDER_TEMPLATES:
-                return "";
-            case INT_YEARLY_REMAINDER_TEMPLATES:
-                return "";
-            case INT_CONDITIONAL_REMAINDER_TEMPLATES:
-                return "";
-                default:
-                    return "";
+
         }
+        return "";
     }
 }

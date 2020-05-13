@@ -2,51 +2,82 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/LinearLayoutGettingTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:orientation="vertical" >
-        <TextView
-            android:id="@+id/tv_alert_string_integer_input_name"
-            android:text = "@string/dialog_string_integer_title"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-        </TextView>
-        <EditText
-            android:id="@+id/et_new_string"
+        <RelativeLayout
+            android:id="@+id/LinearLayoutGettingTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dip"
-            android:layout_marginStart="5dip"
-            android:hint="@string/dialog_string_integer_description_hint"
-            android:lines="1"
-            android:maxLength="30"
-            android:maxLines="1"
-            android:singleLine="true" />
-        <TextView
-            android:id="@+id/tv_alert_dialog_string_input_description"
-            android:text = "@string/dialog_string_integer_value"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-        </TextView>
+            android:padding="4dp" >
 
-        <EditText
-            android:id="@+id/et_new_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dip"
-            android:layout_marginEnd="5dip"
-            android:hint="@string/dialog_string_integer_value"
-            android:lines="1"
-            android:maxLength="30"
-            android:maxLines="1"
-            android:numeric="integer"
-            android:singleLine="true"
-            android:textAlignment="textEnd" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_control_description"
+                android:layout_width="281dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="9dp"
+                android:layout_toStartOf="@+id/ll_control_value"
+                android:orientation="vertical"
+                android:padding="@dimen/margins_dialog_alert">
 
+                <TextView
+                    android:id="@+id/tv_alert_string_integer_input_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_string_integer_description"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_new_string"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginEnd="5dip"
+                    android:hint="@string/dialog_string_integer_description_hint"
+                    android:lines="1"
+                    android:maxLength="60"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_control_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:padding="@dimen/margins_dialog_alert">
+
+                <TextView
+                    android:id="@+id/tv_alert_dialog_string_input_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_string_integer_value"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    android:padding="@dimen/margins_dialog_alert"/>
+
+                <EditText
+                    android:id="@+id/et_new_value"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle"
+                    android:hint="@string/dialog_string_integer_value"
+                    android:inputType="number"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginEnd="5dip"
+                    android:lines="1"
+                    android:maxLength="8"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+        </RelativeLayout>
     <RelativeLayout
         android:layout_below="@+id/LinearLayoutGettingTitle"
         android:layout_width="fill_parent"
