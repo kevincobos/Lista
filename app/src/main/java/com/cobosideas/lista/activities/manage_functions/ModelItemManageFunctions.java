@@ -14,6 +14,6 @@ public class ModelItemManageFunctions {
     public Long id;         //Auto Generate number
     public Long order;      //This one will be use to organize the items
     public Long link;       //This is the selected Lista item for the table identification
-    public int function = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.INT_DEFAULT_TEMPLATES;
+    public int function = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.INT_MONEY_TEMPLATES;
     public String JSON = "";
 }

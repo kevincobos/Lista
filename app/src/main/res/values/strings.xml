@@ -21,11 +21,53 @@
     <string name="dialog_getting_string_description">"Description"</string>
     <string name="dialog_getting_string_name_empty">"Empty name"</string>
 
-    /*DialogFragment create new Manage Functions*/
-    <string name="dialog_string_integer_title">"Description"</string>
+    /*DialogFragment create new Manage Functions Money*/
+    <string name="dialog_string_integer_description">"Description"</string>
     <string name="dialog_string_integer_value">"Value"</string>
     <string name="dialog_string_integer_description_hint">"Describe value"</string>
     <string name="dialog_string_integer_value_hint">"0"</string>
+
+    /*DialogFragment remainder chooser*/
+    <string name="dialog_remainder_chooser_title">"Create a remainder"</string>
+
+    <string name="dialog_remainder_chooser_cb_repeat">"Repeat"</string>
+    <string name="dialog_remainder_chooser_cb_click_to_change">"Click to change"</string>
+
+    <string name="dialog_remainder_chooser_cb_hour_control">"Hour Control"</string>
+    <string name="dialog_remainder_chooser_cb_specific_time">"Specific Time"</string>
+    <string name="dialog_remainder_chooser_cb_selected_hours">"Selected Hours"</string>
+
+    <string name="dialog_remainder_chooser_cb_date_control">Date Control"</string>
+    <string name="dialog_remainder_chooser_cb_specific_day">"Specific Day"</string>
+    <string name="dialog_remainder_chooser_cb_selected_dais">"Selected Days"</string>
+    <string name="dialog_remainder_chooser_cb_mon">"Mon"</string>
+    <string name="dialog_remainder_chooser_cb_Tues">"Tues"</string>
+    <string name="dialog_remainder_chooser_cb_Wed">"Wed"</string>
+    <string name="dialog_remainder_chooser_cb_Thur">"Thur"</string>
+    <string name="dialog_remainder_chooser_cb_Fri">"Fri"</string>
+    <string name="dialog_remainder_chooser_cb_Sat">"Sat"</string>
+    <string name="dialog_remainder_chooser_cb_Sun">"Sun"</string>
+
+    <string name="dialog_remainder_chooser_cb_weekly">"Weekly"</string>
+    <string name="dialog_remainder_chooser_cb_first">"First"</string>
+    <string name="dialog_remainder_chooser_cb_second">"Second"</string>
+    <string name="dialog_remainder_chooser_cb_third">"Third"</string>
+    <string name="dialog_remainder_chooser_cb_forth">"Four"</string>
+
+    <string name="dialog_remainder_chooser_cb_monthly">"Months</string>
+    <string name="dialog_remainder_chooser_cb_jan">"Jan"</string>
+    <string name="dialog_remainder_chooser_cb_feb">"Feb"</string>
+    <string name="dialog_remainder_chooser_cb_mar">"Mar"</string>
+    <string name="dialog_remainder_chooser_cb_apr">"Apr"</string>
+    <string name="dialog_remainder_chooser_cb_may">"May"</string>
+    <string name="dialog_remainder_chooser_cb_jun">"Jun"</string>
+    <string name="dialog_remainder_chooser_cb_jul">"Jul"</string>
+    <string name="dialog_remainder_chooser_cb_aug">"Aug"</string>
+    <string name="dialog_remainder_chooser_cb_sep">"Sep"</string>
+    <string name="dialog_remainder_chooser_cb_oct">"Oct"</string>
+    <string name="dialog_remainder_chooser_cb_nov">"Nov"</string>
+    <string name="dialog_remainder_chooser_cb_dic">"Dic"</string>
+
 
     /*DialogFragment icon Chooser*/
     <string name="dialog_icon_chooser_title">"Select an Image"</string>
@@ -43,6 +85,18 @@
     <string name="alert_dialog_exit_message">"Are you sure you want to exit"</string>
     <string name="alert_dialog_exit_button">"Exit"</string>
     <string name="alert_dialog_exit_cancel_button">"Cancel"</string>
+
+    /* Database */
+    <string name="database_manage_functions_templates_default">"DEFAULT"</string>
+    <string name="database_manage_functions_templates_money">"MONEY"</string>
+    <string name="database_manage_functions_templates_remainder">"REMAINDER"</string>
+
+    <string name="database_manage_functions_templates_time_remainder">"ONE TIME REMAINDER"</string>
+    <string name="database_manage_functions_templates_daily_remainder">"DAILY REMAINDER"</string>
+    <string name="database_manage_functions_templates_weekly_remainder">"WEEKLY REMAINDER"</string>
+    <string name="database_manage_functions_templates_monthly_remainder">"MONTHLY REMAINDER"</string>
+    <string name="database_manage_functions_templates_yearly_remainder">"YEARLY REMAINDER"</string>
+    <string name="database_manage_functions_templates_conditional_remainder">"CONDITIONAL REMAINDER"</string>
 
     /*CardView Main Recycler*/
     <string name="cardView_main_recycler_description">"Image representing Item"</string>
@@ -77,5 +131,4 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_manage_functions">ActivityManageFunctions</string>
-
 </resources>

@@ -13,4 +13,7 @@
     <dimen name="cv_activity_lists">4dp</dimen>
     <!--Dimensions for the CardViews Manage Functions-->
     <dimen name="cv_activity_manage_functions">4dp</dimen>
+    <!--Dimensions for the AlertDialogFragment New Function Alert Chooser-->
+    <dimen name="margins_dialog_alert">4dp</dimen>
+
 </resources>
