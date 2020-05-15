@@ -23,101 +23,122 @@
         android:orientation="vertical">
 
         <CheckBox
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
             android:id="@+id/cb_repeat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/dialog_remainder_chooser_cb_repeat" />
 
-        <LinearLayout
-            android:id="@+id/ll_container_repeat_specific_time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margins_dialog_alert"
-            android:layout_marginEnd="@dimen/margins_dialog_alert"
-            android:background="@drawable/rectangle"
-            android:orientation="vertical">
-
-            <CheckBox
-                android:id="@+id/cb_hour_control"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_remainder_chooser_cb_hour_control" />
-
-            <RadioGroup
-                android:id="@+id/rg_hour_control"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rb_repeat_specific_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:text="@string/dialog_remainder_chooser_cb_specific_time" />
-
-                <RadioButton
-                    android:id="@+id/rb_repeat_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:text="@string/dialog_remainder_chooser_cb_selected_hours" />
-            </RadioGroup>
-
-            <LinearLayout
-                android:id="@+id/ll_control_specific_time"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_container_repeat_specific_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/b_select_specific_time"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:layout_marginEnd="@dimen/margins_dialog_alert"
-                    android:layout_weight="1"
-                    android:text="@string/dialog_remainder_chooser_cb_click_to_change" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_control_selected_hours"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margins_dialog_alert"
+                android:layout_marginEnd="@dimen/margins_dialog_alert"
+                android:background="@drawable/rectangle"
                 android:orientation="vertical">
-                <RadioGroup
-                    android:id="@+id/rg_AM_PM_control"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" >
 
-                    <RadioButton
-                        android:id="@+id/rb_AM"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margins_dialog_alert"
-                        android:text="@string/dialog_remainder_chooser_cb_specific_AM" />
-
-                    <RadioButton
-                        android:id="@+id/rb_PM"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margins_dialog_alert"
-                        android:text="@string/dialog_remainder_chooser_cb_specific_PM" />
-                </RadioGroup>
-                <Button
-                    android:id="@+id/b_select_hours"
-                    style="?android:attr/borderlessButtonStyle"
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_hour_control"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:layout_marginEnd="@dimen/margins_dialog_alert"
-                    android:layout_weight="1"
-                    android:text="@string/dialog_remainder_chooser_cb_click_to_change" />
-            </LinearLayout>
-        </LinearLayout>
+                    android:text="@string/dialog_remainder_chooser_cb_hour_control" />
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_hour_control"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
+                    <RadioGroup
+                        android:id="@+id/rg_hour_control"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_specific_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margins_dialog_alert"
+                            android:text="@string/dialog_remainder_chooser_cb_specific_time"
+                            android:checked="true"/>
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_specific_hours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margins_dialog_alert"
+                            android:text="@string/dialog_remainder_chooser_cb_selected_hours" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_control_specific_time"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/b_select_specific_time"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margins_dialog_alert"
+                            android:layout_marginEnd="@dimen/margins_dialog_alert"
+                            android:layout_weight="1"
+                            android:text="@string/dialog_remainder_chooser_cb_click_to_change" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_control_specific_hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <RadioGroup
+                            android:id="@+id/rg_AM_PM_control"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" >
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:id="@+id/rb_AM"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margins_dialog_alert"
+                                android:text="@string/dialog_remainder_chooser_cb_specific_AM"
+                                android:checked="true"/>
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:id="@+id/rb_PM"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margins_dialog_alert"
+                                android:text="@string/dialog_remainder_chooser_cb_specific_PM" />
+                        </RadioGroup>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ll_container_first_hours"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ll_container_second_hours"
+                            android:layout_width="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ll_container_third_hours"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         <LinearLayout
             android:id="@+id/ll_container_specific_day"
             android:layout_width="match_parent"
@@ -126,58 +147,62 @@
             android:layout_marginEnd="@dimen/margins_dialog_alert"
             android:background="@drawable/rectangle"
             android:orientation="vertical">
-
             <CheckBox
-                android:id="@+id/cb_Date_control"
+                android:id="@+id/cb_date_control"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_remainder_chooser_cb_date_control" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_date_control"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_repeat_specific_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margins_dialog_alert"
+                            android:text="@string/dialog_remainder_chooser_cb_specific_day"
+                            android:checked="true"/>
 
-                <RadioButton
-                    android:id="@+id/cb_repeat_specific_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:text="@string/dialog_remainder_chooser_cb_specific_day" />
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/cb_repeat_daily"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margins_dialog_alert"
+                            android:text="@string/dialog_remainder_chooser_cb_selected_dais" />
+                    </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/cb_repeat_daily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:text="@string/dialog_remainder_chooser_cb_selected_dais" />
-            </RadioGroup>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_control_specific_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/ll_control_specific_day"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/b_select_specific_day"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margins_dialog_alert"
+                            android:layout_marginEnd="@dimen/margins_dialog_alert"
+                            android:layout_weight="1"
+                            android:text="@string/dialog_remainder_chooser_cb_click_to_change" />
 
-                <Button
-                    android:id="@+id/b_select_specific_day"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margins_dialog_alert"
-                    android:layout_marginEnd="@dimen/margins_dialog_alert"
-                    android:layout_weight="1"
-                    android:text="@string/dialog_remainder_chooser_cb_click_to_change" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_container_selected_days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"></LinearLayout>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_control_specific_days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"></androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/ll_selector_repeat_specific_month"
             android:layout_width="match_parent"
@@ -188,16 +213,18 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/cb_repeat_monday"
+                android:id="@+id/cb_months_control"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_remainder_chooser_cb_monthly" />
 
-            <LinearLayout
-                android:id="@+id/ll_selector_repeat_monthly"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_control_months"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
 
 

@@ -179,7 +179,7 @@ public class ActivityManageFunctions extends AppCompatActivity implements
                     case INT_REMAINDER_TEMPLATES:
                         //Showing AlertDialogFragment New Function Remainder
                         DialogFunctionRemainderChooser alertDialogFragmentNewRemainder =
-                                DialogFunctionRemainderChooser.newInstance();
+                                DialogFunctionRemainderChooser.newInstance(null);
                         alertDialogFragmentNewRemainder.show(fragmentManager,
                                 "alertDialogNewFunctionRemainder");
                         break;
