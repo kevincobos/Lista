@@ -34,6 +34,8 @@
     <string name="dialog_remainder_chooser_cb_click_to_change">"Click to change"</string>
 
     <string name="dialog_remainder_chooser_cb_hour_control">"Hour Control"</string>
+    <string name="dialog_remainder_chooser_cb_specific_AM">"AM"</string>
+    <string name="dialog_remainder_chooser_cb_specific_PM">"PM"</string>
     <string name="dialog_remainder_chooser_cb_specific_time">"Specific Time"</string>
     <string name="dialog_remainder_chooser_cb_selected_hours">"Selected Hours"</string>
 

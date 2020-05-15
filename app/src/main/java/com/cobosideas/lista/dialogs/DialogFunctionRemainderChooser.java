@@ -28,6 +28,7 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     }
     //Global values to show on AlertDialog
     private String stringValue, stringDescription;
+    private
     //we will extract the string from et_stringValue to send it to the Activity
     //private EditText et_stringValue;
     //we will extract the string from et_stringDescription to send it to the Activity
