@@ -35,7 +35,7 @@ import java.util.List;
 public class MainActivityLista extends AppCompatActivity
         implements
         DialogStringInput.DialogStringInputListener,
-        MainRecycler.MainRecyclerInputListener {
+        MainRecycler.MainRecyclerInputListener{
     /**     CONSTANTS     */
     //CODE_ALERT_DIALOG_FRAGMENT
     final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;

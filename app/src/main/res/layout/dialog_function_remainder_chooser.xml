@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sv_scroller"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_alert_dialog_string_input_name"
@@ -16,19 +24,30 @@
         android:id="@+id/LinearLayoutGettingTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+
         android:layout_below="@+id/tv_alert_dialog_string_input_name"
+
         android:layout_marginStart="@dimen/margins_dialog_alert"
         android:layout_marginEnd="@dimen/margins_dialog_alert"
         android:background="@drawable/rectangle"
         android:orientation="vertical">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle"
+            android:hint="@string/dialog_remainder_chooser_description_hint"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLength="30"
+            android:minLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
         <CheckBox
-            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
             android:id="@+id/cb_repeat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/dialog_remainder_chooser_cb_repeat" />
-
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_container_repeat_specific_time"
                 android:layout_width="fill_parent"
@@ -115,27 +134,32 @@
                                 android:text="@string/dialog_remainder_chooser_cb_specific_PM" />
                         </RadioGroup>
                         <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_container_first_hours"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_container_first_hours"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_container_second_hours"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_container_third_hours"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+                            </androidx.appcompat.widget.LinearLayoutCompat>
                         </androidx.appcompat.widget.LinearLayoutCompat>
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_container_second_hours"
-                            android:layout_width="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_container_third_hours"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -163,7 +187,7 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/rb_repeat_specific_day"
+                            android:id="@+id/rb_specific_day"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margins_dialog_alert"
@@ -171,7 +195,7 @@
                             android:checked="true"/>
 
                         <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/cb_repeat_daily"
+                            android:id="@+id/rb_specific_days"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margins_dialog_alert"
@@ -200,7 +224,9 @@
                         android:id="@+id/ll_control_specific_days"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"></androidx.appcompat.widget.LinearLayoutCompat>
+                        android:orientation="horizontal">
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
         <LinearLayout
@@ -210,7 +236,7 @@
             android:layout_marginStart="@dimen/margins_dialog_alert"
             android:layout_marginEnd="@dimen/margins_dialog_alert"
             android:background="@drawable/rectangle"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_months_control"
@@ -222,14 +248,31 @@
                 android:id="@+id/ll_control_months"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:orientation="vertical">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_container_first_months"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_container_second_months"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_container_third_months"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
-
-
     </LinearLayout>
-
     <RelativeLayout
         android:layout_below="@+id/LinearLayoutGettingTitle"
         android:layout_width="match_parent"
@@ -281,3 +324,4 @@
             android:text="@string/global_create_new" />
     </RelativeLayout>
 </RelativeLayout>
+</ScrollView>

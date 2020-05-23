@@ -29,6 +29,7 @@
 
     /*DialogFragment remainder chooser*/
     <string name="dialog_remainder_chooser_title">"Create a remainder"</string>
+    <string name="dialog_remainder_chooser_description_hint">"Remainder"</string>
 
     <string name="dialog_remainder_chooser_cb_repeat">"Repeat"</string>
     <string name="dialog_remainder_chooser_cb_click_to_change">"Click to change"</string>

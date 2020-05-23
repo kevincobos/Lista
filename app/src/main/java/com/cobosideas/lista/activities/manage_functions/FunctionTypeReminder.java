@@ -21,6 +21,10 @@ public class FunctionTypeReminder {
     private long dateFunctionCreated = 0;
     private long dateFunctionModify = 0;
 
+    public FunctionTypeReminder(){
+        this.setSpecificTime(false);
+    }
+
     public FunctionTypeReminder(String newName, String reminderInformation){
         this.name = newName;
         this.reminderInformation = reminderInformation;
