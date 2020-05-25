@@ -8,12 +8,10 @@ public class FunctionTypeReminder {
     private boolean hourControl = false;
     private boolean specificTime = false;
     private String selectedTime = "";
-    private boolean selectedHours = false;
-    private boolean[] hours = new boolean[12];
+    private boolean[] selectedHours = new boolean[12];
     private boolean dateControl = false;
     private boolean specificDay = false;
-    private String selectedDate = "";
-    private boolean selectDays =false;
+    private String selectedDay = "";
     private boolean[] selectedDays = new boolean[7];
     private boolean months = false;
     private boolean monthsControl = false;
@@ -36,7 +34,7 @@ public class FunctionTypeReminder {
                                 boolean remainderNeededToday, boolean repeat, boolean hourControl,
                                 boolean specificTime, String selectedTime, boolean selectedHours,
                                 boolean[] hours, boolean dateControl,
-                                boolean specificDay, String selectedDate, boolean selectDays,
+                                boolean specificDay, String selectedDay, boolean selectDays,
                                 boolean[] selectedDays, boolean months,
                                 boolean monthsControl, boolean[] selectedMonths,
                                 long dateFunctionCreated, long dateFunctionModify) {
@@ -47,12 +45,10 @@ public class FunctionTypeReminder {
         this.hourControl = hourControl;
         this.specificTime = specificTime;
         this.selectedTime = selectedTime;
-        this.selectedHours = selectedHours;
-        this.hours = hours;
+        this.selectedHours = hours;
         this.dateControl = dateControl;
         this.specificDay = specificDay;
-        this.selectedDate = selectedDate;
-        this.selectDays = selectDays;
+        this.selectedDay = selectedDay;
         this.selectedDays = selectedDays;
         this.months = months;
         this.monthsControl = monthsControl;
@@ -117,20 +113,15 @@ public class FunctionTypeReminder {
         this.selectedTime = selectedTime;
     }
 
-    public boolean isSelectedHours() {
+    public boolean[] getSelectedHours() {
         return selectedHours;
     }
+    public boolean getSelectedHours(int selectedItem) {
+        return selectedHours[selectedItem];
+    }
 
-    public void setSelectedHours(boolean selectedHours) {
+    public void setSelectedHours(boolean[] selectedHours) {
         this.selectedHours = selectedHours;
-    }
-
-    public boolean[] getHours() {
-        return hours;
-    }
-
-    public void setHours(boolean[] hours) {
-        this.hours = hours;
     }
 
     public boolean isDateControl() {
@@ -149,25 +140,22 @@ public class FunctionTypeReminder {
         this.specificDay = specificDay;
     }
 
-    public String getSelectedDate() {
-        return selectedDate;
+    public String getSelectedDay() {
+        return selectedDay;
     }
 
-    public void setSelectedDate(String selectedDate) {
-        this.selectedDate = selectedDate;
-    }
-
-    public boolean isSelectDays() {
-        return selectDays;
-    }
-
-    public void setSelectDays(boolean selectDays) {
-        this.selectDays = selectDays;
+    public void setSelectedDay(String selectedDay) {
+        this.selectedDay = selectedDay;
     }
 
     public boolean[] getSelectedDays() {
         return selectedDays;
     }
+
+    public boolean getSelectedDays(int selectedItem) {
+        return selectedDays[selectedItem];
+    }
+
 
     public void setSelectedDays(boolean[] selectedDays) {
         this.selectedDays = selectedDays;
@@ -183,6 +171,10 @@ public class FunctionTypeReminder {
 
     public boolean[] getSelectedMonths() {
         return selectedMonths;
+    }
+
+    public boolean getSelectedMonths(int selectedItem) {
+        return selectedMonths[selectedItem];
     }
 
     public void setSelectedMonths(boolean[] selectedMonths) {

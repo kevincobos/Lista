@@ -1,11 +1,16 @@
 package com.cobosideas.lista.dialogs;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,23 +28,33 @@ import com.cobosideas.lista.activities.manage_functions.FunctionTypeReminder;
 import com.cobosideas.lista.activities.manage_functions.ModelTypeReminder;
 import com.cobosideas.lista.global.Constants;
 
+import java.util.Calendar;
+
 public class DialogFunctionRemainderChooser extends DialogFragment {
     //CODE_ALERT_DIALOG_FRAGMENT
-    private final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
-    private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INPUT.CODE_STRING_EDIT_STRING_VALUE;
-    private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ADF_STRING_INPUT.CODE_STRING_BUTTON_NEW_STATE;
+    private final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.
+            CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
+    private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INPUT.
+            CODE_STRING_EDIT_STRING_VALUE;
+    private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ADF_STRING_INPUT.
+            CODE_STRING_BUTTON_NEW_STATE;
 
     //Holds the access to liveData
-    ModelTypeReminder modelTypeReminder;
+    ModelTypeReminder gModelTypeReminder;
 
-    LiveData<FunctionTypeReminder> functionTypeReminder;
+    FunctionTypeReminder gFunctionTypeReminder;
     //Global values to show on AlertDialog
     private String stringValue, stringDescription;
 
     //buttonNewListState state
     private boolean buttonNewListState = false;
+    private EditText et_name;
+    Button b_selectSpecificTime, b_selectSpecificDay;
+    private AppCompatRadioButton rb_specific_time, rb_specific_hours, rb_specific_day,
+            rb_specific_days;
+    private AppCompatCheckBox cb_repeat, cb_hour_control, cb_date_control, cb_months_control;
+    private AppCompatCheckBox[] cb_hours, cb_days, cb_months;
 
-    private AppCompatRadioButton rb_specific_time, rb_specific_hours, rb_specific_day, rb_specific_days;
     private LinearLayoutCompat ll_hour_control, ll_date_control, ll_control_months,
             ll_control_specific_time, ll_control_specific_hours,
             ll_control_specific_day,  ll_control_specific_days,
@@ -77,6 +92,7 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             stringValue = savedInstanceState.getString(CODE_STRING_EDIT_STRING_VALUE);
             buttonNewListState = savedInstanceState.getBoolean(CODE_STRING_BUTTON_NEW_STATE);
         }
+        setupLiveData();
     }
     View gView;
     @Nullable
@@ -87,12 +103,13 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_function_remainder_chooser ,
                 container,
                 false);
-        setupLiveData();
+
         //View global: gView
         gView = view;
         setupLinearLayouts();
         setupControlsCheckButtons();
         setupControlsRadioButtons();
+        setupEditText();
         setupButtons();
         inflateHours();
         inflateDays();
@@ -102,13 +119,37 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     private Observer<FunctionTypeReminder> typeReminderUpdateObserver = new Observer<FunctionTypeReminder>() {
         @Override
         public void onChanged(FunctionTypeReminder functionTypeReminder) {
-            rb_specific_time.setChecked(functionTypeReminder.isSpecificTime());
+            gFunctionTypeReminder = gFunctionTypeReminder;
+            cb_repeat.setChecked(gFunctionTypeReminder.isRepeat());
+
+            cb_hour_control.setChecked(gFunctionTypeReminder.isHourControl());
+            cb_date_control.setChecked(gFunctionTypeReminder.isDateControl());
+            cb_months_control.setChecked(gFunctionTypeReminder.isMonthsControl());
+
+            rb_specific_time.setChecked(gFunctionTypeReminder.isSpecificTime());
+            rb_specific_hours.setChecked(gFunctionTypeReminder.isSpecificDay());
+
+            et_name.setText(gFunctionTypeReminder.getName());
+
+            b_selectSpecificTime.setText(gFunctionTypeReminder.getSelectedTime());
+            b_selectSpecificDay.setText(gFunctionTypeReminder.getSelectedDay());
+
+            for (int cont = 0; cont < cb_hours.length; cont++){
+                cb_hours[cont].setChecked(gFunctionTypeReminder.getSelectedHours(cont));
+            }
+            for (int cont = 0; cont < cb_days.length; cont++){
+                cb_days[cont].setChecked(gFunctionTypeReminder.getSelectedDays(cont));
+            }
+            for (int cont = 0; cont < cb_months.length; cont++){
+                cb_months[cont].setChecked(gFunctionTypeReminder.getSelectedMonths(cont));
+            }
         }
+
     };
     private void setupLiveData(){
         // Setup M V V M, after that jump to onChanged to setupRecycler
-        modelTypeReminder = new ViewModelProvider(this.requireActivity()).get(ModelTypeReminder.class);
-        modelTypeReminder.getAllValues().observe(this.requireActivity(), typeReminderUpdateObserver);
+        gModelTypeReminder = new ViewModelProvider(this.requireActivity()).get(ModelTypeReminder.class);
+        gModelTypeReminder.getAllValues().observe(this.requireActivity(), typeReminderUpdateObserver);
         //modelTypeReminder.setAllValues();
     }
     private void setupLinearLayouts(){
@@ -130,8 +171,9 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         ll_container_second_months = gView.findViewById(R.id.ll_container_second_months);
         ll_container_third_months = gView.findViewById(R.id.ll_container_third_months);
     }
-    private AppCompatCheckBox createNewCheckBox(String checkBoxName){
+    private AppCompatCheckBox createNewCheckBox(int idNumber, String checkBoxName){
         AppCompatCheckBox checkBox = new AppCompatCheckBox(this.requireContext());
+        checkBox.setId(idNumber);
         checkBox.setText(checkBoxName);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -145,11 +187,12 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         Shows the checkboxes only hours from 1 to 12
      */
     private void inflateHours(){
+        final int ID_HOURS = 10;
         final int TOTAL_HOURS = 12;
         final int SECOND_HOURS= 4;
         final int THIRD_HOURS = 8;
 
-        AppCompatCheckBox[] hours = new AppCompatCheckBox[TOTAL_HOURS];
+        cb_hours = new AppCompatCheckBox[TOTAL_HOURS];
         for (int cont = 0; cont < SECOND_HOURS; cont++){
             int secondRow = SECOND_HOURS + cont;
             int thirdRow = THIRD_HOURS + cont;
@@ -158,29 +201,30 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             String secondName = secondRow + 1 + "";
             String thirdName = thirdRow + 1 + "";
 
-            hours[cont] = createNewCheckBox(firstName);
-            hours[secondRow] = createNewCheckBox(secondName);
-            hours[thirdRow] = createNewCheckBox(thirdName);
+            cb_hours[cont] = createNewCheckBox(ID_HOURS + cont, firstName);
+            cb_hours[secondRow] = createNewCheckBox(ID_HOURS + secondRow, secondName);
+            cb_hours[thirdRow] = createNewCheckBox(ID_HOURS + thirdRow, thirdName);
 
-            ll_container_first_hours.addView(hours[cont]);
-            ll_container_second_hours.addView(hours[secondRow]);
-            ll_container_third_hours.addView(hours[thirdRow]);
+            ll_container_first_hours.addView(cb_hours[cont]);
+            ll_container_second_hours.addView(cb_hours[secondRow]);
+            ll_container_third_hours.addView(cb_hours[thirdRow]);
         }
     }
     private void inflateDays(){
         final int TOTAL_DAYS = 6;
-        AppCompatCheckBox[] days = new AppCompatCheckBox[TOTAL_DAYS];
+        cb_days = new AppCompatCheckBox[TOTAL_DAYS];
         for (int cont = 0; cont < TOTAL_DAYS; cont++){
             String textName = cont + 1 + "";
-            days[cont] = createNewCheckBox(textName);
-            ll_control_specific_days.addView(days[cont]);
+            cb_days[cont] = createNewCheckBox(cont, textName);
+            ll_control_specific_days.addView(cb_days[cont]);
         }
     }
     private void inflateMonths(){
+        final int ID_MONTHS = 100;
         final int TOTAL_MONTHS = 12;
         final int SECOND_MONTHS= 4;
         final int THIRD_MONTHS = 8;
-        AppCompatCheckBox[] months = new AppCompatCheckBox[TOTAL_MONTHS];
+        cb_months = new AppCompatCheckBox[TOTAL_MONTHS];
         for (int cont = 0; cont < SECOND_MONTHS; cont++){
             int secondRow = SECOND_MONTHS + cont;
             int thirdRow = THIRD_MONTHS + cont;
@@ -189,13 +233,13 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             String secondName = secondRow + 1 + "";
             String thirdName = thirdRow + 1 + "";
 
-            months[cont] = createNewCheckBox(fistName);
-            months[secondRow] = createNewCheckBox(secondName);
-            months[thirdRow] = createNewCheckBox(thirdName);
+            cb_months[cont] = createNewCheckBox(ID_MONTHS + cont, fistName);
+            cb_months[secondRow] = createNewCheckBox(ID_MONTHS + secondRow, secondName);
+            cb_months[thirdRow] = createNewCheckBox(ID_MONTHS + thirdRow, thirdName);
 
-            ll_container_first_months.addView(months[cont]);
-            ll_container_second_months.addView(months[secondRow]);
-            ll_container_third_months.addView(months[thirdRow]);
+            ll_container_first_months.addView(cb_months[cont]);
+            ll_container_second_months.addView(cb_months[secondRow]);
+            ll_container_third_months.addView(cb_months[thirdRow]);
         }
     }
     private void setupControlsRadioButtons(){
@@ -213,6 +257,7 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         setOnRadioButtonCheckedChange(rb_specific_days, SETUP_VIEW_CONTROL_DATE);
 
     }
+    //
     private void setOnRadioButtonCheckedChange(AppCompatRadioButton appCompatRadioButton,
                                                final int setupViewControl){
         final int SETUP_VIEW_CONTROL_TIME = 0;
@@ -253,10 +298,10 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         });
     }
     private void setupControlsCheckButtons(){
-        AppCompatCheckBox cb_hour_control = gView.findViewById(R.id.cb_hour_control);
-        AppCompatCheckBox cb_date_control = gView.findViewById(R.id.cb_date_control);
-        AppCompatCheckBox cb_months_control = gView.findViewById(R.id.cb_months_control);
-
+        cb_repeat = gView.findViewById(R.id.cb_repeat);
+        cb_hour_control = gView.findViewById(R.id.cb_hour_control);
+        cb_date_control = gView.findViewById(R.id.cb_date_control);
+        cb_months_control = gView.findViewById(R.id.cb_months_control);
         setOnCheckBoxCheckChange(cb_hour_control, ll_hour_control);
         setOnCheckBoxCheckChange(cb_date_control, ll_date_control);
         setOnCheckBoxCheckChange(cb_months_control, ll_control_months);
@@ -289,12 +334,51 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                 dismiss();
             }
         });
-        Button b_select_specific_time = gView.findViewById(R.id.b_select_specific_time);
-        b_select_specific_time.setOnClickListener(new View.OnClickListener() {
+
+        b_selectSpecificTime = gView.findViewById(R.id.b_select_specific_time);
+        b_selectSpecificDay = gView.findViewById(R.id.b_select_specific_day);
+        b_selectSpecificTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TimePicker specificTimeSelected = new TimePicker();
-            }
+                final Calendar calendar = Calendar.getInstance();
+                final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                final int minutes = calendar.get(Calendar.MINUTE);
+                // date picker dialog
+                TimePickerDialog picker = new TimePickerDialog(requireContext(),
+                        new TimePickerDialog.OnTimeSetListener(){
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String stringMinutes;
+                        if (minute < 9) stringMinutes = ":0"+minute;
+                        else stringMinutes = ":"+minute;
+                        String selectedTime = hourOfDay + stringMinutes;
+                        gFunctionTypeReminder.setSelectedTime(selectedTime);
+                        //b_selectSpecificTime.setText(selectedTime);
+                    }
+                },hour, minutes, true);
+                picker.show();            }
         });
+        b_selectSpecificDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // date picker dialog
+                DatePickerDialog picker = new DatePickerDialog(requireContext(),
+                        new DatePickerDialog.OnDateSetListener(){
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String selectedDay = year + "/" +month + "/" + dayOfMonth;
+                        //gFunctionTypeReminder.setSelectedDay(selectedDay);
+                        b_selectSpecificDay.setText(selectedDay);
+                    }
+                }, year, month, day);
+                picker.show();            }
+        });
+    }
+    private void setupEditText(){
+        et_name = gView.findViewById(R.id.et_name);
     }
 }
