@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 
 
-public class TypeReminderViewModel extends ViewModel {
-    MutableLiveData<FunctionTypeReminder> functionTypeReminderMutableLiveData;
-    public TypeReminderViewModel(){
-        this.functionTypeReminderMutableLiveData = new MutableLiveData<>();
+public class ModelTypeReminder extends ViewModel {
+    private MutableLiveData<FunctionTypeReminder> functionTypeReminderMutableLiveData;
+    public ModelTypeReminder(){
+        this.functionTypeReminderMutableLiveData = new MutableLiveData<FunctionTypeReminder>();
     }
     public void setAllValues(FunctionTypeReminder functionTypeReminder){
         this.functionTypeReminderMutableLiveData.setValue(functionTypeReminder);

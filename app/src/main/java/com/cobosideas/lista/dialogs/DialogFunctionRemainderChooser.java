@@ -14,12 +14,13 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cobosideas.lista.R;
 import com.cobosideas.lista.activities.manage_functions.FunctionTypeReminder;
-import com.cobosideas.lista.activities.manage_functions.TypeReminderViewModel;
+import com.cobosideas.lista.activities.manage_functions.ModelTypeReminder;
 import com.cobosideas.lista.global.Constants;
 
 public class DialogFunctionRemainderChooser extends DialogFragment {
@@ -27,19 +28,14 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     private final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
     private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INPUT.CODE_STRING_EDIT_STRING_VALUE;
     private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ADF_STRING_INPUT.CODE_STRING_BUTTON_NEW_STATE;
-    //Holds the access to liveData
-    TypeReminderViewModel typeReminderViewModel;
-    /*        Trying to create a connection request sender for action    */
-    public interface DialogStringInputListener {
-        void onInterfaceString(int CODE_ID, String stringValue, String stringDescription);
-    }
 
-    private FunctionTypeReminder functionTypeReminder = new FunctionTypeReminder();
+    //Holds the access to liveData
+    ModelTypeReminder modelTypeReminder;
+
+    LiveData<FunctionTypeReminder> functionTypeReminder;
     //Global values to show on AlertDialog
     private String stringValue, stringDescription;
 
-    //Buttons
-    private Button b_Cancel, b_CreateNewRemainder;
     //buttonNewListState state
     private boolean buttonNewListState = false;
 
@@ -49,6 +45,10 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             ll_control_specific_day,  ll_control_specific_days,
             ll_container_first_hours, ll_container_second_hours, ll_container_third_hours,
             ll_container_first_months, ll_container_second_months, ll_container_third_months;
+    /*        Trying to create a connection request sender for action    */
+    public interface DialogStringInputListener {
+        void onInterfaceString(int CODE_ID, String stringValue, String stringDescription);
+    }
     public DialogFunctionRemainderChooser(){
     }
     public static DialogFunctionRemainderChooser newInstance(FunctionTypeReminder functionTypeReminder) {
@@ -107,9 +107,9 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     };
     private void setupLiveData(){
         // Setup M V V M, after that jump to onChanged to setupRecycler
-        typeReminderViewModel = new ViewModelProvider(this.requireActivity()).get(TypeReminderViewModel.class);
-        typeReminderViewModel.getAllValues().observe(this.requireActivity(), typeReminderUpdateObserver);
-        typeReminderViewModel.setAllValues(functionTypeReminder);
+        modelTypeReminder = new ViewModelProvider(this.requireActivity()).get(ModelTypeReminder.class);
+        modelTypeReminder.getAllValues().observe(this.requireActivity(), typeReminderUpdateObserver);
+        //modelTypeReminder.setAllValues();
     }
     private void setupLinearLayouts(){
         ll_hour_control = gView.findViewById(R.id.ll_hour_control);
@@ -228,7 +228,7 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                         if (rb_specific_hours.isChecked()) ll_control_specific_hours.
                                 setVisibility(View.VISIBLE);
                         else ll_control_specific_hours.setVisibility(View.GONE);
-                        functionTypeReminder.setSpecificTime(isChecked);
+                        //functionTypeReminder.setSpecificTime(isChecked);
                         break;
                     case SETUP_VIEW_CONTROL_DATE:
                         if (rb_specific_day.isChecked()) ll_control_specific_day.
@@ -262,8 +262,9 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         setOnCheckBoxCheckChange(cb_months_control, ll_control_months);
     }
     private void setupButtons() {
-        b_Cancel = gView.findViewById(R.id.b_cancel);
-        b_CreateNewRemainder = gView.findViewById(R.id.b_new_remainder);
+        //Buttons
+        Button b_Cancel = gView.findViewById(R.id.b_cancel);
+        Button b_CreateNewRemainder = gView.findViewById(R.id.b_new_remainder);
         b_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
