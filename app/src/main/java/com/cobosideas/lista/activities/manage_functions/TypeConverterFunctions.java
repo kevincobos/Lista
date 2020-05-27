@@ -20,4 +20,16 @@ class TypeConverterFunctions {
         Type listType = new TypeToken<FunctionTypeMoneyAmount>() { }.getType();
         return new Gson().toJson(functionTypeMoneyAmount, listType);
     }
+    @TypeConverter
+    public static FunctionTypeReminder getFunctionTypeRemainder(String stringFunctionRemainder){
+        if (stringFunctionRemainder == null) return null;
+        Type listType = new TypeToken<FunctionTypeReminder>() { }.getType();
+        return new Gson().fromJson(stringFunctionRemainder, listType);
+    }
+    @TypeConverter
+    public static String getStringFunctionTypeRemainder(FunctionTypeReminder functionTypeReminder){
+        if (functionTypeReminder == null) return null;
+        Type listType = new TypeToken<FunctionTypeReminder>() { }.getType();
+        return new Gson().toJson(functionTypeReminder, listType);
+    }
 }

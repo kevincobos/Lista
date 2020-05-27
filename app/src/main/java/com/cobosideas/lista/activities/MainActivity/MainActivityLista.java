@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.cobosideas.lista.global.Constants;
 import com.cobosideas.lista.global.SharableUtilitiesMessages;
 import com.cobosideas.lista.activities.MainActivity.room.core.CoreDataBase;
 import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
+import com.cobosideas.lista.global.remainders_manager.ReminderClock;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -104,13 +106,14 @@ public class MainActivityLista extends AppCompatActivity
     }
     @Nullable
     @Override
-    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+    public View onCreateView(@NonNull String name, @NonNull Context context,
+                             @NonNull AttributeSet attrs) {
         return super.onCreateView(name, context, attrs);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
     @Override
@@ -121,14 +124,22 @@ public class MainActivityLista extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_activity_main_settings) {
+            showingAllNotifications();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    private void showingAllNotifications(){
+        ReminderClock remainderClock = new ReminderClock(context);
+        int totalListas = remainderClock.getAllListas();
+        //int totalLists = remainderClock.getAllLists();
+        //int totalListsItems = remainderClock.getAllListsItems();
+        Toast.makeText(context,"totalListas="+totalListas, Toast.LENGTH_LONG).show();
+    }
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
-        //Values to setup AlertFragment, so far I'm not using this values
+        //TODO Values to setup AlertFragment, so far I'm not using this values
         String title = getStringFromResources(R.string.dialog_getting_string_new_title);
         String message = getStringFromResources(R.string.dialog_getting_string_new_message_name);
         //Showing Dialog Message

@@ -2,7 +2,7 @@ package com.cobosideas.lista.activities.manage_functions;
 
 
 public class FunctionTypeMoneyAmount {
-    public String name = "";
+    public String name = "Value Description";
     public int number = 0;
     public Long dateFunctionCreated = 0L;
     public Long dateFunctionModify = 0L;

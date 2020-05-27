@@ -24,22 +24,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-
 import java.util.List;
+
 public class ActivityManageFunctions extends AppCompatActivity implements
         RecyclerManageFunctions.RecyclerManageFunctionsInputListener,
-        DialogStringIntegerInput.DialogStringInputListener {
+        DialogStringIntegerInput.DialogStringInputListener,
+        DialogFunctionRemainderChooser.DialogRemainderChooserListener {
     /*     CONSTANTS
      *     CODE_STRING_ACTIVITY_LISTA this is the values coming from ActivityLists */
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
     //CODE_INT_ACTIVITY_EDIT_LISTS
     private final String CODE_STRING_EDIT_LISTS_ID_SELECTED = Constants.CODES_ACTIVITY_EDIT_LISTS
             .CODE_STRING_EDIT_LISTS_ID_SELECTED;
+
     Context gContext; //Context to use globally
     DataBaseLists gDataBaseLists;
     ModelItemLists gModelItemLists;
     Long gSelectedListaItemId;
-    Long gSelectedListId;
+    Long gSelectedListItemId;
 
     DataBaseManageFunctions gDataBaseManageFunctions;//Initialize the DataBase to be able to use it
     ViewModelManageFunctions gViewModelManageFunctions;//Model View View Model
@@ -62,7 +64,7 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     };
     public void setupDataAndRecycler(){
         gDataBaseManageFunctions = new DataBaseManageFunctions(gContext,
-                gSelectedListaItemId);//Starting DataBase
+                gSelectedListItemId);//Starting DataBase
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
         gViewModelManageFunctions = new ViewModelProvider(this).get(ViewModelManageFunctions.class);
@@ -88,7 +90,7 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     }
     private void setupDataBaseListsSelectedList(){
         gDataBaseLists = new DataBaseLists(gContext, gSelectedListaItemId);
-        gModelItemLists = gDataBaseLists.getListsItemFromDataBase(gSelectedListId);
+        gModelItemLists = gDataBaseLists.getListsItemFromDataBase(gSelectedListItemId);
     }
     private void setupValues(Bundle savedInstanceState){
         gContext = getApplicationContext();
@@ -100,16 +102,16 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     }
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        savedInstanceState.putLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, this.gSelectedListId);
+        savedInstanceState.putLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, this.gSelectedListItemId);
         savedInstanceState.putLong(CODE_STRING_LISTA_ID, this.gSelectedListaItemId);
        super.onSaveInstanceState(savedInstanceState);
     }
     private void setGlobalVariables(){
-        this.gSelectedListId = getIntent().getLongExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
+        this.gSelectedListItemId = getIntent().getLongExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
         this.gSelectedListaItemId = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
     }
     private void getGlobalVariables(Bundle savedInstanceState) {
-        this.gSelectedListId = savedInstanceState.getLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
+        this.gSelectedListItemId = savedInstanceState.getLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
         this.gSelectedListaItemId = savedInstanceState.getLong(CODE_STRING_LISTA_ID, 0);
     }
     private void setupToolBar(){
@@ -141,11 +143,6 @@ public class ActivityManageFunctions extends AppCompatActivity implements
         });
     }
     private void newFunctionType(){
-        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
-                CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY;
-        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
-                CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER;
-
         final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
                 INT_REMAINDER_TEMPLATES;
         final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
@@ -233,35 +230,17 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     }
 
     public static String createStringFunctionJSON(int CODE_FUNCTION_ADF_ID, Object valuesObject) {
-        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
-                CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY;
-        final int CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
-                CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER;
-
-        final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_REMAINDER_TEMPLATES;
         final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
                 INT_MONEY_TEMPLATES;
-        final int INT_ONE_TIME_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_ONE_TIME_REMAINDER_TEMPLATES;
-        final int INT_DAILY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_DAILY_REMAINDER_TEMPLATES;
-        final int INT_WEEKLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_WEEKLY_REMAINDER_TEMPLATES;
-        final int INT_MONTHLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_MONTHLY_REMAINDER_TEMPLATES;
-        final int INT_YEARLY_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_YEARLY_REMAINDER_TEMPLATES;
-        final int INT_CONDITIONAL_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
-                INT_CONDITIONAL_REMAINDER_TEMPLATES;
+        final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_REMAINDER_TEMPLATES;
         switch (CODE_FUNCTION_ADF_ID) {
-            case CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEY:
+            case INT_MONEY_TEMPLATES:
                 FunctionTypeMoneyAmount functionTypeMoneyAmount = (FunctionTypeMoneyAmount) valuesObject;
                 return TypeConverterFunctions.getStringFunctionTypeMoney(functionTypeMoneyAmount);
-            case CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDER:
-
-                return "";
-
+            case INT_REMAINDER_TEMPLATES:
+                FunctionTypeReminder functionTypeRemainder = (FunctionTypeReminder) valuesObject;
+                return TypeConverterFunctions.getStringFunctionTypeRemainder(functionTypeRemainder);
         }
         return "";
     }

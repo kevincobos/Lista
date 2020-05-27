@@ -28,6 +28,16 @@ public class CoreDataBase {
         ItemDAO itemDAO = listaDataBase.getItemDAO();
         return itemDAO.getItems();
     }
+    //getting data from database in memory
+    public List<Integer> getListaIsNumber(){
+        List<Integer> listaIdsInteger = null;
+        ItemDAO itemDAO = listaDataBase.getItemDAO();
+        List<ItemRoom> itemRooms = itemDAO.getItems();
+        for(int cont = 0; cont < itemDAO.getItems().size(); cont++){
+            listaIdsInteger.add(itemRooms)
+        }
+        return listaIdsInteger;
+    }
     //getting selected item from database
     public ItemRoom getListaItemFromDataBase(Long Id){
         ItemDAO itemDAO = listaDataBase.getItemDAO();

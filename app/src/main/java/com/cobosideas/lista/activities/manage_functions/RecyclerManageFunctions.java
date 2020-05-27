@@ -8,14 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.TypeConverters;
 
 import com.cobosideas.lista.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.cobosideas.lista.global.Constants;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerManageFunctions extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -58,16 +54,40 @@ public class RecyclerManageFunctions extends RecyclerView.Adapter<RecyclerView.V
     }
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        String stringFunctionType = dataSetManageFunctions.get(position).JSON+"";
-
-        FunctionTypeMoneyAmount functionTypeMoneyAmount = TypeConverterFunctions.getFunctionTypeMoneyAmount(stringFunctionType);
-
+        final int INT_MONEY_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_MONEY_TEMPLATES;
+        final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+                INT_REMAINDER_TEMPLATES;
+        String stringFunctionType = dataSetManageFunctions.get(position).JSON;
+        int typeFunction = dataSetManageFunctions.get(position).function;
+        switch (typeFunction){
+            case INT_MONEY_TEMPLATES:
+                handleDefaultMoney(stringFunctionType, holder);
+                break;
+            case  INT_REMAINDER_TEMPLATES:
+                handleDefaultReminder(stringFunctionType, holder);
+                break;
+        }
+    }
+    private void handleDefaultMoney(String stringFunctionType, RecyclerView.ViewHolder holder){
+        //functionTypeMoneyAmount
+        FunctionTypeMoneyAmount functionTypeMoneyAmount = TypeConverterFunctions.
+                getFunctionTypeMoneyAmount(stringFunctionType);
+        //ViewHolder will give us a access to the view objects
         RecyclerManageFunctions.MyViewHolderDefault myViewHolderDefault = (RecyclerManageFunctions.
                 MyViewHolderDefault) holder;
-        //myViewHolderDefault.tv_manage_function_Name.setText(dataSetManageFunctions.get(position).);
         myViewHolderDefault.tv_manage_function_Name.setText(functionTypeMoneyAmount.name);
-
-        myViewHolderDefault.tv_manage_function_number.setText(functionTypeMoneyAmount.number+"");
+        String moneyAmount = "$"+functionTypeMoneyAmount.number;
+        myViewHolderDefault.tv_manage_function_number.setText(moneyAmount);
+    }
+    private void handleDefaultReminder(String stringFunctionType, RecyclerView.ViewHolder holder){
+        FunctionTypeReminder functionTypeReminder = TypeConverterFunctions.
+                getFunctionTypeRemainder(stringFunctionType);
+        RecyclerManageFunctions.MyViewHolderDefault myViewHolderDefault = (RecyclerManageFunctions.
+                MyViewHolderDefault) holder;
+        myViewHolderDefault.tv_manage_function_Name.setText(functionTypeReminder.name);
+        String description = functionTypeReminder.getReminderInformation();
+        myViewHolderDefault.tv_manage_function_number.setText(description);
     }
     @Override
     public int getItemCount() {

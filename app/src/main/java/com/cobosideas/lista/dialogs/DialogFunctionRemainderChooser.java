@@ -19,7 +19,6 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -31,9 +30,9 @@ import com.cobosideas.lista.global.Constants;
 import java.util.Calendar;
 
 public class DialogFunctionRemainderChooser extends DialogFragment {
+    final int INT_REMAINDER_TEMPLATES = Constants.CODES_DATABASE_MANAGE_FUNCTIONS.
+            INT_REMAINDER_TEMPLATES;
     //CODE_ALERT_DIALOG_FRAGMENT
-    private final int CODE_INT_ADF_ID = Constants.CODES_ADF_STRING_INPUT.
-            CODE_INT_ALERT_DIALOG_FRAGMENT_ID;
     private final String CODE_STRING_EDIT_STRING_VALUE = Constants.CODES_ADF_STRING_INPUT.
             CODE_STRING_EDIT_STRING_VALUE;
     private final String CODE_STRING_BUTTON_NEW_STATE = Constants.CODES_ADF_STRING_INPUT.
@@ -61,8 +60,8 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             ll_container_first_hours, ll_container_second_hours, ll_container_third_hours,
             ll_container_first_months, ll_container_second_months, ll_container_third_months;
     /*        Trying to create a connection request sender for action    */
-    public interface DialogStringInputListener {
-        void onInterfaceString(int CODE_ID, String stringValue, String stringDescription);
+    public interface DialogRemainderChooserListener {
+        void onInterfaceNewFunctionType(int CODE_ID, Object functionTypeRemainder);
     }
     public DialogFunctionRemainderChooser(){
     }
@@ -116,20 +115,57 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         inflateMonths();
         return view;
     }
+
+    private FunctionTypeReminder getFunctionTypeRemainder(){
+        FunctionTypeReminder functionTypeReminder = new FunctionTypeReminder();
+        functionTypeReminder.setRepeat(cb_repeat.isChecked());
+
+        functionTypeReminder.setName(et_name.getText().toString());
+
+        functionTypeReminder.setHourControl(cb_hour_control.isChecked());
+        functionTypeReminder.setDateControl(cb_date_control.isChecked());
+        functionTypeReminder.setMonthsControl(cb_months_control.isChecked());
+
+        functionTypeReminder.setSpecificTime(rb_specific_time.isChecked());
+        functionTypeReminder.setSpecificDay(rb_specific_day.isChecked());
+
+        b_selectSpecificTime.getText();
+        b_selectSpecificDay.getText();
+
+        boolean[] selectedHours = new boolean[cb_hours.length];
+        for (int cont = 0; cont < cb_hours.length; cont++){
+            selectedHours[cont] = cb_hours[cont].isChecked();
+        }
+        functionTypeReminder.setSelectedHours(selectedHours);
+
+        boolean[] selectedDays = new boolean[cb_days.length];
+        for (int cont = 0; cont < cb_days.length; cont++){
+            selectedDays[cont] = cb_days[cont].isChecked();
+        }
+        functionTypeReminder.setSelectedDays(selectedDays);
+
+        boolean[] selectedMonths = new boolean[cb_months.length];
+        for (int cont = 0; cont < cb_months.length; cont++){
+            selectedMonths[cont] = cb_months[cont].isChecked();
+        }
+        functionTypeReminder.setSelectedMonths(selectedMonths);
+        return functionTypeReminder;
+    }
+
     private Observer<FunctionTypeReminder> typeReminderUpdateObserver = new Observer<FunctionTypeReminder>() {
         @Override
         public void onChanged(FunctionTypeReminder functionTypeReminder) {
-            gFunctionTypeReminder = gFunctionTypeReminder;
+            gFunctionTypeReminder = functionTypeReminder;
             cb_repeat.setChecked(gFunctionTypeReminder.isRepeat());
+
+            et_name.setText(gFunctionTypeReminder.getName());
 
             cb_hour_control.setChecked(gFunctionTypeReminder.isHourControl());
             cb_date_control.setChecked(gFunctionTypeReminder.isDateControl());
             cb_months_control.setChecked(gFunctionTypeReminder.isMonthsControl());
 
             rb_specific_time.setChecked(gFunctionTypeReminder.isSpecificTime());
-            rb_specific_hours.setChecked(gFunctionTypeReminder.isSpecificDay());
-
-            et_name.setText(gFunctionTypeReminder.getName());
+            rb_specific_day.setChecked(gFunctionTypeReminder.isSpecificDay());
 
             b_selectSpecificTime.setText(gFunctionTypeReminder.getSelectedTime());
             b_selectSpecificDay.setText(gFunctionTypeReminder.getSelectedDay());
@@ -316,16 +352,18 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                 dismiss();
             }
         });
-        b_CreateNewRemainder.setEnabled(buttonNewListState);
+        //b_CreateNewRemainder.setEnabled(buttonNewListState);
         b_CreateNewRemainder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // on success
                 //String valueToSendToActivity = et_stringValue.getText().toString();
                 //send editText value to Activity
-                DialogStringInputListener listener = (DialogStringInputListener) getActivity();
+                DialogRemainderChooserListener listener = (DialogRemainderChooserListener) getActivity();
                 if (listener != null) {
-                    listener.onInterfaceString(CODE_INT_ADF_ID, stringValue, stringDescription);
+                    FunctionTypeReminder functionTypeReminder = getFunctionTypeRemainder();
+                    listener.onInterfaceNewFunctionType(INT_REMAINDER_TEMPLATES,
+                            functionTypeReminder);
                 } else {
                     String errorMessage = getResources().getString(R.string.dialog_getting_string_error);
                     Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
@@ -352,8 +390,8 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                         if (minute < 9) stringMinutes = ":0"+minute;
                         else stringMinutes = ":"+minute;
                         String selectedTime = hourOfDay + stringMinutes;
-                        gFunctionTypeReminder.setSelectedTime(selectedTime);
-                        //b_selectSpecificTime.setText(selectedTime);
+                        //gFunctionTypeReminder.setSelectedTime(selectedTime);
+                        b_selectSpecificTime.setText(selectedTime);
                     }
                 },hour, minutes, true);
                 picker.show();            }
