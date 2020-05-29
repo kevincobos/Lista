@@ -39,9 +39,9 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             CODE_STRING_BUTTON_NEW_STATE;
 
     //Holds the access to liveData
-    ModelTypeReminder gModelTypeReminder;
+    private ModelTypeReminder gModelTypeReminder;
 
-    FunctionTypeReminder gFunctionTypeReminder;
+    private FunctionTypeReminder gFunctionTypeReminder;
     //Global values to show on AlertDialog
     private String stringValue, stringDescription;
 

@@ -132,10 +132,16 @@ public class MainActivityLista extends AppCompatActivity
     }
     private void showingAllNotifications(){
         ReminderClock remainderClock = new ReminderClock(context);
+
         int totalListas = remainderClock.getAllListas();
+        List<String> allListaDataBaseName = getListaDataBaseName.getAllListasIds();
+        int sizeAllListas = remainderClock.getListaDataBaseName.;
+        for (int cont = 0;  ){
+
+        }
         //int totalLists = remainderClock.getAllLists();
         //int totalListsItems = remainderClock.getAllListsItems();
-        Toast.makeText(context,"totalListas="+totalListas, Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"totalListas="+totalListas+"\n", Toast.LENGTH_LONG).show();
     }
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
@@ -215,7 +221,6 @@ public class MainActivityLista extends AppCompatActivity
         Long sessionId;
         switch (CODE_ID){
             case CODE_INT_MAIN_RECYCLER_ACCESS:
-
                 /* Click on one of the Items in the Recycler */
                 //Looking inside database all information
                 modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);

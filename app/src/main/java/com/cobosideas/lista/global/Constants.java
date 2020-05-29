@@ -36,8 +36,6 @@ public class Constants {
     public interface CODES_ACTIVITY_MANAGE_FUNCTIONS {
         //Strings will help to obtain and save values in the activity lists cards
         String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
-        //int CODE_ACTIVITY_MENU_NEW_FUNCTION_MONEYa = CODES_ACTIVITY_MANAGE_FUNCTIONS + 1;
-        //int CODE_ACTIVITY_MENU_NEW_FUNCTION_REMAINDERa = CODES_ACTIVITY_MANAGE_FUNCTIONS + 2;
     }
     public interface CODES_DATABASE_MANAGE_FUNCTIONS {
         String MANAGE_FUNCTIONS_DATABASE_ID = "MANAGE_FUNCTIONS_DATABASE_ID";
