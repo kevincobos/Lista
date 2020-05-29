@@ -67,8 +67,10 @@ public class ActivityManageFunctions extends AppCompatActivity implements
                 gSelectedListItemId);//Starting DataBase
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
-        gViewModelManageFunctions = new ViewModelProvider(this).get(ViewModelManageFunctions.class);
-        gViewModelManageFunctions.getAllItemsMutableLiveDataModel().observe(this, listUpdateObserver);
+        gViewModelManageFunctions = new ViewModelProvider(this).
+                get(ViewModelManageFunctions.class);
+        gViewModelManageFunctions.getAllItemsMutableLiveDataModel().
+                observe(this, listUpdateObserver);
         //get all values from Data Base and setup mainRecyclerViewModel
         gViewModelManageFunctions.setAllItemsViewModel(gDataBaseManageFunctions.getAllItems());
     }
@@ -85,8 +87,8 @@ public class ActivityManageFunctions extends AppCompatActivity implements
 
         //setup recycler: DataBase , MainRecyclerInputListener
         gRecyclerManageFunctions = new RecyclerManageFunctions(itemsManageFunctions, this);
-        RecyclerView.Adapter mAdapter = gRecyclerManageFunctions;
-        recyclerViewLists.setAdapter(mAdapter);
+        RecyclerView.Adapter adapter = gRecyclerManageFunctions;
+        recyclerViewLists.setAdapter(adapter);
     }
     private void setupDataBaseListsSelectedList(){
         gDataBaseLists = new DataBaseLists(gContext, gSelectedListaItemId);

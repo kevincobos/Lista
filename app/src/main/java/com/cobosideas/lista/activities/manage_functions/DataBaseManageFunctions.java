@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.cobosideas.lista.activities.lists.ModelItemLists;
 import com.cobosideas.lista.global.Constants;
 
 import java.util.List;
@@ -38,6 +39,16 @@ public class DataBaseManageFunctions {
     public ModelItemManageFunctions getItemSelected(Long Id){
         DAOItemFunctions DAOItem = roomDataBaseManageFunctions.getItemDAO();
         return DAOItem.getItemListsById(Id);
+    }
+    //creating a lists of database integers to access each list items
+    public List<Long> getManageFunctionsDataBaseAccessesIds(){
+        List<Long> manageFunctionsAccessesIds = null;
+        List<ModelItemManageFunctions> itemRooms = getAllItems();
+        for(int cont = 0; cont < itemRooms.size(); cont++){
+            Long dataBaseIdAccess = itemRooms.get(cont).id;
+            manageFunctionsAccessesIds.add(dataBaseIdAccess);
+        }
+        return manageFunctionsAccessesIds;
     }
     //update selected item from database
     public void updateItemSelected(ModelItemManageFunctions modelItemManageFunctions){

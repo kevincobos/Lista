@@ -46,7 +46,7 @@ public class MainActivityLista extends AppCompatActivity
     final int CODE_INT_MAIN_RECYCLER_DELETE = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_DELETE;
     //CODE_STRING_ACTIVITY_LISTS
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
-    Context context; //Context to use globally
+    Context gContext; //Context to use globally
     SharableUtilitiesMessages Messages; //Using a class that simplifies the use of: SnackBar and Toast
     MainRecycler mainRecycler;//Variables for RecyclerView
     MainViewModel mainViewModel;//Model View View Model
@@ -57,8 +57,8 @@ public class MainActivityLista extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        context = this.getApplicationContext();
-        Messages = new SharableUtilitiesMessages(context);//setting up Messages with context
+        gContext = this.getApplicationContext();
+        Messages = new SharableUtilitiesMessages(gContext);//setting up Messages with context
 
         setContentView(R.layout.activity_main_lista);
         Toolbar toolbar = findViewById(R.id.tb_main_activity_lista);
@@ -83,8 +83,7 @@ public class MainActivityLista extends AppCompatActivity
         });
     }
     public void setupDataAndRecycler(){
-        coreDataBase = new CoreDataBase(context);//Starting DataBase
-
+        coreDataBase = new CoreDataBase(gContext);//Starting DataBase
         // Setup M V V M, after that jump to onChanged to setupRecycler
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getAllItemsMutableLiveDataRoom().observe(this, listaUpdateObserver);
@@ -130,24 +129,21 @@ public class MainActivityLista extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+    //TODO finish this
     private void showingAllNotifications(){
-        ReminderClock remainderClock = new ReminderClock(context);
-
+        ReminderClock remainderClock = new ReminderClock(gContext);
         int totalListas = remainderClock.getAllListas();
-        List<String> allListaDataBaseName = getListaDataBaseName.getAllListasIds();
-        int sizeAllListas = remainderClock.getListaDataBaseName.;
-        for (int cont = 0;  ){
-
+        List<String> listReminders = remainderClock.getAllRemindersNames();
+        String listNamesToShow = "";
+        for (int cont = 0; cont < listReminders.size(); cont++){
+            listNamesToShow = listReminders.get(cont) + "\n";
         }
         //int totalLists = remainderClock.getAllLists();
         //int totalListsItems = remainderClock.getAllListsItems();
-        Toast.makeText(context,"totalListas="+totalListas+"\n", Toast.LENGTH_LONG).show();
+        Toast.makeText(gContext,"totalListas{\n"+listNamesToShow+"}", Toast.LENGTH_LONG).show();
     }
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
-        //TODO Values to setup AlertFragment, so far I'm not using this values
-        String title = getStringFromResources(R.string.dialog_getting_string_new_title);
-        String message = getStringFromResources(R.string.dialog_getting_string_new_message_name);
         //Showing Dialog Message
         FragmentManager fm = getSupportFragmentManager();
         DialogStringInput alertDialog = DialogStringInput.newInstance();
@@ -216,11 +212,13 @@ public class MainActivityLista extends AppCompatActivity
      */
     @Override
     public void onInterfaceString(int CODE_ID, Long longValue, int selectedItemFromCardView) {
-        final int CODE_INT_MAIN_RECYCLER_PREFERENCES = Constants.CODES_MAIN_RECYCLER.CODE_INT_MAIN_RECYCLER_PREFERENCES;
+        final int CODE_INT_MAIN_RECYCLER_PREFERENCES = Constants.CODES_MAIN_RECYCLER.
+                CODE_INT_MAIN_RECYCLER_PREFERENCES;
         ItemRoom modelViewItem;
         Long sessionId;
         switch (CODE_ID){
             case CODE_INT_MAIN_RECYCLER_ACCESS:
+
                 /* Click on one of the Items in the Recycler */
                 //Looking inside database all information
                 modelViewItem = coreDataBase.getListaItemFromDataBase(longValue);
@@ -283,7 +281,6 @@ public class MainActivityLista extends AppCompatActivity
         AlertDialog alert = builder.create();
         alert.show();
     }
-
     /**
      * menu to exit or stay
      */

@@ -7,6 +7,7 @@ import com.cobosideas.lista.activities.MainActivity.room.ListaDataBase;
 import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 import com.cobosideas.lista.global.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoreDataBase {
@@ -29,7 +30,16 @@ public class CoreDataBase {
         ItemDAO itemDAO = listaDataBase.getItemDAO();
         return itemDAO.getItems();
     }
-
+    //creating a lista of database numbers to access each list
+    public List<Long> getListaDataBaseAccessesIds(){
+        List<Long> listaAccessesIds = new ArrayList<>();
+        List<ItemRoom> itemRooms = getListaItemsFromDataBase();
+        for(int cont = 0; cont < itemRooms.size(); cont++){
+            long dataBaseAccessId = itemRooms.get(cont).id;
+            listaAccessesIds.add(dataBaseAccessId);
+        }
+        return listaAccessesIds;
+    }
     //getting selected item from database
     public ItemRoom getListaItemFromDataBase(Long Id){
         ItemDAO itemDAO = listaDataBase.getItemDAO();
