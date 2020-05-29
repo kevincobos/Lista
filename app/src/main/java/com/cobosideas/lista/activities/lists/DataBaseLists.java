@@ -3,8 +3,10 @@ package com.cobosideas.lista.activities.lists;
 import android.content.Context;
 import androidx.room.Room;
 
+import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 import com.cobosideas.lista.global.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseLists {
@@ -32,6 +34,16 @@ public class DataBaseLists {
     public List<ModelItemLists> getListsItemsFromDataBase(){
         DAOItemLists DAOItem = roomDataBaseLists.getItemDAO();
         return DAOItem.getAllItemsLists();
+    }
+    //creating a lists of database integers to access each list items
+    public List<Long> getListsDataBaseAccessIds(){
+        List<Long> listAccessesIds = new ArrayList<>();
+        List<ModelItemLists> itemRooms = getListsItemsFromDataBase();
+        for(int cont = 0; cont < itemRooms.size(); cont++){
+            Long dataBaseIdAccess = itemRooms.get(cont).id;
+            listAccessesIds.add(dataBaseIdAccess);
+        }
+        return listAccessesIds;
     }
     //getting selected item from database
     public ModelItemLists getListsItemFromDataBase(Long Id){

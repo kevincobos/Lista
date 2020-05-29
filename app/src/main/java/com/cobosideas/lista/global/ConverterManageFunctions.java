@@ -1,4 +1,4 @@
-package com.cobosideas.lista.activities.manage_functions;
+package com.cobosideas.lista.global;
 
 import androidx.room.TypeConverter;
 

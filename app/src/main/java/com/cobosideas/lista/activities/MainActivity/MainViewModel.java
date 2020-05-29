@@ -22,7 +22,4 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<List<ItemRoom>> getAllItemsMutableLiveDataRoom(){
         return this.listaItemRoom;
     }
-    public void addItemRoom(ItemRoom itemRoom){
-        //this.listaItemRoom.setValue(itemRoom); TODO fix adding itemize
-    }
 }

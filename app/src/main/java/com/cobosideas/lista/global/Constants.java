@@ -30,7 +30,8 @@ public class Constants {
         };
     }
     public interface CODES_ACTIVITY_LISTS{
-        //Strings will help to obtain and save values in the activity lists cards
+        //String is added to the begging of each lists database as a identifier
+        // will help to obtain and save values in the activity lists cards
         String CODE_STRING_LISTS_ID = "CODE_STRING_LISTS_ID";
     }
     public interface CODES_ACTIVITY_MANAGE_FUNCTIONS {

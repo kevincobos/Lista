@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-class TypeConverterFunctions {
+public class TypeConverterFunctions {
     @TypeConverter
     public static FunctionTypeMoneyAmount getFunctionTypeMoneyAmount(String stringFunctionMoney){
         if (stringFunctionMoney == null) return null;
