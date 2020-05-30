@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -48,10 +49,11 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     //buttonNewListState state
     private boolean buttonNewListState = false;
     private EditText et_name;
+    private TextView g_tv_selectedSpecificTime, g_tv_selectedSpecificDay;
     Button b_selectSpecificTime, b_selectSpecificDay;
     private AppCompatRadioButton rb_specific_time, rb_specific_hours, rb_specific_day,
             rb_specific_days;
-    private AppCompatCheckBox cb_repeat, cb_hour_control, cb_date_control, cb_months_control;
+    private AppCompatCheckBox cb_hour_control, cb_date_control, cb_months_control;
     private AppCompatCheckBox[] cb_hours, cb_days, cb_months;
 
     private LinearLayoutCompat ll_hour_control, ll_date_control, ll_control_months,
@@ -109,6 +111,7 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         setupControlsCheckButtons();
         setupControlsRadioButtons();
         setupEditText();
+        setupTextView();
         setupButtons();
         inflateHours();
         inflateDays();
@@ -117,8 +120,10 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     }
 
     private FunctionTypeReminder getFunctionTypeRemainder(){
+        /* TODO depending if FunctionTypeReminder exist update it or create a new one
+            for now we are only creating one but should be allowing to update it in the future
+            the main difference is the time stamp of "dateFunctionModify" */
         FunctionTypeReminder functionTypeReminder = new FunctionTypeReminder();
-        functionTypeReminder.setRepeat(cb_repeat.isChecked());
 
         functionTypeReminder.setName(et_name.getText().toString());
 
@@ -129,8 +134,8 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         functionTypeReminder.setSpecificTime(rb_specific_time.isChecked());
         functionTypeReminder.setSpecificDay(rb_specific_day.isChecked());
 
-        b_selectSpecificTime.getText();
-        b_selectSpecificDay.getText();
+        functionTypeReminder.setSelectedTime(g_tv_selectedSpecificTime.getText().toString());
+        functionTypeReminder.setSelectedDay(g_tv_selectedSpecificDay.getText().toString());
 
         boolean[] selectedHours = new boolean[cb_hours.length];
         for (int cont = 0; cont < cb_hours.length; cont++){
@@ -156,8 +161,6 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         @Override
         public void onChanged(FunctionTypeReminder functionTypeReminder) {
             gFunctionTypeReminder = functionTypeReminder;
-            cb_repeat.setChecked(gFunctionTypeReminder.isRepeat());
-
             et_name.setText(gFunctionTypeReminder.getName());
 
             cb_hour_control.setChecked(gFunctionTypeReminder.isHourControl());
@@ -167,8 +170,8 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
             rb_specific_time.setChecked(gFunctionTypeReminder.isSpecificTime());
             rb_specific_day.setChecked(gFunctionTypeReminder.isSpecificDay());
 
-            b_selectSpecificTime.setText(gFunctionTypeReminder.getSelectedTime());
-            b_selectSpecificDay.setText(gFunctionTypeReminder.getSelectedDay());
+            g_tv_selectedSpecificTime.setText(gFunctionTypeReminder.getSelectedTime());
+            g_tv_selectedSpecificDay.setText(gFunctionTypeReminder.getSelectedDay());
 
             for (int cont = 0; cont < cb_hours.length; cont++){
                 cb_hours[cont].setChecked(gFunctionTypeReminder.getSelectedHours(cont));
@@ -334,7 +337,6 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
         });
     }
     private void setupControlsCheckButtons(){
-        cb_repeat = gView.findViewById(R.id.cb_repeat);
         cb_hour_control = gView.findViewById(R.id.cb_hour_control);
         cb_date_control = gView.findViewById(R.id.cb_date_control);
         cb_months_control = gView.findViewById(R.id.cb_months_control);
@@ -345,15 +347,14 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     private void setupButtons() {
         //Buttons
         Button b_Cancel = gView.findViewById(R.id.b_cancel);
-        Button b_CreateNewRemainder = gView.findViewById(R.id.b_new_remainder);
+        Button b_Accept = gView.findViewById(R.id.b_accept);
         b_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        //b_CreateNewRemainder.setEnabled(buttonNewListState);
-        b_CreateNewRemainder.setOnClickListener(new View.OnClickListener() {
+        b_Accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // on success
@@ -372,7 +373,6 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                 dismiss();
             }
         });
-
         b_selectSpecificTime = gView.findViewById(R.id.b_select_specific_time);
         b_selectSpecificDay = gView.findViewById(R.id.b_select_specific_day);
         b_selectSpecificTime.setOnClickListener(new View.OnClickListener() {
@@ -390,8 +390,7 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                         if (minute < 9) stringMinutes = ":0"+minute;
                         else stringMinutes = ":"+minute;
                         String selectedTime = hourOfDay + stringMinutes;
-                        //gFunctionTypeReminder.setSelectedTime(selectedTime);
-                        b_selectSpecificTime.setText(selectedTime);
+                        g_tv_selectedSpecificTime.setText(selectedTime);
                     }
                 },hour, minutes, true);
                 picker.show();            }
@@ -409,8 +408,8 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String selectedDay = year + "/" +month + "/" + dayOfMonth;
-                        //gFunctionTypeReminder.setSelectedDay(selectedDay);
-                        b_selectSpecificDay.setText(selectedDay);
+                        g_tv_selectedSpecificDay.setText(selectedDay);
+
                     }
                 }, year, month, day);
                 picker.show();            }
@@ -418,5 +417,9 @@ public class DialogFunctionRemainderChooser extends DialogFragment {
     }
     private void setupEditText(){
         et_name = gView.findViewById(R.id.et_name);
+    }
+    private void setupTextView(){
+        g_tv_selectedSpecificTime = gView.findViewById(R.id.tv_select_specific_time);
+        g_tv_selectedSpecificDay = gView.findViewById(R.id.tv_select_specific_day);
     }
 }

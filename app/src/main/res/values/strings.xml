@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="global_cancel">"Cancel"</string>
     <string name="global_create_new">"Create New"</string>
+    <string name="global_accept">"Accept"</string>
     <string name="global_new">"new"</string>
 
     /*AlertDialog create new list*/

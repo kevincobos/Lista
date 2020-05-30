@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cobosideas.lista.R;
 import com.cobosideas.lista.activities.edit_lista.ActivityEditLista;
 import com.cobosideas.lista.activities.lists.ActivityLists;
+import com.cobosideas.lista.activities.manage_functions.FunctionTypeReminder;
 import com.cobosideas.lista.dialogs.DialogStringInput;
 import com.cobosideas.lista.global.Constants;
 import com.cobosideas.lista.global.SharableUtilitiesMessages;
@@ -132,11 +133,10 @@ public class MainActivityLista extends AppCompatActivity
     //TODO finish this
     private void showingAllNotifications(){
         ReminderClock remainderClock = new ReminderClock(gContext);
-        int totalListas = remainderClock.getAllListas();
-        List<String> listReminders = remainderClock.getAllRemindersNames();
+        List<FunctionTypeReminder> listReminders = remainderClock.getAllRemindersTodayTime();
         String listNamesToShow = "";
         for (int cont = 0; cont < listReminders.size(); cont++){
-            listNamesToShow = listReminders.get(cont) + "\n";
+            listNamesToShow = listNamesToShow + listReminders.get(cont).getSelectedTime() + "\n";
         }
         //int totalLists = remainderClock.getAllLists();
         //int totalListsItems = remainderClock.getAllListsItems();

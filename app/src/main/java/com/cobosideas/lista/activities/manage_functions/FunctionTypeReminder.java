@@ -4,7 +4,7 @@ public class FunctionTypeReminder {
     public String name = "";
     private String reminderInformation = "";
     private boolean remainderNeededToday = false;
-    private boolean repeat = false;
+    private boolean reminded = false;
     private boolean hourControl = false;
     private boolean specificTime = false;
     private String selectedTime = "";
@@ -31,17 +31,21 @@ public class FunctionTypeReminder {
     }
 
     public FunctionTypeReminder(String name, String reminderInformation,
-                                boolean remainderNeededToday, boolean repeat, boolean hourControl,
-                                boolean specificTime, String selectedTime, boolean selectedHours,
-                                boolean[] hours, boolean dateControl,
-                                boolean specificDay, String selectedDay, boolean selectDays,
-                                boolean[] selectedDays, boolean months,
-                                boolean monthsControl, boolean[] selectedMonths,
-                                long dateFunctionCreated, long dateFunctionModify) {
+                                boolean remainderNeededToday,
+                                boolean reminded,
+                                boolean hourControl,
+                                boolean specificTime, String selectedTime,
+                                boolean[] hours,
+                                boolean dateControl,
+                                boolean specificDay, String selectedDay,
+                                boolean[] selectedDays,
+                                boolean months,
+                                boolean monthsControl,
+                                boolean[] selectedMonths) {
         this.name = name;
         this.reminderInformation = reminderInformation;
         this.remainderNeededToday = remainderNeededToday;
-        this.repeat = repeat;
+        this.reminded = reminded;
         this.hourControl = hourControl;
         this.specificTime = specificTime;
         this.selectedTime = selectedTime;
@@ -53,8 +57,7 @@ public class FunctionTypeReminder {
         this.months = months;
         this.monthsControl = monthsControl;
         this.selectedMonths = selectedMonths;
-        this.dateFunctionCreated = dateFunctionCreated;
-        this.dateFunctionModify = dateFunctionModify;
+        this.dateFunctionModify = System.currentTimeMillis();;
     }
 
     public String getName() {
@@ -81,12 +84,12 @@ public class FunctionTypeReminder {
         this.remainderNeededToday = remainderNeededToday;
     }
 
-    public boolean isRepeat() {
-        return repeat;
+    public boolean isReminded() {
+        return reminded;
     }
 
-    public void setRepeat(boolean repeat) {
-        this.repeat = repeat;
+    public void setReminded(boolean reminded) {
+        this.reminded = reminded;
     }
 
     public boolean isHourControl() {

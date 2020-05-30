@@ -79,4 +79,17 @@ public class ReminderClock {
         }
         return allRemindersNames;
     }
+    public List<FunctionTypeReminder> getAllRemindersTodayTime(){
+        List<FunctionTypeReminder> allRemindersToday = new ArrayList<>();
+        List<FunctionTypeReminder> functionTypeReminders = getAllReminders();
+        int totalReminders = functionTypeReminders.size();
+        for (int cont = 0; cont <  totalReminders; cont++){
+            boolean isReminderHourSelected = functionTypeReminders.get(cont).isHourControl();
+            if (isReminderHourSelected) {
+                FunctionTypeReminder functionTypeReminder = functionTypeReminders.get(cont);
+                allRemindersToday.add(functionTypeReminder);
+            }
+        }
+        return allRemindersToday;
+    }
 }

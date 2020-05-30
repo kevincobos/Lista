@@ -43,12 +43,6 @@
             android:minLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true" />
-
-        <CheckBox
-            android:id="@+id/cb_repeat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/dialog_remainder_chooser_cb_repeat" />
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_container_repeat_specific_time"
                 android:layout_width="fill_parent"
@@ -200,6 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_remainder_chooser_cb_date_control" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/ll_date_control"
                     android:layout_width="match_parent"
@@ -360,7 +355,7 @@
             android:layout_toStartOf="@+id/view_separator_medium"
             android:text="@string/global_cancel" />
         <Button
-            android:id="@+id/b_new_remainder"
+            android:id="@+id/b_accept"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -368,7 +363,7 @@
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/view_separator_medium"
             android:layout_toStartOf="@+id/view_separator_medium"
-            android:text="@string/global_create_new" />
+            android:text="@string/global_accept" />
     </RelativeLayout>
 </RelativeLayout>
 </ScrollView>
