@@ -34,9 +34,10 @@ public class ActivityManageFunctions extends AppCompatActivity implements
      *     CODE_STRING_ACTIVITY_LISTA this is the values coming from ActivityLists */
     final String CODE_STRING_LISTA_ID = Constants.CODES_ACTIVITY_LISTA.CODE_STRING_LISTA_ID;
     //CODE_INT_ACTIVITY_EDIT_LISTS
-    private final String CODE_STRING_EDIT_LISTS_ID_SELECTED = Constants.CODES_ACTIVITY_EDIT_LISTS
+    private final String CODE_STRING_EDIT_LISTS_ID_SELECTE = Constants.CODES_ACTIVITY_EDIT_LISTS
             .CODE_STRING_EDIT_LISTS_ID_SELECTED;
-
+    final String CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
+            CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED;
     Context gContext; //Context to use globally
     DataBaseLists gDataBaseLists;
     ModelItemLists gModelItemLists;
@@ -64,7 +65,7 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     };
     public void setupDataAndRecycler(){
         gDataBaseManageFunctions = new DataBaseManageFunctions(gContext,
-                gSelectedListItemId);//Starting DataBase
+                gSelectedListaItemId, gSelectedListItemId);//Starting DataBase
 
         // Setup M V V M, after that jump to onChanged to setupRecycler
         gViewModelManageFunctions = new ViewModelProvider(this).
@@ -104,16 +105,19 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     }
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        savedInstanceState.putLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, this.gSelectedListItemId);
+        savedInstanceState.putLong(CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED,
+                this.gSelectedListItemId);
         savedInstanceState.putLong(CODE_STRING_LISTA_ID, this.gSelectedListaItemId);
        super.onSaveInstanceState(savedInstanceState);
     }
     private void setGlobalVariables(){
-        this.gSelectedListItemId = getIntent().getLongExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
+        this.gSelectedListItemId = getIntent().getLongExtra(CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED,
+                0);
         this.gSelectedListaItemId = getIntent().getLongExtra(CODE_STRING_LISTA_ID, 0);
     }
     private void getGlobalVariables(Bundle savedInstanceState) {
-        this.gSelectedListItemId = savedInstanceState.getLong(CODE_STRING_EDIT_LISTS_ID_SELECTED, 0);
+        this.gSelectedListItemId = savedInstanceState.getLong(CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED,
+                0);
         this.gSelectedListaItemId = savedInstanceState.getLong(CODE_STRING_LISTA_ID, 0);
     }
     private void setupToolBar(){
@@ -198,8 +202,6 @@ public class ActivityManageFunctions extends AppCompatActivity implements
     public void onInterfaceString(int CODE_INT_RMF_ID, Long stringValue, int itemPosition) {
         final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
         final int CODE_INT_RECYCLER_EDIT = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_EDIT;
-        final String CODE_STRING_EDIT_LISTS_ID_SELECTED = Constants.CODES_ACTIVITY_EDIT_LISTS.
-                CODE_STRING_EDIT_LISTS_ID_SELECTED;
         Intent intent;
         switch (CODE_INT_RMF_ID) {
             case CODE_INT_RECYCLER_EDIT:
@@ -229,6 +231,7 @@ public class ActivityManageFunctions extends AppCompatActivity implements
         modelItemManageFunctions.order = newDataBaseItemId;
         //inserting new item
         gRecyclerManageFunctions.addItemToRecycler(modelItemManageFunctions);
+
     }
 
     public static String createStringFunctionJSON(int CODE_FUNCTION_ADF_ID, Object valuesObject) {

@@ -245,6 +245,8 @@ public class ActivityLists extends AppCompatActivity implements
         final int CODE_INT_RECYCLER_ACCESS = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_ACCESS;
         final int CODE_INT_RECYCLER_DELETE = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_DELETE;
         final int CODE_INT_RECYCLER_EDIT = Constants.CODES_RECYCLER_LISTS.CODE_INT_RECYCLER_EDIT;
+        final String CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED = Constants.CODES_ACTIVITY_MANAGE_FUNCTIONS.
+                CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED;
         final String CODE_STRING_EDIT_LISTS_ID_SELECTED = Constants.CODES_ACTIVITY_EDIT_LISTS.
                 CODE_STRING_EDIT_LISTS_ID_SELECTED;
         Intent intent;
@@ -264,7 +266,7 @@ public class ActivityLists extends AppCompatActivity implements
                 break;
             case CODE_INT_RECYCLER_ACCESS:
                 intent = new Intent(this, ActivityManageFunctions.class);
-                intent.putExtra(CODE_STRING_EDIT_LISTS_ID_SELECTED, longValueItemSelected);
+                intent.putExtra(CODE_STRING_MANAGE_FUNCTIONS_ID_SELECTED, longValueItemSelected);
                 intent.putExtra(CODE_STRING_LISTA_ID, gSelectedListaDataBaseNumber);
                 //intent contains de selected lista information
                 startActivity(intent);//Let's start the selected activity

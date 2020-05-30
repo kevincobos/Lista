@@ -11,10 +11,13 @@ import java.util.List;
 
 public class DataBaseManageFunctions {
     private ROOMDataBaseManageFunctions roomDataBaseManageFunctions;
-    public DataBaseManageFunctions(Context context, long selectedDataBaseNumber){
-        //database name combining (MANAGE_FUNCTIONS_DATABASE_ID and selectedDataBaseNumber)
+    public DataBaseManageFunctions(Context context,
+                                   long selectedDataBaseLista,
+                                   long selectedDataBaseLists){
+        //database name combining (MANAGE_FUNCTIONS_DATABASE_ID and selectedDataBaseLists)
         final String MANAGE_FUNCTIONS_DATABASE_ID = Constants.
-                CODES_ACTIVITY_MANAGE_FUNCTIONS.MANAGE_FUNCTIONS_DATABASE_ID + selectedDataBaseNumber;
+                CODES_DATABASE_MANAGE_FUNCTIONS.MANAGE_FUNCTIONS_DATABASE_ID +
+                "-" + selectedDataBaseLista +"-"+selectedDataBaseLists;
         //Setup database
         this.roomDataBaseManageFunctions = Room.databaseBuilder(context,
                 ROOMDataBaseManageFunctions.class,

@@ -43,7 +43,9 @@ public class ReminderClock {
             DataBaseLists dataBaseLists = new DataBaseLists(gContext, listasIdsAccess.get(cont));
             List<Long> listsIdsAccess = dataBaseLists.getListsDataBaseAccessIds();
             for (int counterLists = 0; counterLists < listsIdsAccess.size(); counterLists++) {
-                DataBaseManageFunctions dataBaseManageFunctions = new DataBaseManageFunctions(gContext,
+                DataBaseManageFunctions dataBaseManageFunctions = new DataBaseManageFunctions(
+                        gContext,
+                        listasIdsAccess.get(cont),
                         listsIdsAccess.get(counterLists));
                 List<ModelItemManageFunctions> manageFunctions = dataBaseManageFunctions.getAllItems();
                 modelItemManageFunctions.addAll(manageFunctions);
