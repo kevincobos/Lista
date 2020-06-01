@@ -1,8 +1,13 @@
 package com.cobosideas.lista.activities.MainActivity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Menu;
@@ -15,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +37,7 @@ import com.cobosideas.lista.global.Constants;
 import com.cobosideas.lista.global.SharableUtilitiesMessages;
 import com.cobosideas.lista.activities.MainActivity.room.core.CoreDataBase;
 import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
+import com.cobosideas.lista.global.remainders_manager.Notifications;
 import com.cobosideas.lista.global.remainders_manager.ReminderClock;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -130,6 +138,48 @@ public class MainActivityLista extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+    public void createNotification(
+            int  notificationId,
+            String  channelId,
+            int choosePriority,
+            String title,
+            String message){
+        Notification notification;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = title;
+                String description = message;
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel(channelId, name, importance);
+                channel.setDescription(description);
+                // Register the channel with the system; you can't change the importance
+                // or other notification behaviors after this
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+                notificationManager.notify();
+            notification =
+                    new Notification.Builder(gContext, channelId)
+                            .setContentTitle(title)
+                            .setContentText(message)
+                            .setSmallIcon(R.drawable.app_developer)
+                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            //.setPriority(choosePriority)
+                            .build();
+        }else{
+            notification =
+                    new NotificationCompat.Builder(gContext, channelId)
+                            .setContentTitle(title)
+                            .setContentText(message)
+                            .setSmallIcon(R.drawable.app_developer)
+                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            //.setPriority(choosePriority)
+                            .build();
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(notificationId, notification);
+        }
+
+
+    }
     //TODO finish this
     private void showingAllNotifications(){
         ReminderClock remainderClock = new ReminderClock(gContext);
@@ -141,6 +191,9 @@ public class MainActivityLista extends AppCompatActivity
         //int totalLists = remainderClock.getAllLists();
         //int totalListsItems = remainderClock.getAllListsItems();
         Toast.makeText(gContext,"totalListas{\n"+listNamesToShow+"}", Toast.LENGTH_LONG).show();
+        Notifications notification = new Notifications(gContext);
+        createNotification(1,
+                "Lista-one", 4, "Lista - Title","Lista - Message");
     }
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
