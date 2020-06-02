@@ -22,16 +22,16 @@ public class Notifications2 {
         final int NOTIFICATION_START_ID      = 0;
         RemoteViews remoteViews = new RemoteViews(gContext.getPackageName(),
                 R.layout.notifications);
-        NotificationCompat builder;
+        NotificationCompat.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             //builder = new NotificationCompat.Builder(contextStatic, Chanel Id)
-            builder = new NotificationCompat(gContext)
+            builder = new NotificationCompat.Builder(gContext)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContent(remoteViews)
                     .setPriority(2)
                     .setAutoCancel(true);
         }else{
-            builder = new Notification.Builder(gContext)
+            builder = new NotificationCompat.Builder(gContext)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContent(remoteViews)
                     .setPriority(Notification.PRIORITY_HIGH)
@@ -72,7 +72,7 @@ public class Notifications2 {
         NotificationManager notificationManager =
                 (NotificationManager) gContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        //builder.setContentIntent(startIntent);
+        builder.setContentIntent(startIntent);
         notificationManager.notify(NOTIFICATION_START_ID, builder.build());
     }
 }
