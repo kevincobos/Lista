@@ -38,6 +38,7 @@ import com.cobosideas.lista.global.SharableUtilitiesMessages;
 import com.cobosideas.lista.activities.MainActivity.room.core.CoreDataBase;
 import com.cobosideas.lista.activities.MainActivity.room.models.ItemRoom;
 import com.cobosideas.lista.global.remainders_manager.Notifications;
+import com.cobosideas.lista.global.remainders_manager.Notifications2;
 import com.cobosideas.lista.global.remainders_manager.ReminderClock;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -191,9 +192,10 @@ public class MainActivityLista extends AppCompatActivity
         //int totalLists = remainderClock.getAllLists();
         //int totalListsItems = remainderClock.getAllListsItems();
         Toast.makeText(gContext,"totalListas{\n"+listNamesToShow+"}", Toast.LENGTH_LONG).show();
-        Notifications notification = new Notifications(gContext);
-        createNotification(1,
-                "Lista-one", 4, "Lista - Title","Lista - Message");
+        Notifications2 notification = new Notifications2(gContext);
+        notification.showNotification();
+
+        //createNotification(1,"Lista-one", 4, "Lista - Title","Lista - Message");
     }
     /**Dialog to create a New List and adding to the database*/
     private void showDialogCreateNewList(){
